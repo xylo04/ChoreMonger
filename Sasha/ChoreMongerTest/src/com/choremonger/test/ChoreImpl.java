@@ -259,9 +259,7 @@ public class ChoreImpl implements Chore
 	}
 	public void setName(String newName)
 	{
-		System.out.println(this.str);
 		this.str = str.replace("<name>"+this.name, "<name>"+newName);
-		System.out.println(this.str);
 		this.name = newName;
 		HttpPut request = new HttpPut(HttpRequestExecutor.RESOURCE_ROOT + "chore/" + this.id);
 		try {
