@@ -9,13 +9,11 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
-import com.choremonger.shared.Chore;
-
 public interface ChoreResource {
 
 	@POST
 	@Consumes("application/xml")
-	public Chore createChore(Chore chore);
+	public ChoreImpl createChore(ChoreImpl chore);
 
 	@DELETE
 	@Path("{id}")
@@ -24,7 +22,7 @@ public interface ChoreResource {
 	@GET
 	@Path("{id}")
 	@Produces("application/xml")
-	public Chore getChore(@PathParam("id") String id);
+	public ChoreImpl getChore(@PathParam("id") String id);
 
 	@GET
 	@Produces("application/xml")
@@ -33,6 +31,6 @@ public interface ChoreResource {
 	@PUT
 	@Path("{id}")
 	@Consumes("application/xml")
-	public void updateChore(@PathParam("id") String id, Chore chore);
+	public void updateChore(@PathParam("id") String id, ChoreImpl chore);
 
 }

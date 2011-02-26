@@ -1,42 +1,44 @@
-<!-- An example of what comes back from the server for
-     GET http://5.lastest.choremonger.appspot.com/resources/family     -->
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<family id="1">
-	<chore id="1">
-		<instructions>Instructions for this chore.</instructions>
-		<name>A Chore Title</name>
+<family>
+	<chore>
+		<instructions>Sweep the floor.</instructions>
+		<name>Sweep the Floor</name>
 		<pointValue>15.0</pointValue>
+		<priority>1.0</priority>
+		<status>Not done</status>
 	</chore>
-	<chore id="2">
-		<instructions>Instructions for this chore.</instructions>
-		<name>A Chore Title</name>
+	<chore">
+		<instructions>Wash the dishes.</instructions>
+		<name>Wash the Dishes</name>
 		<pointValue>15.0</pointValue>
+		<priority>1.0</priority>
+		<status>Not done</status>
 	</chore>
-	<name>Family Name</name>
-	<reward id="1">
+	<name>The Newest Family</name>
+	<reward>
 		<description>The reward's description.</description>
 		<isOneTime>false</isOneTime>
 		<name>A Sweet Reward</name>
 		<pointValue>15.0</pointValue>
 	</reward>
-	<reward id="2">
+	<reward>
 		<description>The reward's description.</description>
 		<isOneTime>false</isOneTime>
-		<name>A Sweet Reward</name>
+		<name>Another Sweet Reward</name>
 		<pointValue>15.0</pointValue>
 	</reward>
-	<user id="1">
-		<dob>2011-04-05T17:27:40.919Z</dob>
-		<email>user@email.com</email>
-		<name>User Name</name>
-		<rewardPoints>15.0</rewardPoints>
+	<user>
 		<chore>1</chore>
-	</user>
-	<user id="2">
-		<dob>2011-04-05T17:27:40.919Z</dob>
-		<email>user@email.com</email>
-		<name>User Name</name>
+		<dob>1986-02-06T00:00:00.000Z</dob>
+		<email>user1@email.com</email>
+		<name>User 1</name>
 		<rewardPoints>15.0</rewardPoints>
+	</user>
+	<user>
 		<chore>2</chore>
+		<dob>1988-10-02T00:00:00.000Z</dob>
+		<email>user2@email.com</email>
+		<name>User 2</name>
+		<rewardPoints>15.0</rewardPoints>
 	</user>
 </family>

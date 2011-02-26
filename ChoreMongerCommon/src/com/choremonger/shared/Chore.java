@@ -4,6 +4,8 @@ import java.util.List;
 
 public interface Chore {
 
+	// string status, double priority
+
 	/**
 	 * Add a {@link User} to this {@link Chore}'s responsibility list. Also adds
 	 * the {@link Chore} to the {@link User}'s assigned list.
@@ -39,6 +41,20 @@ public interface Chore {
 	 * @return
 	 */
 	public double getPointValue();
+
+	/**
+	 * Get this {@link Chore}'s priority.
+	 * 
+	 * @return
+	 */
+	public double getPriority();
+
+	/**
+	 * Get this {@link Chore}'s status.
+	 * 
+	 * @return
+	 */
+	public String getStatus();
 
 	/**
 	 * Get the {@link User}s responsible for this {@link Chore}.
@@ -83,4 +99,18 @@ public interface Chore {
 	 * @param newPointValue
 	 */
 	public void setPointValue(double newPointValue);
+
+	/**
+	 * Set this {@link Chore}'s priority.
+	 * 
+	 * @param newPriority
+	 */
+	public void setPriority(double newPriority);
+
+	/**
+	 * Set this {@link Chore}'s status.
+	 * 
+	 * @param newStatus
+	 */
+	public void setStatus(String newStatus);
 }

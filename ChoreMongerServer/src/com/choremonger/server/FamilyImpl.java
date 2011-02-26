@@ -25,7 +25,7 @@ import com.choremonger.shared.User;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class FamilyImpl implements Family {
 
-	@Persistent
+	@Persistent(defaultFetchGroup = "true")
 	@XmlElement(name = "chore")
 	private List<ChoreImpl> chores = new ArrayList<ChoreImpl>();
 
@@ -40,17 +40,13 @@ public class FamilyImpl implements Family {
 	@XmlElement
 	private String name;
 
-	@Persistent
+	@Persistent(defaultFetchGroup = "true")
 	@XmlElement(name = "reward")
 	private List<RewardImpl> rewards = new ArrayList<RewardImpl>();
 
-	@Persistent
+	@Persistent(defaultFetchGroup = "true")
 	@XmlElement(name = "user")
 	private List<UserImpl> users = new ArrayList<UserImpl>();
-
-	public FamilyImpl() {
-		fillDummyData();
-	}
 
 	@Override
 	public void addChore(Chore toAdd) {
@@ -65,28 +61,6 @@ public class FamilyImpl implements Family {
 	@Override
 	public void addUser(User toAdd) {
 		users.add((UserImpl) toAdd);
-	}
-
-	private void fillDummyData() {
-		id = "1";
-		name = "Family Name";
-
-		RewardImpl reward1 = new RewardImpl(), reward2 = new RewardImpl();
-		reward2.setId("2");
-		rewards.add(reward1);
-		rewards.add(reward2);
-
-		UserImpl user1 = new UserImpl(), user2 = new UserImpl();
-		user2.setId("2");
-		ChoreImpl chore1 = new ChoreImpl(), chore2 = new ChoreImpl();
-		chore2.setId("2");
-
-		chore1.addUser(user1);
-		chore2.addUser(user2);
-		users.add(user1);
-		users.add(user2);
-		chores.add(chore1);
-		chores.add(chore2);
 	}
 
 	@Override

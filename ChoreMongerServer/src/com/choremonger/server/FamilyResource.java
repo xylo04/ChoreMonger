@@ -9,13 +9,11 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
-import com.choremonger.shared.Family;
-
 public interface FamilyResource {
 
 	@POST
 	@Consumes("application/xml")
-	public Family createFamily(Family family);
+	public FamilyImpl createFamily(FamilyImpl family);
 
 	@DELETE
 	@Path("{id}")
@@ -23,16 +21,16 @@ public interface FamilyResource {
 
 	@GET
 	@Produces("application/xml")
-	public Family getFamily();
+	public FamilyImpl getFamily();
 
 	@GET
 	@Path("{id}")
 	@Produces("application/xml")
-	public Family getFamily(@PathParam("id") String id);
+	public FamilyImpl getFamily(@PathParam("id") String id);
 
 	@PUT
 	@Path("{id}")
 	@Consumes("application/xml")
-	public void updateFamily(@PathParam("id") String id, Family family);
+	public void updateFamily(@PathParam("id") String id, FamilyImpl family);
 
 }

@@ -9,13 +9,11 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
-import com.choremonger.shared.Reward;
-
 public interface RewardResource {
 
 	@POST
 	@Consumes("application/xml")
-	public Reward createReward(Reward reward);
+	public RewardImpl createReward(RewardImpl reward);
 
 	@DELETE
 	@Path("{id}")
@@ -24,7 +22,7 @@ public interface RewardResource {
 	@GET
 	@Path("{id}")
 	@Produces("application/xml")
-	public Reward getReward(@PathParam("id") String id);
+	public RewardImpl getReward(@PathParam("id") String id);
 
 	@GET
 	@Produces("application/xml")
@@ -33,6 +31,6 @@ public interface RewardResource {
 	@PUT
 	@Path("{id}")
 	@Consumes("application/xml")
-	public void updateReward(@PathParam("id") String id, Reward reward);
+	public void updateReward(@PathParam("id") String id, RewardImpl reward);
 
 }
