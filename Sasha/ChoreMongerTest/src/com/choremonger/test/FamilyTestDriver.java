@@ -20,12 +20,24 @@ public class FamilyTestDriver {
 		temp = chore0.getId();
 
 		User user0 = UserImpl.createUser();
+		User user1 = UserImpl.createUser();
+		User user2 = UserImpl.createUser();
 		chore0.addUser(user0);
+		chore0.addUser(user1);
+		chore0.addUser(user2);
 		
 		ChoreImpl chore1 = new ChoreImpl(temp);
 		test_users = chore1.getUsers();
-		System.out.println("User id: "+test_users.get(0).getId());
+		System.out.println("User 0 id: "+test_users.get(0).getId());
+		System.out.println("User 1 id: "+test_users.get(1).getId());
+		System.out.println("User 2 id: "+test_users.get(2).getId());
+		
+		chore0.removeUser(user1);
 	
+		ChoreImpl chore2 = new ChoreImpl(temp);
+		test_users = chore2.getUsers();
+		System.out.println("User 0 id: "+test_users.get(0).getId());
+		System.out.println("User 1 id: "+test_users.get(1).getId());
 	//		chore0.clean();
 //		chore1.clean();
 	}

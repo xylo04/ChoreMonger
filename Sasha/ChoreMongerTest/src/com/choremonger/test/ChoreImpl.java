@@ -22,7 +22,7 @@ import com.choremonger.shared.User;
 
 public class ChoreImpl implements Chore
 {
-	List<User> users_assigned;
+	List<User> users_assigned = new ArrayList<User>();
 	String id;
 	String intsructions;
 	String name;
@@ -139,14 +139,7 @@ public class ChoreImpl implements Chore
 				//users
 				if(str.indexOf("<users>") != -1)
 				{
-					String[] temp;
 					this.list_of_users = str.substring(str.indexOf("<users>")+7, str.indexOf("</users>"));
-					temp = str.substring(str.indexOf("<users>")+7, str.indexOf("</users>")).split("\\.");
-					System.out.println("id: " + temp[0]);
-					for (int i = 0; i<temp.length-1; i++)
-					{
-						if (temp[i] != null){this.users_assigned.add(UserImpl.getUser(temp[i]));}
-					}
 				}
 				//users
 			} catch (Exception e) {
@@ -207,9 +200,6 @@ public class ChoreImpl implements Chore
 /**/	public void addUser(User toAdd)
 	{
 		String[] temp;
-		if (toAdd == null)
-			System.out.println("object is null");
-		this.users_assigned.add(toAdd);	
 		if(this.list_of_users == null){this.list_of_users = "";}
 		this.list_of_users += toAdd.getId() + ".";
 		temp = this.str.split("<users>");
@@ -244,6 +234,16 @@ public class ChoreImpl implements Chore
 	}
 	public List<User> getUsers()
 	{
+		String[] temp;
+		temp = this.list_of_users.split("\\.");
+		for (int i = 0; i<temp.length-1; i++)
+		{
+			if (temp[i] != null)
+			{
+				System.out.println("***************"+temp[i]+"*************");
+				this.users_assigned.add(UserImpl.getUser(temp[i]));
+			}
+		}
 		return this.users_assigned;
 	}
 
