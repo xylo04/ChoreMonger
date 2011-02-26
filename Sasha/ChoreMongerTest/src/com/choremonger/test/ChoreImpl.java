@@ -91,11 +91,11 @@ public class ChoreImpl implements Chore
 			e.printStackTrace();
 		}
 		Request.setHeader("Content-Type", "application/xml");
+		HttpResponse Response = HttpRequestExecutor.executeRequest(Request);
 
 	}
 	public ChoreImpl(String id)
 	{
-		String value;
 		this.id = id;
 		HttpGet request = new HttpGet(HttpRequestExecutor.RESOURCE_ROOT + "chore/" + this.id);
 		HttpResponse response = HttpRequestExecutor.executeRequest(request);
@@ -184,6 +184,8 @@ public class ChoreImpl implements Chore
 			e.printStackTrace();
 		}
 		request.setHeader("Content-Type", "application/xml");
+		HttpResponse Response = HttpRequestExecutor.executeRequest(request);
+
 	}
 
 /**/	public void addUser(User toAdd)
@@ -199,6 +201,8 @@ public class ChoreImpl implements Chore
 			e.printStackTrace();
 		}
 		request.setHeader("Content-Type", "application/xml");
+		HttpResponse Response = HttpRequestExecutor.executeRequest(request);
+
 
 	}
 	public String getId()
@@ -232,6 +236,7 @@ public class ChoreImpl implements Chore
 			e.printStackTrace();
 		}
 		request.setHeader("Content-Type", "application/xml");
+		HttpResponse Response = HttpRequestExecutor.executeRequest(request);
 		return this.users_assigned.remove(toRemove);
 	}
 
@@ -240,8 +245,9 @@ public class ChoreImpl implements Chore
 	}
 	public void setInstructions(String newInstructions)
 	{
-		this.str = str.replace("<intsructions>"+this.intsructions, "<intsructions>"+newInstructions);
+		this.str = str.replace("<instructions>"+this.intsructions, "<instructions>"+newInstructions);
 		this.intsructions = newInstructions;
+		System.out.println(this.str);
 		HttpPut request = new HttpPut(HttpRequestExecutor.RESOURCE_ROOT + "chore/" + this.id);
 		try {
 			request.setEntity(new StringEntity(this.str));
@@ -249,6 +255,7 @@ public class ChoreImpl implements Chore
 			e.printStackTrace();
 		}
 		request.setHeader("Content-Type", "application/xml");
+		HttpResponse Response = HttpRequestExecutor.executeRequest(request);
 	}
 	public void setName(String newName)
 	{
@@ -261,11 +268,13 @@ public class ChoreImpl implements Chore
 			e.printStackTrace();
 		}
 		request.setHeader("Content-Type", "application/xml");
+		HttpResponse Response = HttpRequestExecutor.executeRequest(request);
 	}
 	public void setPointValue(double newPointValue)
 	{
 		this.str = str.replace("<pointValue>"+this.points, "<pointValue>"+Double.toString(newPointValue));
 		this.points = newPointValue;
+		System.out.println(this.str);
 		HttpPut request = new HttpPut(HttpRequestExecutor.RESOURCE_ROOT + "chore/" + this.id);
 		try {
 			request.setEntity(new StringEntity(this.str));
@@ -273,5 +282,6 @@ public class ChoreImpl implements Chore
 			e.printStackTrace();
 		}
 		request.setHeader("Content-Type", "application/xml");
+		HttpResponse Response = HttpRequestExecutor.executeRequest(request);
 	}
 }
