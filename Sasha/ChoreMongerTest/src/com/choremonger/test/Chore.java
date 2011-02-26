@@ -64,29 +64,29 @@ public class Chore implements Chore
 			try {
 				str = response.getEntity().getContent();
 				if ((str.indexOf("<name>") != -1)
-					this.name = str.substring(str.indexOf("<name>"), str.indexOf("</name>"));					//name
+					this.name = str.substring(str.indexOf("<name>")+6, str.indexOf("</name>"));					//name
 				else 
 					this.name = "";
 				if ((str.indexOf("<intsructions>") != -1)
-					this.intsructions = str.substring(str.indexOf("<intsructions>"), str.indexOf("</intsructions>"));		//instructions
+					this.intsructions = str.substring(str.indexOf("<intsructions>")+14, str.indexOf("</intsructions>"));		//instructions
 				else 
 					this.intsructions = "";
 				if ((str.indexOf("<status>") != -1)
-					this.status = str.substring(str.indexOf("<status>"), str.indexOf("</status>"));					//status
+					this.status = str.substring(str.indexOf("<status>")+8, str.indexOf("</status>"));					//status
 				else 
 					this.status = "";
 				if ((str.indexOf("<points>") != -1)
-					this.points = Double.parseDouble(str.substring(str.indexOf("<points>"), str.indexOf("</points>")));		//points
+					this.points = Double.parseDouble(str.substring(str.indexOf("<points>")+8, str.indexOf("</points>")));		//points
 				else 
 					this.points = 0.0;
 				if ((str.indexOf("<priority>") != -1)
-					this.priority = Double.parseDouble(str.substring(str.indexOf("<priority>"), str.indexOf("</priority>")));	//priority
+					this.priority = Double.parseDouble(str.substring(str.indexOf("<priority>")+10, str.indexOf("</priority>")));	//priority
 				else 
 					this.priority = 0.0;
 				//users
 				for (int i = 0; i>-5; i++)
 				{
-					value = str.substring(str.indexOf("<user id="), str.indexOf(" uri="));
+					value = str.substring(str.indexOf("<user id=")+9, str.indexOf(" uri="));
 					str = str.substring(str.indexOf(" uri="));
 					this.users_assigned.add(User(value));
 				}
