@@ -23,8 +23,8 @@ public class FamilyTestDriver {
 		System.out.println("Name: " + chore1.getName());
 		System.out.println("Instructions: " + chore1.getInstructions());
 		System.out.println("PointValue: " + chore1.getPointValue());
-		
-
+		chore0.clean();
+		chore1.clean();
 	}
 
 }
