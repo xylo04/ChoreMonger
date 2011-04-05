@@ -1,0 +1,12 @@
+curl -v -k -X GET https://www.google.com/accounts/ClientLogin?Email=xylo04\&Passwd=passwd\&service=ah\&source=test\&accountType=HOSTED_OR_GOOGLE
+
+curl -c cookie.txt -v -k -X GET http://4.latest.choremonger.appspot.com/_ah/login?auth=DQAAALAAAAD4_CSFpu0yRIVROBXuwL...\&continue=http://4.latest.choremonger.appspot.com/
+
+
+curl -b cookie.txt -c cookie.txt -v -X POST --data "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><customer><fullname>Bill Burke</fullname><address><street>123 Main Street</street><city>Anytown</city><state>US</state><zip>00100</zip></address></customer>" --header "Content-Type: application/xml" http://4.latest.choremonger.appspot.com/resources/customers/
+
+curl -b cookie.txt -c cookie.txt -v -X GET http://4.latest.choremonger.appspot.com/resources/customers/4001
+
+curl -b cookie.txt -c cookie.txt -v -X PUT --data "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><customer id=\"4\"><fullname>Bill Burke II</fullname><address><street>123 Main Street</street><city>Anytown</city><state>US</state><zip>00101</zip></address></customer>" --header "Content-Type: application/xml"  http://4.latest.choremonger.appspot.com/resources/customers/3001
+
+curl -b cookie.txt -c cookie.txt -v -X DELETE http://4.latest.choremonger.appspot.com/resources/customers/3001 --header "Accept: application/xml"
