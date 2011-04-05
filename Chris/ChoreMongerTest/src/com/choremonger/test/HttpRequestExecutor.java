@@ -10,6 +10,8 @@ import org.apache.http.impl.client.DefaultHttpClient;
 
 public class HttpRequestExecutor {
 
+	public static final String RESOURCE_ROOT = "http://5.latest.choremonger.appspot.com/resources/";
+
 	// right now this just executes the request, but this could also
 	// encapsulate authentication issues
 	public static HttpResponse executeRequest(HttpUriRequest request) {
@@ -26,6 +28,4 @@ public class HttpRequestExecutor {
 		}
 		return null;
 	}
-
-	static final String RESOURCE_ROOT = "http://5.latest.choremonger.appspot.com/resources/";
 }

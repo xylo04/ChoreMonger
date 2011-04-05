@@ -4,7 +4,11 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
+
 import org.apache.http.HttpResponse;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 
@@ -15,16 +19,9 @@ import com.choremonger.shared.User;
 
 public class FamilyImpl implements Family {
 
-	private List<Chore> chores = new ArrayList<Chore>();
-	private List<Reward> rewards = new ArrayList<Reward>();
-	private List<User> users = new ArrayList<User>();
-	private String id;
-	private String name;
-
-	private FamilyImpl() {
-	}
-
 	public static Family createFamily() {
+		Family retval = null;
+
 		HttpPost request = new HttpPost(HttpRequestExecutor.RESOURCE_ROOT
 				+ "family");
 		try {
@@ -44,9 +41,62 @@ public class FamilyImpl implements Family {
 					+ response.getStatusLine().getStatusCode());
 		}
 
+		if (response.getStatusLine().getStatusCode() == 200) {
+			retval = parseFamily(response, retval);
+		}
+
 		// parse response XML into a FamilyImpl object
 		// and return that
-		return null;
+		return retval;
+	}
+
+	public static Family getFamily(String id) {
+		Family retval = null;
+
+		HttpGet request = new HttpGet(HttpRequestExecutor.RESOURCE_ROOT
+				+ "family/1");
+
+		System.out
+				.println("FamilyImpl is building request to get Family from the server");
+		HttpResponse response = HttpRequestExecutor.executeRequest(request);
+		if (response != null) {
+			System.out.println("Got a response, code "
+					+ response.getStatusLine().getStatusCode());
+		}
+
+		if (response.getStatusLine().getStatusCode() == 200) {
+			retval = parseFamily(response, retval);
+		}
+
+		// parse response XML into a FamilyImpl object
+		// and return that
+		return retval;
+	}
+
+	private static Family parseFamily(HttpResponse response, Family retval) {
+		System.out.println("Going to try and parse out a Family");
+		SAXParserFactory factory = SAXParserFactory.newInstance();
+		try {
+			SAXParser saxParser = factory.newSAXParser();
+			FamilySaxHandler handler = new FamilySaxHandler();
+			saxParser.parse(response.getEntity().getContent(), handler);
+			retval = handler.getFamily();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return retval;
+	}
+
+	private List<Chore> chores = new ArrayList<Chore>();
+	private String id;
+
+	private String name;
+
+	private List<Reward> rewards = new ArrayList<Reward>();
+
+	private List<User> users = new ArrayList<User>();
+
+	public FamilyImpl() {
 	}
 
 	@Override
