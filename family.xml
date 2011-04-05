@@ -1,0 +1,42 @@
+<!-- An example of what comes back from the server for
+     GET http://5.lastest.choremonger.appspot.com/resources/family     -->
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<family id="1">
+	<chore id="1">
+		<instructions>Instructions for this chore.</instructions>
+		<name>A Chore Title</name>
+		<pointValue>15.0</pointValue>
+	</chore>
+	<chore id="2">
+		<instructions>Instructions for this chore.</instructions>
+		<name>A Chore Title</name>
+		<pointValue>15.0</pointValue>
+	</chore>
+	<name>Family Name</name>
+	<reward id="1">
+		<description>The reward's description.</description>
+		<isOneTime>false</isOneTime>
+		<name>A Sweet Reward</name>
+		<pointValue>15.0</pointValue>
+	</reward>
+	<reward id="2">
+		<description>The reward's description.</description>
+		<isOneTime>false</isOneTime>
+		<name>A Sweet Reward</name>
+		<pointValue>15.0</pointValue>
+	</reward>
+	<user id="1">
+		<dob>2011-04-05T17:27:40.919Z</dob>
+		<email>user@email.com</email>
+		<name>User Name</name>
+		<rewardPoints>15.0</rewardPoints>
+		<chore>1</chore>
+	</user>
+	<user id="2">
+		<dob>2011-04-05T17:27:40.919Z</dob>
+		<email>user@email.com</email>
+		<name>User Name</name>
+		<rewardPoints>15.0</rewardPoints>
+		<chore>2</chore>
+	</user>
+</family>
