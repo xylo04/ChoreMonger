@@ -17,16 +17,16 @@ import com.choremonger.shared.Family;
 import com.choremonger.shared.Reward;
 import com.choremonger.shared.User;
 
-public class FamilyImpl implements Family {
+public class UserImpl implements User {
 
-	public static Family createFamily() {
-		Family retval = null;
+	public static User createUser() {
+		User retval = null;
 
 		HttpPost request = new HttpPost(HttpRequestExecutor.RESOURCE_ROOT
-				+ "family");
+				+ "user");
 		try {
 			request.setEntity(new StringEntity(
-					"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><family />",
+					"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><user />",
 					"utf-8"));
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
@@ -34,7 +34,7 @@ public class FamilyImpl implements Family {
 		request.setHeader("Content-Type", "application/xml");
 
 		System.out
-				.println("FamilyImpl is building request for new Family from the server");
+				.println("UserImpl is building request for new User from the server");
 		HttpResponse response = HttpRequestExecutor.executeRequest(request);
 		if (response != null) {
 			System.out.println("Got a response, code "
@@ -42,22 +42,22 @@ public class FamilyImpl implements Family {
 		}
 
 		if (response.getStatusLine().getStatusCode() == 200) {
-			retval = parseFamily(response, retval);
+			retval = parseUser(response, retval);
 		}
 
-		// parse response XML into a FamilyImpl object
+		// parse response XML into a UserImpl object
 		// and return that
 		return retval;
 	}
 
-	public static Family getFamily(String id) {
-		Family retval = null;
+	public static User getUser(String id) {
+		User retval = null;
 
 		HttpGet request = new HttpGet(HttpRequestExecutor.RESOURCE_ROOT
-				+ "family/1");
+				+ "User/1");
 
 		System.out
-				.println("FamilyImpl is building request to get Family from the server");
+				.println("UserImpl is building request to get User from the server");
 		HttpResponse response = HttpRequestExecutor.executeRequest(request);
 		if (response != null) {
 			System.out.println("Got a response, code "
@@ -65,22 +65,22 @@ public class FamilyImpl implements Family {
 		}
 
 		if (response.getStatusLine().getStatusCode() == 200) {
-			retval = parseFamily(response, retval);
+			retval = parseUser(response, retval);
 		}
 
-		// parse response XML into a FamilyImpl object
+		// parse response XML into a UserImpl object
 		// and return that
 		return retval;
 	}
 
-	private static Family parseFamily(HttpResponse response, Family retval) {
-		System.out.println("Going to try and parse out a Family");
+	private static User parseUser(HttpResponse response, User retval) {
+		System.out.println("Going to try and parse out a User");
 		SAXParserFactory factory = SAXParserFactory.newInstance();
 		try {
 			SAXParser saxParser = factory.newSAXParser();
-			FamilySaxHandler handler = new FamilySaxHandler();
+			UserSaxHandler handler = new UserSaxHandler();
 			saxParser.parse(response.getEntity().getContent(), handler);
-			retval = handler.getFamily();
+			retval = handler.getUser();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -89,14 +89,13 @@ public class FamilyImpl implements Family {
 
 	private List<Chore> chores = new ArrayList<Chore>();
 	private String id;
+	private double RewardPoints;
+	private Date Dob;
+	private String email;
 
 	private String name;
 
-	private List<Reward> rewards = new ArrayList<Reward>();
-
-	private List<User> users = new ArrayList<User>();
-
-	public FamilyImpl() {
+	public UserImpl() {
 	}
 
 	@Override
@@ -106,20 +105,24 @@ public class FamilyImpl implements Family {
 	}
 
 	@Override
-	public void addReward(Reward toAdd) {
-		rewards.add(toAdd);
-		// send update to server
-	}
-
-	@Override
-	public void addUser(User toAdd) {
-		users.add(toAdd);
+	public void addRewardPoints(double amountToAdd) {
+		RewardPoints += amountToAdd;
 		// send update to server
 	}
 
 	@Override
 	public List<Chore> getChores() {
 		return chores;
+	}
+
+	@Override
+	public Date getDob() {
+		return Dob;
+	}
+
+	@Override
+	public String getEmail() {
+		return email;
 	}
 
 	@Override
@@ -133,13 +136,13 @@ public class FamilyImpl implements Family {
 	}
 
 	@Override
-	public List<Reward> getRewards() {
-		return rewards;
+	public double getRewardPoints() {
+		return RewardPoints;
 	}
 
 	@Override
-	public List<User> getUsers() {
-		return users;
+	public void redeemReward(Reward toRedeem) {
+		// do stuff
 	}
 
 	@Override
@@ -149,14 +152,14 @@ public class FamilyImpl implements Family {
 	}
 
 	@Override
-	public boolean removeReward(Reward toRemove) {
-		return rewards.remove(toRemove);
+	public void setDob(Date newDateOfBirth) {
+		Dob = newDateOfBirth;
 		// send update to server
 	}
 
 	@Override
-	public boolean removeUser(User toRemove) {
-		return users.remove(toRemove);
+	public void setEmail(String newEmail) {
+		email = newEmail;
 		// send update to server
 	}
 
@@ -169,6 +172,12 @@ public class FamilyImpl implements Family {
 	@Override
 	public void setName(String newName) {
 		name = newName;
+		// send update to server
+	}
+
+	@Override
+	public void subtractRewardPoints(double amountToSubtract) {
+		RewardPoints -= amountToSubstract;
 		// send update to server
 	}
 
