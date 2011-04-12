@@ -21,6 +21,7 @@ public class ChoreResourceImpl implements ChoreResource {
 	@Override
 	public Chore getChore(String id) {
 		ChoreImpl retval = new ChoreImpl();
+		retval.setId(id);
 		return retval;
 	}
 

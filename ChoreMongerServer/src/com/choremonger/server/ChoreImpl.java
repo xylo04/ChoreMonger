@@ -44,6 +44,14 @@ public class ChoreImpl implements Chore {
 	private double pointValue;
 
 	@Persistent
+	@XmlElement
+	private double priority;
+
+	@Persistent
+	@XmlElement
+	private String status;
+
+	@Persistent
 	@XmlElement(name = "user")
 	@XmlIDREF
 	private List<UserImpl> users = new ArrayList<UserImpl>();
@@ -62,6 +70,8 @@ public class ChoreImpl implements Chore {
 		instructions = "Instructions for this chore.";
 		name = "A Chore Title";
 		pointValue = 15.0;
+		priority = 1.0;
+		status = "Not done";
 	}
 
 	@Override
@@ -82,6 +92,14 @@ public class ChoreImpl implements Chore {
 	@Override
 	public double getPointValue() {
 		return pointValue;
+	}
+
+	public double getPriority() {
+		return priority;
+	}
+
+	public String getStatus() {
+		return status;
 	}
 
 	@Override
@@ -114,6 +132,14 @@ public class ChoreImpl implements Chore {
 	@Override
 	public void setPointValue(double newPointValue) {
 		pointValue = newPointValue;
+	}
+
+	public void setPriority(double newPriority) {
+		priority = newPriority;
+	}
+
+	public void setStatus(String newStatus) {
+		status = newStatus;
 	}
 
 }

@@ -27,6 +27,11 @@ import com.choremonger.shared.User;
 public class UserImpl implements User {
 
 	@Persistent
+	@XmlElement(name = "chore")
+	@XmlIDREF
+	private List<ChoreImpl> chores = new ArrayList<ChoreImpl>();
+
+	@Persistent
 	@XmlElement
 	private Date dob;
 
@@ -49,11 +54,6 @@ public class UserImpl implements User {
 	@XmlElement
 	private double rewardPoints;
 
-	@Persistent
-	@XmlElement(name = "chore")
-	@XmlIDREF
-	private List<ChoreImpl> chores = new ArrayList<ChoreImpl>();
-
 	public UserImpl() {
 		id = "1";
 		name = "User Name";
@@ -62,9 +62,20 @@ public class UserImpl implements User {
 		rewardPoints = 15.0;
 	}
 
+	public void addChore(Chore toAdd) {
+		chores.add((ChoreImpl) toAdd);
+		toAdd.getUsers().add(this);
+	}
+
 	@Override
 	public void addRewardPoints(double amountToAdd) {
 		rewardPoints += amountToAdd;
+	}
+
+	public List<Chore> getChores() {
+		List<Chore> retval = new ArrayList<Chore>();
+		retval.addAll(chores);
+		return retval;
 	}
 
 	@Override
@@ -97,6 +108,11 @@ public class UserImpl implements User {
 		// TODO Do this!
 	}
 
+	public boolean removeChore(Chore toRemove) {
+		toRemove.getUsers().remove(this);
+		return chores.remove(toRemove);
+	}
+
 	@Override
 	public void setDob(Date newDateOfBirth) {
 		dob = newDateOfBirth;
@@ -120,22 +136,6 @@ public class UserImpl implements User {
 	@Override
 	public void subtractRewardPoints(double amountToSubtract) {
 		rewardPoints -= amountToSubtract;
-	}
-
-	public List<Chore> getChores() {
-		List<Chore> retval = new ArrayList<Chore>();
-		retval.addAll(chores);
-		return retval;
-	}
-
-	public void addChore(Chore toAdd) {
-		chores.add((ChoreImpl) toAdd);
-		toAdd.getUsers().add(this);
-	}
-
-	public boolean removeChore(Chore toRemove) {
-		toRemove.getUsers().remove(this);
-		return chores.remove(toRemove);
 	}
 
 }
