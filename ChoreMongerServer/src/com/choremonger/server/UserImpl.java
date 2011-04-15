@@ -41,7 +41,7 @@ public class UserImpl implements User {
 
 	@PrimaryKey
 	@Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
-    @Extension(vendorName="datanucleus", key="gae.encoded-pk", value="true")
+	@Extension(vendorName = "datanucleus", key = "gae.encoded-pk", value = "true")
 	@XmlAttribute
 	@XmlID
 	private String id;
@@ -54,6 +54,7 @@ public class UserImpl implements User {
 	@XmlElement
 	private double rewardPoints;
 
+	@Override
 	public void addChore(Chore toAdd) {
 		chores.add((ChoreImpl) toAdd);
 		toAdd.getUsers().add(this);
@@ -64,6 +65,7 @@ public class UserImpl implements User {
 		rewardPoints += amountToAdd;
 	}
 
+	@Override
 	public List<Chore> getChores() {
 		List<Chore> retval = new ArrayList<Chore>();
 		retval.addAll(chores);
@@ -100,6 +102,7 @@ public class UserImpl implements User {
 		// TODO Do this!
 	}
 
+	@Override
 	public boolean removeChore(Chore toRemove) {
 		toRemove.getUsers().remove(this);
 		return chores.remove(toRemove);

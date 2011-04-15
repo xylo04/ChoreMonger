@@ -81,10 +81,12 @@ public class ChoreImpl implements Chore {
 		return pointValue;
 	}
 
+	@Override
 	public double getPriority() {
 		return priority;
 	}
 
+	@Override
 	public String getStatus() {
 		return status;
 	}
@@ -121,10 +123,12 @@ public class ChoreImpl implements Chore {
 		pointValue = newPointValue;
 	}
 
+	@Override
 	public void setPriority(double newPriority) {
 		priority = newPriority;
 	}
 
+	@Override
 	public void setStatus(String newStatus) {
 		status = newStatus;
 	}

@@ -1,6 +1,7 @@
 package com.choremonger.server;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 import javax.jdo.JDOObjectNotFoundException;
 import javax.jdo.PersistenceManager;
@@ -14,12 +15,18 @@ import com.google.appengine.api.datastore.KeyFactory;
 @Path("/family")
 public class FamilyResourceImpl implements FamilyResource {
 
+	private Logger log = Logger.getLogger(FamilyResourceImpl.class.getName());
+
 	@Override
 	public FamilyImpl createFamily(FamilyImpl toCreate) {
+		log.info("Creating family " + toCreate.getName());
 		PersistenceManager pm = PMF.get().getPersistenceManager();
 
 		try {
 			pm.makePersistent(toCreate);
+			log.info("Family got ID " + toCreate.getId());
+		} catch (Exception e) {
+			log.warning(e.getMessage());
 		} finally {
 			pm.close();
 		}
@@ -29,13 +36,16 @@ public class FamilyResourceImpl implements FamilyResource {
 
 	@Override
 	public void deleteFamily(String id) {
+		log.info("Deleting family id " + id);
 		PersistenceManager pm = PMF.get().getPersistenceManager();
 		FamilyImpl toDelete = null;
 		try {
-			Key k = KeyFactory.createKey(FamilyImpl.class.getSimpleName(), id);
+			Key k = KeyFactory.stringToKey(id);
 			toDelete = pm.getObjectById(FamilyImpl.class, k);
 			pm.deletePersistent(toDelete);
+			log.info("OK");
 		} catch (JDOObjectNotFoundException e) {
+			log.warning("Not found");
 			throw new WebApplicationException(404);
 		} finally {
 			pm.close();
@@ -46,6 +56,7 @@ public class FamilyResourceImpl implements FamilyResource {
 
 	@Override
 	public FamilyImpl getFamily() {
+		log.info("Retrieve default family");
 		PersistenceManager pm = PMF.get().getPersistenceManager();
 		FamilyImpl retval = null;
 		try {
@@ -54,8 +65,11 @@ public class FamilyResourceImpl implements FamilyResource {
 			@SuppressWarnings("unchecked")
 			List<FamilyImpl> families = (List<FamilyImpl>) query.execute();
 			retval = families.get(0);
+			log.info("OK");
 		} catch (JDOObjectNotFoundException e) {
+			log.warning("Not found");
 			throw new WebApplicationException(404);
+			// TODO catch IndexOutOfBoundsException
 		} finally {
 			pm.close();
 		}
@@ -65,12 +79,16 @@ public class FamilyResourceImpl implements FamilyResource {
 
 	@Override
 	public FamilyImpl getFamily(String id) {
+		log.info("Retrieve family id " + id);
 		PersistenceManager pm = PMF.get().getPersistenceManager();
 		FamilyImpl retval = null;
 		try {
-			Key k = KeyFactory.createKey(FamilyImpl.class.getSimpleName(), id);
+			Key k = KeyFactory.stringToKey(id);
 			retval = pm.getObjectById(FamilyImpl.class, k);
+			retval.getChores();
+			log.info("OK");
 		} catch (JDOObjectNotFoundException e) {
+			log.warning("Not found");
 			throw new WebApplicationException(404);
 		} finally {
 			pm.close();
@@ -81,14 +99,16 @@ public class FamilyResourceImpl implements FamilyResource {
 
 	@Override
 	public void updateFamily(String id, FamilyImpl newValue) {
+		log.info("Update family id " + id);
 		PersistenceManager pm = PMF.get().getPersistenceManager();
-		@SuppressWarnings("unused")
-		FamilyImpl toUpdate = null;
 		try {
-			Key k = KeyFactory.createKey(FamilyImpl.class.getSimpleName(), id);
-			toUpdate = pm.getObjectById(FamilyImpl.class, k);
-			toUpdate = newValue;
+			Key k = KeyFactory.stringToKey(id);
+			FamilyImpl toUpdate = pm.getObjectById(FamilyImpl.class, k);
+			pm.deletePersistent(toUpdate);
+			pm.makePersistent(newValue);
+			log.info("OK");
 		} catch (JDOObjectNotFoundException e) {
+			log.warning("Not found");
 			throw new WebApplicationException(404);
 		} finally {
 			pm.close();

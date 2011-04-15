@@ -42,7 +42,7 @@ public class UserResourceImpl implements UserResource {
 		PersistenceManager pm = PMF.get().getPersistenceManager();
 		UserImpl toDelete = null;
 		try {
-			Key k = KeyFactory.createKey(UserImpl.class.getSimpleName(), id);
+			Key k = KeyFactory.stringToKey(id);
 			toDelete = pm.getObjectById(UserImpl.class, k);
 			pm.deletePersistent(toDelete);
 			log.info("OK");
@@ -62,7 +62,7 @@ public class UserResourceImpl implements UserResource {
 		PersistenceManager pm = PMF.get().getPersistenceManager();
 		UserImpl retval = null;
 		try {
-			Key k = KeyFactory.createKey(UserImpl.class.getSimpleName(), id);
+			Key k = KeyFactory.stringToKey(id);
 			retval = pm.getObjectById(UserImpl.class, k);
 			log.info("OK");
 		} catch (JDOObjectNotFoundException e) {
@@ -103,7 +103,7 @@ public class UserResourceImpl implements UserResource {
 		@SuppressWarnings("unused")
 		UserImpl toUpdate = null;
 		try {
-			Key k = KeyFactory.createKey(UserImpl.class.getSimpleName(), id);
+			Key k = KeyFactory.stringToKey(id);
 			toUpdate = pm.getObjectById(UserImpl.class, k);
 			toUpdate = newValue;
 			log.info("OK");

@@ -25,7 +25,7 @@ import com.choremonger.shared.User;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class FamilyImpl implements Family {
 
-	@Persistent
+	@Persistent(defaultFetchGroup = "true")
 	@XmlElement(name = "chore")
 	private List<ChoreImpl> chores = new ArrayList<ChoreImpl>();
 
@@ -40,11 +40,11 @@ public class FamilyImpl implements Family {
 	@XmlElement
 	private String name;
 
-	@Persistent
+	@Persistent(defaultFetchGroup = "true")
 	@XmlElement(name = "reward")
 	private List<RewardImpl> rewards = new ArrayList<RewardImpl>();
 
-	@Persistent
+	@Persistent(defaultFetchGroup = "true")
 	@XmlElement(name = "user")
 	private List<UserImpl> users = new ArrayList<UserImpl>();
 
