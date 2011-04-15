@@ -43,18 +43,6 @@ public class RewardImpl implements Reward {
 	@XmlElement
 	private double pointValue;
 
-	public RewardImpl() {
-		fillDummyData();
-	}
-
-	private void fillDummyData() {
-		id = "1";
-		name = "A Sweet Reward";
-		description = "The reward's description.";
-		isOneTime = false;
-		pointValue = 15.0;
-	}
-
 	@Override
 	public String getDescription() {
 		return description;

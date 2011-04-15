@@ -41,7 +41,7 @@ public class UserImpl implements User {
 
 	@PrimaryKey
 	@Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
-	@Extension(vendorName = "datanucleus", key = "gae.encoded-pk", value = "true")
+    @Extension(vendorName="datanucleus", key="gae.encoded-pk", value="true")
 	@XmlAttribute
 	@XmlID
 	private String id;
@@ -53,14 +53,6 @@ public class UserImpl implements User {
 	@Persistent
 	@XmlElement
 	private double rewardPoints;
-
-	public UserImpl() {
-		id = "1";
-		name = "User Name";
-		email = "user@email.com";
-		dob = new Date();
-		rewardPoints = 15.0;
-	}
 
 	public void addChore(Chore toAdd) {
 		chores.add((ChoreImpl) toAdd);
@@ -125,7 +117,7 @@ public class UserImpl implements User {
 
 	@Override
 	public void setId(String newId) {
-		id = newId;
+		id = null;
 	}
 
 	@Override

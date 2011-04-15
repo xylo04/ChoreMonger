@@ -1,6 +1,7 @@
 package com.choremonger.server;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 import javax.jdo.JDOObjectNotFoundException;
 import javax.jdo.PersistenceManager;
@@ -14,28 +15,39 @@ import com.google.appengine.api.datastore.KeyFactory;
 @Path("/user")
 public class UserResourceImpl implements UserResource {
 
+	private Logger log = Logger.getLogger(UserResourceImpl.class.getName());
+
 	@Override
 	public UserImpl createUser(UserImpl toCreate) {
+		log.info("Creating username " + toCreate.getName());
 		PersistenceManager pm = PMF.get().getPersistenceManager();
-
+		UserImpl created = null;
 		try {
-			pm.makePersistent(toCreate);
+			created = new UserImpl();
+			pm.makePersistent(created);
+			log.info("User got ID " + created.getId());
+			created.setName(toCreate.getName());
+		} catch (Exception e) {
+			log.warning(e.getMessage());
 		} finally {
 			pm.close();
 		}
 
-		return toCreate;
+		return created;
 	}
 
 	@Override
 	public void deleteUser(String id) {
+		log.info("Deleting user id " + id);
 		PersistenceManager pm = PMF.get().getPersistenceManager();
 		UserImpl toDelete = null;
 		try {
 			Key k = KeyFactory.createKey(UserImpl.class.getSimpleName(), id);
 			toDelete = pm.getObjectById(UserImpl.class, k);
 			pm.deletePersistent(toDelete);
+			log.info("OK");
 		} catch (JDOObjectNotFoundException e) {
+			log.warning("Not found");
 			throw new WebApplicationException(404);
 		} finally {
 			pm.close();
@@ -46,12 +58,15 @@ public class UserResourceImpl implements UserResource {
 
 	@Override
 	public UserImpl getUser(String id) {
+		log.info("Retrieve user id " + id);
 		PersistenceManager pm = PMF.get().getPersistenceManager();
 		UserImpl retval = null;
 		try {
 			Key k = KeyFactory.createKey(UserImpl.class.getSimpleName(), id);
 			retval = pm.getObjectById(UserImpl.class, k);
+			log.info("OK");
 		} catch (JDOObjectNotFoundException e) {
+			log.warning("Not found");
 			throw new WebApplicationException(404);
 		} finally {
 			pm.close();
@@ -62,6 +77,7 @@ public class UserResourceImpl implements UserResource {
 
 	@Override
 	public UserList getUsers() {
+		log.info("Retrieve user list");
 		PersistenceManager pm = PMF.get().getPersistenceManager();
 		UserList retval = new UserList();
 		try {
@@ -69,7 +85,9 @@ public class UserResourceImpl implements UserResource {
 			@SuppressWarnings("unchecked")
 			List<UserImpl> persistChoreList = (List<UserImpl>) query.execute();
 			retval.addAllUsers(persistChoreList);
+			log.info("OK");
 		} catch (JDOObjectNotFoundException e) {
+			log.warning("Not found");
 			throw new WebApplicationException(404);
 		} finally {
 			pm.close();
@@ -80,6 +98,7 @@ public class UserResourceImpl implements UserResource {
 
 	@Override
 	public void updateUser(String id, UserImpl newValue) {
+		log.info("Update user id " + id);
 		PersistenceManager pm = PMF.get().getPersistenceManager();
 		@SuppressWarnings("unused")
 		UserImpl toUpdate = null;
@@ -87,7 +106,9 @@ public class UserResourceImpl implements UserResource {
 			Key k = KeyFactory.createKey(UserImpl.class.getSimpleName(), id);
 			toUpdate = pm.getObjectById(UserImpl.class, k);
 			toUpdate = newValue;
+			log.info("OK");
 		} catch (JDOObjectNotFoundException e) {
+			log.warning("Not found");
 			throw new WebApplicationException(404);
 		} finally {
 			pm.close();

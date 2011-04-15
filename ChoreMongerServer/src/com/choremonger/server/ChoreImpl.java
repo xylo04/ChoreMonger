@@ -56,22 +56,9 @@ public class ChoreImpl implements Chore {
 	@XmlIDREF
 	private List<UserImpl> users = new ArrayList<UserImpl>();
 
-	public ChoreImpl() {
-		fillDummyData();
-	}
-
 	@Override
 	public void addUser(User toAdd) {
 		((UserImpl) toAdd).addChore(this);
-	}
-
-	private void fillDummyData() {
-		id = "1";
-		instructions = "Instructions for this chore.";
-		name = "A Chore Title";
-		pointValue = 15.0;
-		priority = 1.0;
-		status = "Not done";
 	}
 
 	@Override

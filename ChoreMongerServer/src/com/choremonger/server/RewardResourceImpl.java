@@ -17,7 +17,7 @@ public class RewardResourceImpl implements RewardResource {
 	@Override
 	public RewardImpl createReward(RewardImpl toCreate) {
 		PersistenceManager pm = PMF.get().getPersistenceManager();
-
+		toCreate.setId(null);
 		try {
 			pm.makePersistent(toCreate);
 		} finally {
