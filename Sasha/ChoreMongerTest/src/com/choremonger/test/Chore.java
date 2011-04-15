@@ -3,6 +3,7 @@ package com.choremonger.shared;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpPut;
 import org.apache.http.entity.StringEntity;
 
 import com.choremonger.shared.Chore;
@@ -29,7 +30,7 @@ public class Chore implements Chore
 	String status;
 	double priority;
 	String str;
-394 uri=\”/user/394\” /><user id=403 uri=\”/user/403\” /></users>
+
 	public Chore()
 	{
 		this(null, null, null, 0.0, null, 0.0);
@@ -49,13 +50,6 @@ public class Chore implements Chore
 	public Chore(String name, String id, List<User> users, double points, String intsructions, double priority)
 	{
 		Iterator itr = users.iterator();
-		str = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><chore id=\"\"><instructions>"+this.intsructions+"</instructions><name>"+this.name+"</name><pointValue>"+Double.toString(this.points)+"</pointValue>
-		for (users.hasNext())
-		{ 
-			String temp = Double.toString(itr.next().getId());
-			str.concat("<users><user id=").concat(temp).concast(" uri=\”/user/").concat(temp).concat(\” />);
-		}
-		str.concat("</users><priority>"+Double.toString(this.priority)+"</priority><status>"+this.status+"</status></chore>");
 
 		this.id = id;
 		this.name = name;
@@ -64,6 +58,18 @@ public class Chore implements Chore
 		this.intsructions = intsructions;
 		this.priority = priority;
 		this.status = "Not Started";
+		str = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><chore id=\"\"><instructions>"+this.intsructions+"</instructions><name>"+this.name+"</name><pointValue>"+Double.toString(this.points)+"</pointValue>
+		for (users.hasNext())
+		{ 
+			String temp = Double.toString(itr.next().getId());
+			str.concat("<users><user id=").concat(temp).concast(" uri=\”/user/").concat(temp).concat("\” />");
+		}
+		str.concat("</users><priority>"+Double.toString(this.priority)+"</priority><status>"+this.status+"</status></chore>");
+		HttpPost request = new HttpPost(HttpRequestExecutor.RESOURCE_ROOT + "chore/", str);
+		HttpResponse response = HttpRequestExecutor.executeRequest(request);
+		this.id = response.getEntity().getContent();
+
+
 	}
 	public Chore(String id)
 	{
@@ -102,7 +108,7 @@ public class Chore implements Chore
 				{
 					value = str.substring(str.indexOf("<user id=")+9, str.indexOf(" uri="));
 					str = str.substring(str.indexOf(" uri="));
-					this.users_assigned.add(User(value));
+					this.users_assigned.add(getUser(value));
 				}
 				//users
 			} catch (Exception e) {
@@ -116,10 +122,6 @@ public class Chore implements Chore
 		else if (response.getStatusLine().getStatusCode() == 403)
 		{
 			//not allowed acess
-		}
-		else if (response.getStatusLine().getStatusCode() == 401)
-		{
-			//not logged in
 		}
 		else if (response.getStatusLine().getStatusCode() == 401)
 		{
@@ -152,11 +154,19 @@ public class Chore implements Chore
 	{
 		this.str = str.replace(this.priority, Double.toString(priority));
 		this.priority = priority;
+		HttpPut request = new HttpPut(HttpRequestExecutor.RESOURCE_ROOT + "chore/" + this.id, str);
+		HttpResponse response = HttpRequestExecutor.executeRequest(request);
 	}
 
 /**/	public void addUser(User toAdd)
 	{
-		this.users_assigned.add(toAdd);		
+		String[] temp;
+		this.users_assigned.add(toAdd);	
+		temp = this.str.split("<users>");
+		this.str = temp[0].concat("<users>").concat("<user id=\""+toAdd.getId()+"\" uri=\"/user/"+toAdd.getId()+"\">").concat(temp[1]);
+		HttpPut request = new HttpPut(HttpRequestExecutor.RESOURCE_ROOT + "chore/" + this.id, this.str);
+		HttpResponse response = HttpRequestExecutor.executeRequest(request);
+
 	}
 	public String getId()
 	{
@@ -182,30 +192,33 @@ public class Chore implements Chore
 /**/	public boolean removeUser(User toRemove)
 	{
 		return this.users_assigned.remove(toRemove);
+		this.str = str.replace("<user id=\""+toRemove.getId()+"\" uri=\"/user/"+toRemove.getId()+"\">", "");
+		HttpPut request = new HttpPut(HttpRequestExecutor.RESOURCE_ROOT + "chore/" + this.id, this.str);
+		HttpResponse response = HttpRequestExecutor.executeRequest(request);
 	}
 
 	public void setId(String newId)
 	{
-		this.str = str.replace(this.id, newId);
-		this.id = newId;
 	}
 	public void setInstructions(String newInstructions)
 	{
 		this.str = str.replace("<intsructions>"+this.intsructions, "<intsructions>"+newInstructions);
 		this.intsructions = newInstructions;
+		HttpPut request = new HttpPut(HttpRequestExecutor.RESOURCE_ROOT + "chore/" + this.id, this.str);
+		HttpResponse response = HttpRequestExecutor.executeRequest(request);
 	}
 	public void setName(String newName)
 	{
 		this.str = str.replace("<name>"+this.name, "<name>"+newName);
 		this.name = newName;
+		HttpPut request = new HttpPut(HttpRequestExecutor.RESOURCE_ROOT + "chore/" + this.id, this.str);
+		HttpResponse response = HttpRequestExecutor.executeRequest(request);
 	}
 	public void setPointValue(double newPointValue)
 	{
 		this.str = str.replace("<pointValue>"+this.points, "<pointValue>"+Double.toString(newPointValue));
 		this.points = newPointValue;
+		HttpPut request = new HttpPut(HttpRequestExecutor.RESOURCE_ROOT + "chore/" + this.id, this.str);
+		HttpResponse response = HttpRequestExecutor.executeRequest(request);
 	}
-
-
-
-
 }
