@@ -49,7 +49,7 @@ public class UserSaxHandler extends DefaultHandler {
 		}
 
 		if (qName.equalsIgnoreCase("name")) {
-			family.setName(characters);
+			user.setName(characters);
 		}
 
 		// if we hit an end element that didn't have any characters, we don't
@@ -57,8 +57,8 @@ public class UserSaxHandler extends DefaultHandler {
 		characters = "";
 	}
 
-	public Family getFamily() {
-		return family;
+	public User getUser() {
+		return user;
 	}
 
 	@Override
@@ -71,8 +71,8 @@ public class UserSaxHandler extends DefaultHandler {
 		}
 
 		if (qName.equalsIgnoreCase("family")) {
-			family = new FamilyImpl();
-			family.setId(attributes.getValue("id"));
+			// break off another parser with a family handler
+			payingAttention = false;
 		} else if (qName.equalsIgnoreCase("chore")) {
 			// break off another parser with a chore handler
 			payingAttention = false;
@@ -80,8 +80,8 @@ public class UserSaxHandler extends DefaultHandler {
 			// break off another parser with a reward handler
 			payingAttention = false;
 		} else if (qName.equalsIgnoreCase("user")) {
-			// break off another parser with a user handler
-			payingAttention = false;
+			user = new UserImpl();
+			user.setId(attributes.getValue("id"));	
 		}
 	}
 

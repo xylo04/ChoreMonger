@@ -3,6 +3,7 @@ package com.choremonger.test;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Date;
 
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
@@ -54,7 +55,7 @@ public class UserImpl implements User {
 		User retval = null;
 
 		HttpGet request = new HttpGet(HttpRequestExecutor.RESOURCE_ROOT
-				+ "User/1");
+				+ "user/" + id);
 
 		System.out
 				.println("UserImpl is building request to get User from the server");
@@ -88,6 +89,7 @@ public class UserImpl implements User {
 	}
 
 	private List<Chore> chores = new ArrayList<Chore>();
+	private Family parent;
 	private String id;
 	private double RewardPoints;
 	private Date Dob;
@@ -142,7 +144,9 @@ public class UserImpl implements User {
 
 	@Override
 	public void redeemReward(Reward toRedeem) {
-		// do stuff
+		RewardPoints = RewardPoints - toRedeem.getPointValue();
+		toRedeem.redeemReward(this);
+		// log
 	}
 
 	@Override
@@ -177,7 +181,7 @@ public class UserImpl implements User {
 
 	@Override
 	public void subtractRewardPoints(double amountToSubtract) {
-		RewardPoints -= amountToSubstract;
+		RewardPoints -= amountToSubtract;
 		// send update to server
 	}
 
