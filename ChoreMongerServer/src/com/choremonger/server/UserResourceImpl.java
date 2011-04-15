@@ -18,9 +18,12 @@ public class UserResourceImpl implements UserResource {
 		toCreate.setId(null);
 		FamilyResource fr = new FamilyResourceImpl();
 		FamilyImpl f = fr.getFamily();
+		log.info("Starting with " + f.getUsers().size() + " users");
 		f.addUser(toCreate);
 		fr.updateFamily(f.getId(), f);
 		log.info("User got id " + toCreate.getId());
+		f = fr.getFamily();
+		log.info("Now there are " + f.getUsers().size() + " users");
 		return toCreate;
 	}
 
