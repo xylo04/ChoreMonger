@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<chore>
-	<instructions>Sweep the floor.</instructions>
-	<name>Sweep the Floor</name>
-	<pointValue>15.0</pointValue>
-	<priority>1.0</priority>
-	<status>Not done</status>
-</chore>
+<chores>
+	<chore
+		id="agtjaG9yZW1vbmdlcnIhCxIKRmFtaWx5SW1wbBjxLgwLEglDaG9yZUltcGwYuhcM">
+		<instructions>Sweep the floor.</instructions>
+		<name>Sweep the Floor</name>
+		<pointValue>15.0</pointValue>
+		<priority>1.0</priority>
+		<status>Not done</status>
+	</chore>
+</chores>

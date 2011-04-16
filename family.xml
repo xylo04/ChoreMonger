@@ -1,44 +1,38 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<family>
-	<chore>
+<family id="agtjaG9yZW1vbmdlcnIRCxIKRmFtaWx5SW1wbBjxLgw">
+	<chore
+		id="agtjaG9yZW1vbmdlcnIhCxIKRmFtaWx5SW1wbBjxLgwLEglDaG9yZUltcGwYuhcM">
 		<instructions>Sweep the floor.</instructions>
 		<name>Sweep the Floor</name>
 		<pointValue>15.0</pointValue>
 		<priority>1.0</priority>
 		<status>Not done</status>
 	</chore>
-	<chore">
-		<instructions>Wash the dishes.</instructions>
-		<name>Wash the Dishes</name>
-		<pointValue>15.0</pointValue>
-		<priority>1.0</priority>
-		<status>Not done</status>
-	</chore>
 	<name>The Newest Family</name>
-	<reward>
+	<reward
+		id="agtjaG9yZW1vbmdlcnIiCxIKRmFtaWx5SW1wbBjxLgwLEgpSZXdhcmRJbXBsGOkHDA">
 		<description>The reward's description.</description>
 		<isOneTime>false</isOneTime>
 		<name>A Sweet Reward</name>
 		<pointValue>15.0</pointValue>
 	</reward>
-	<reward>
+	<reward
+		id="agtjaG9yZW1vbmdlcnIiCxIKRmFtaWx5SW1wbBjxLgwLEgpSZXdhcmRJbXBsGLkXDA">
 		<description>The reward's description.</description>
 		<isOneTime>false</isOneTime>
-		<name>Another Sweet Reward</name>
+		<name>A Sweet Reward</name>
 		<pointValue>15.0</pointValue>
 	</reward>
-	<user>
-		<chore>1</chore>
-		<dob>1986-02-06T00:00:00.000Z</dob>
-		<email>user1@email.com</email>
-		<name>User 1</name>
+	<user id="agtjaG9yZW1vbmdlcnIgCxIKRmFtaWx5SW1wbBjxLgwLEghVc2VySW1wbBjRDww">
+		<dob>1986-02-06T00:00:00Z</dob>
+		<email>test@example.com</email>
+		<name>Test User</name>
 		<rewardPoints>15.0</rewardPoints>
 	</user>
-	<user>
-		<chore>2</chore>
-		<dob>1988-10-02T00:00:00.000Z</dob>
-		<email>user2@email.com</email>
-		<name>User 2</name>
-		<rewardPoints>15.0</rewardPoints>
+	<user id="agtjaG9yZW1vbmdlcnIgCxIKRmFtaWx5SW1wbBjxLgwLEghVc2VySW1wbBjSDww">
+		<dob>1988-10-02T00:00:00Z</dob>
+		<email>test2@example.com</email>
+		<name>Test User 2</name>
+		<rewardPoints>20.0</rewardPoints>
 	</user>
 </family>

@@ -90,7 +90,7 @@ public class FamilyResourceImpl implements FamilyResource {
 		} catch (JDOObjectNotFoundException e) {
 			log.warning("Not found");
 			throw new WebApplicationException(404);
-		} catch(IllegalArgumentException e) {
+		} catch (IllegalArgumentException e) {
 			log.warning("Couldn't parse, probably a bad id");
 			throw new WebApplicationException(404);
 		} finally {
@@ -107,8 +107,8 @@ public class FamilyResourceImpl implements FamilyResource {
 		try {
 			Key k = KeyFactory.stringToKey(id);
 			FamilyImpl toUpdate = pm.getObjectById(FamilyImpl.class, k);
-			pm.deletePersistent(toUpdate);
-			pm.makePersistent(newValue);
+			toUpdate.copyFrom(newValue);
+			pm.makePersistent(toUpdate);
 			log.info("OK");
 		} catch (JDOObjectNotFoundException e) {
 			log.warning("Not found");
@@ -116,7 +116,6 @@ public class FamilyResourceImpl implements FamilyResource {
 		} finally {
 			pm.close();
 		}
-
 		return;
 	}
 

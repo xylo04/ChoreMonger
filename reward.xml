@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<rewards>
+	<reward
+		id="agtjaG9yZW1vbmdlcnIiCxIKRmFtaWx5SW1wbBjxLgwLEgpSZXdhcmRJbXBsGOkHDA">
+		<description>The reward's description.</description>
+		<isOneTime>false</isOneTime>
+		<name>A Sweet Reward</name>
+		<pointValue>15.0</pointValue>
+	</reward>
+	<reward
+		id="agtjaG9yZW1vbmdlcnIiCxIKRmFtaWx5SW1wbBjxLgwLEgpSZXdhcmRJbXBsGLkXDA">
+		<description>The reward's description.</description>
+		<isOneTime>false</isOneTime>
+		<name>A Sweet Reward</name>
+		<pointValue>15.0</pointValue>
+	</reward>
+</rewards>
