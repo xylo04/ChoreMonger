@@ -1,15 +1,15 @@
 package com.choremonger.test;
 
-import java.util.List;
-import java.io.UnsupportedEncodingException;
-import org.apache.http.entity.StringEntity;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
+import java.util.List;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
+import org.apache.http.entity.StringEntity;
 
 import com.choremonger.shared.Chore;
 import com.choremonger.shared.User;
@@ -65,8 +65,8 @@ public class ChoreImpl implements Chore
 		}
 		this.str.concat("</users>");
 		*/
-		this.str.concat("<priority>"+Double.toString(this.priority)+"</priority><status>"+this.status+"</status></chore>");
-		HttpPost request = new HttpPost(HttpRequestExecutor.RESOURCE_ROOT + "/chore/");
+		this.str+="<priority>"+Double.toString(this.priority)+"</priority><status>"+this.status+"</status></chore>";
+		HttpPost request = new HttpPost(HttpRequestExecutor.RESOURCE_ROOT + "chore/");
 		try {
 			request.setEntity(new StringEntity(this.str));
 		} catch (UnsupportedEncodingException e) {
@@ -81,9 +81,10 @@ public class ChoreImpl implements Chore
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		this.id = str.substring(str.indexOf("chore id=\"")+10, str.indexOf("\""));						//name
-
-		HttpPut Request = new HttpPut(HttpRequestExecutor.RESOURCE_ROOT + "/chore/" + this.id);
+		//System.out.println(str);
+		this.id = str.substring(str.indexOf("<chore id=\"")+11, str.indexOf("\"><instru"));						//name
+		//System.out.println(this.id);
+		HttpPut Request = new HttpPut(HttpRequestExecutor.RESOURCE_ROOT + "chore/" + this.id);
 		try {
 			Request.setEntity(new StringEntity(this.str));
 		} catch (UnsupportedEncodingException e) {
@@ -96,7 +97,7 @@ public class ChoreImpl implements Chore
 	{
 		String value;
 		this.id = id;
-		HttpGet request = new HttpGet(HttpRequestExecutor.RESOURCE_ROOT + "/chore/" + this.id);
+		HttpGet request = new HttpGet(HttpRequestExecutor.RESOURCE_ROOT + "chore/" + this.id);
 		HttpResponse response = HttpRequestExecutor.executeRequest(request);
 
 

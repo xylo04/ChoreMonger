@@ -8,6 +8,7 @@ import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
 import org.apache.http.HttpResponse;
+import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
@@ -19,15 +20,17 @@ import com.choremonger.shared.User;
 
 public class FamilyImpl implements Family {
 
-	public static Family createFamily() {
+	public static Family createFamily(String name) {
 		Family retval = null;
+
+		String xmlDocument = "<family><name>" + name + "</name></family>";
 
 		HttpPost request = new HttpPost(HttpRequestExecutor.RESOURCE_ROOT
 				+ "family");
 		try {
 			request.setEntity(new StringEntity(
-					"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><family />",
-					"utf-8"));
+					"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>"
+							+ xmlDocument, "utf-8"));
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
@@ -45,16 +48,45 @@ public class FamilyImpl implements Family {
 			retval = parseFamily(response, retval);
 		}
 
-		// parse response XML into a FamilyImpl object
-		// and return that
 		return retval;
+	}
+
+	public static void updateFamily(Family toUpdate) {
+
+		String xmlDocument = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>"
+				+ "<family id=\""
+				+ toUpdate.getId()
+				+ "\"><name>"
+				+ toUpdate.getName() + "</name></family>";
+
+		HttpPost request = new HttpPost(HttpRequestExecutor.RESOURCE_ROOT
+				+ "family/" + toUpdate.getId());
+		try {
+			request.setEntity(new StringEntity(xmlDocument, "utf-8"));
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		request.setHeader("Content-Type", "application/xml");
+
+		System.out
+				.println("FamilyImpl is building request to update Family on the server");
+		HttpResponse response = HttpRequestExecutor.executeRequest(request);
+		if (response != null) {
+			System.out.println("Got a response, code "
+					+ response.getStatusLine().getStatusCode());
+		}
+
+		if (response.getStatusLine().getStatusCode() != 204) {
+			System.out.println("That wasn't quite right!");
+			System.exit(1);
+		}
 	}
 
 	public static Family getFamily(String id) {
 		Family retval = null;
 
 		HttpGet request = new HttpGet(HttpRequestExecutor.RESOURCE_ROOT
-				+ "family/1");
+				+ "family/" + id);
 
 		System.out
 				.println("FamilyImpl is building request to get Family from the server");
@@ -68,8 +100,27 @@ public class FamilyImpl implements Family {
 			retval = parseFamily(response, retval);
 		}
 
-		// parse response XML into a FamilyImpl object
-		// and return that
+		return retval;
+	}
+
+	public static boolean deleteFamily(String id) {
+		boolean retval = false;
+
+		HttpDelete request = new HttpDelete(HttpRequestExecutor.RESOURCE_ROOT
+				+ "family/" + id);
+
+		System.out
+				.println("FamilyImpl is building request to delete Family from the server");
+		HttpResponse response = HttpRequestExecutor.executeRequest(request);
+		if (response != null) {
+			System.out.println("Got a response, code "
+					+ response.getStatusLine().getStatusCode());
+		}
+
+		if (response.getStatusLine().getStatusCode() == 204) {
+			retval = true;
+		}
+
 		return retval;
 	}
 
@@ -99,22 +150,27 @@ public class FamilyImpl implements Family {
 	public FamilyImpl() {
 	}
 
+	public FamilyImpl(String id, String name) {
+		this.id = id;
+		this.name = name;
+	}
+
 	@Override
 	public void addChore(Chore toAdd) {
 		chores.add(toAdd);
-		// send update to server
+		updateFamily(this);
 	}
 
 	@Override
 	public void addReward(Reward toAdd) {
 		rewards.add(toAdd);
-		// send update to server
+		updateFamily(this);
 	}
 
 	@Override
 	public void addUser(User toAdd) {
 		users.add(toAdd);
-		// send update to server
+		updateFamily(this);
 	}
 
 	@Override
@@ -144,32 +200,34 @@ public class FamilyImpl implements Family {
 
 	@Override
 	public boolean removeChore(Chore toRemove) {
-		return chores.remove(toRemove);
-		// send update to server
+		boolean retval = chores.remove(toRemove);
+		updateFamily(this);
+		return retval;
 	}
 
 	@Override
 	public boolean removeReward(Reward toRemove) {
-		return rewards.remove(toRemove);
-		// send update to server
+		boolean retval = rewards.remove(toRemove);
+		updateFamily(this);
+		return retval;
 	}
 
 	@Override
 	public boolean removeUser(User toRemove) {
-		return users.remove(toRemove);
-		// send update to server
+		boolean retval = users.remove(toRemove);
+		updateFamily(this);
+		return retval;
 	}
 
 	@Override
 	public void setId(String newId) {
-		id = newId;
-		// send update to server
+		// no-op
 	}
 
 	@Override
 	public void setName(String newName) {
 		name = newName;
-		// send update to server
+		updateFamily(this);
 	}
 
 }
