@@ -92,7 +92,6 @@ public class UserImpl implements User {
 	}
 
 	private List<Chore> chores = new ArrayList<Chore>();
-	private Family parent;
 	private String id;
 	private double RewardPoints;
 	private Date Dob;
@@ -101,11 +100,16 @@ public class UserImpl implements User {
 	private String name;
 
 	public UserImpl() {
+		RewardPoints = 0;
+		Dob = null;
+		email = "";
+		name = "";
 	}
 
 	@Override
 	public void setRewardPoints(double rewardPoints) {
 		RewardPoints = rewardPoints;
+		this.update();
 	}
 	
 	@Override
@@ -117,7 +121,7 @@ public class UserImpl implements User {
 	@Override
 	public void addRewardPoints(double amountToAdd) {
 		RewardPoints += amountToAdd;
-		// send update to server
+		this.update();
 	}
 
 	@Override
@@ -152,9 +156,11 @@ public class UserImpl implements User {
 
 	@Override
 	public void redeemReward(Reward toRedeem) {
-		RewardPoints = RewardPoints - toRedeem.getPointValue();
-		toRedeem.redeemReward(this);
-		// log
+		if (toRedeem.getPointValue() <= RewardPoints) {
+			RewardPoints = RewardPoints - toRedeem.getPointValue();
+			toRedeem.redeemReward(this);
+			this.update();
+		}
 	}
 
 	@Override
@@ -166,13 +172,13 @@ public class UserImpl implements User {
 	@Override
 	public void setDob(Date newDateOfBirth) {
 		Dob = newDateOfBirth;
-		// send update to server
+		this.update();
 	}
 
 	@Override
 	public void setEmail(String newEmail) {
 		email = newEmail;
-		// send update to server
+		this.update();
 	}
 
 	@Override
@@ -184,12 +190,38 @@ public class UserImpl implements User {
 	@Override
 	public void setName(String newName) {
 		name = newName;
+		this.update();
+	}
+
+	@Override
+	public void subtractRewardPoints(double amountToSubtract) {
+		RewardPoints -= amountToSubtract;
+		this.update();
+	}
+
+	public static void deleteUser(String id) {
+		HttpDelete request = new HttpDelete(HttpRequestExecutor.RESOURCE_ROOT
+				+ "user/" + id);
+		HttpResponse response = HttpRequestExecutor.executeRequest(request);
+		if (response != null) {
+			System.out.println("Got a response, code "
+					+ response.getStatusLine().getStatusCode());
+		}
+	}
+	
+	public void update() {
+		String DobString = "";
+		if (Dob != null) {
+			DobString = "1";
+		}
 		HttpPut request = new HttpPut(HttpRequestExecutor.RESOURCE_ROOT
 				+ "user/" + id);
 		try {
 			request.setEntity(new StringEntity(
 					"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><user id=\""
-							+ id + "\"><name>" + newName + "</name></user>",
+							+ id + "\"><dob>" + DobString + "</dob><email>" + email + 
+							"</email><name>" + name + "</name><rewardPoints>" + RewardPoints +
+							"</rewardPoints></user>",
 					"utf-8"));
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
@@ -205,20 +237,6 @@ public class UserImpl implements User {
 		}
 	}
 
-	@Override
-	public void subtractRewardPoints(double amountToSubtract) {
-		RewardPoints -= amountToSubtract;
-		// send update to server
-	}
-
-	public static void deleteUser(String id) {
-		HttpDelete request = new HttpDelete(HttpRequestExecutor.RESOURCE_ROOT
-				+ "user/" + id);
-		HttpResponse response = HttpRequestExecutor.executeRequest(request);
-		if (response != null) {
-			System.out.println("Got a response, code "
-					+ response.getStatusLine().getStatusCode());
-		}
-	}
-
 }
+
+//NumberFormat.getInstance().format(characters)

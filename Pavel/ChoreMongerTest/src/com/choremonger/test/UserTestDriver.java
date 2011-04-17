@@ -9,7 +9,7 @@ public class UserTestDriver {
 	 */
 	public static void main(String[] args) {
 		System.out.println("Driver is asking to get user");
-		User user = UserImpl.getUser("agtjaG9yZW1vbmdlcnIgCxIKRmFtaWx5SW1wbBjxLgwLEghVc2VySW1wbBjRDww");
+		User user = UserImpl.createUser();
 		if (user == null) {
 			System.out.println("user was null!");
 			System.exit(1);
@@ -19,7 +19,9 @@ public class UserTestDriver {
 		System.out.println(user.getName());
 		System.out.println(user.getId());
 		user.setName("Sir Awesome will Die");
-		System.out.println(user.getName());
+		user.setEmail("specialperson@gmail.com");
+		user.setRewardPoints(15);
+		user = UserImpl.getUser(user.getId());
 		UserImpl.deleteUser(user.getId());
 
 	}
