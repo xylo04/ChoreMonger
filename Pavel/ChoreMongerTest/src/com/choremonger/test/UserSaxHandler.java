@@ -38,7 +38,7 @@ public class UserSaxHandler extends DefaultHandler {
 			user.setEmail(characters);
 		}
 		else if (qName.equalsIgnoreCase("dob")) {
-			DateFormat formatter = new SimpleDateFormat();
+			DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 			try{user.setDob(formatter.parse(characters));}
 			catch (ParseException e) {
 				System.out.println("error parsing!!!");
