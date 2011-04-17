@@ -8,6 +8,9 @@ import com.choremonger.shared.Family;
 
 public class FamilySaxHandler extends DefaultHandler {
 
+	private String id;
+	private String name;
+
 	private String characters;
 	private Family family;
 	private boolean payingAttention = true;
@@ -49,7 +52,11 @@ public class FamilySaxHandler extends DefaultHandler {
 		}
 
 		if (qName.equalsIgnoreCase("name")) {
-			family.setName(characters);
+			name = characters;
+		}
+		
+		if (qName.equalsIgnoreCase("family")) {
+			family = new FamilyImpl(id, name);
 		}
 
 		// if we hit an end element that didn't have any characters, we don't
@@ -71,8 +78,7 @@ public class FamilySaxHandler extends DefaultHandler {
 		}
 
 		if (qName.equalsIgnoreCase("family")) {
-			family = new FamilyImpl();
-			family.setId(attributes.getValue("id"));
+			id = attributes.getValue("id");
 		} else if (qName.equalsIgnoreCase("chore")) {
 			// break off another parser with a chore handler
 			payingAttention = false;

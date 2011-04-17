@@ -2,17 +2,15 @@ package com.choremonger.test;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
+import java.util.Date;
 
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
 import org.apache.http.HttpResponse;
-import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.client.methods.HttpPut;
 import org.apache.http.entity.StringEntity;
 
 import com.choremonger.shared.Chore;
@@ -28,10 +26,9 @@ public class UserImpl implements User {
 		HttpPost request = new HttpPost(HttpRequestExecutor.RESOURCE_ROOT
 				+ "user");
 		try {
-			request
-					.setEntity(new StringEntity(
-							"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><user />",
-							"utf-8"));
+			request.setEntity(new StringEntity(
+					"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><user />",
+					"utf-8"));
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
@@ -92,6 +89,7 @@ public class UserImpl implements User {
 	}
 
 	private List<Chore> chores = new ArrayList<Chore>();
+	private Family parent;
 	private String id;
 	private double RewardPoints;
 	private Date Dob;
@@ -100,18 +98,8 @@ public class UserImpl implements User {
 	private String name;
 
 	public UserImpl() {
-		RewardPoints = 0;
-		Dob = null;
-		email = "";
-		name = "";
 	}
 
-	@Override
-	public void setRewardPoints(double rewardPoints) {
-		RewardPoints = rewardPoints;
-		this.update();
-	}
-	
 	@Override
 	public void addChore(Chore toAdd) {
 		chores.add(toAdd);
@@ -121,7 +109,7 @@ public class UserImpl implements User {
 	@Override
 	public void addRewardPoints(double amountToAdd) {
 		RewardPoints += amountToAdd;
-		this.update();
+		// send update to server
 	}
 
 	@Override
@@ -156,11 +144,9 @@ public class UserImpl implements User {
 
 	@Override
 	public void redeemReward(Reward toRedeem) {
-		if (toRedeem.getPointValue() <= RewardPoints) {
-			RewardPoints = RewardPoints - toRedeem.getPointValue();
-			toRedeem.redeemReward(this);
-			this.update();
-		}
+		RewardPoints = RewardPoints - toRedeem.getPointValue();
+		toRedeem.redeemReward(this);
+		// log
 	}
 
 	@Override
@@ -172,13 +158,13 @@ public class UserImpl implements User {
 	@Override
 	public void setDob(Date newDateOfBirth) {
 		Dob = newDateOfBirth;
-		this.update();
+		// send update to server
 	}
 
 	@Override
 	public void setEmail(String newEmail) {
 		email = newEmail;
-		this.update();
+		// send update to server
 	}
 
 	@Override
@@ -190,53 +176,13 @@ public class UserImpl implements User {
 	@Override
 	public void setName(String newName) {
 		name = newName;
-		this.update();
+		// send update to server
 	}
 
 	@Override
 	public void subtractRewardPoints(double amountToSubtract) {
 		RewardPoints -= amountToSubtract;
-		this.update();
-	}
-
-	public static void deleteUser(String id) {
-		HttpDelete request = new HttpDelete(HttpRequestExecutor.RESOURCE_ROOT
-				+ "user/" + id);
-		HttpResponse response = HttpRequestExecutor.executeRequest(request);
-		if (response != null) {
-			System.out.println("Got a response, code "
-					+ response.getStatusLine().getStatusCode());
-		}
-	}
-	
-	public void update() {
-		String DobString = "";
-		if (Dob != null) {
-			DobString = "1";
-		}
-		HttpPut request = new HttpPut(HttpRequestExecutor.RESOURCE_ROOT
-				+ "user/" + id);
-		try {
-			request.setEntity(new StringEntity(
-					"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><user id=\""
-							+ id + "\"><dob>" + DobString + "</dob><email>" + email + 
-							"</email><name>" + name + "</name><rewardPoints>" + RewardPoints +
-							"</rewardPoints></user>",
-					"utf-8"));
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}
-		request.setHeader("Content-Type", "application/xml");
-
-		System.out
-				.println("UserImpl is building request for updating User from the server");
-		HttpResponse response = HttpRequestExecutor.executeRequest(request);
-		if (response != null) {
-			System.out.println("Got a response, code "
-					+ response.getStatusLine().getStatusCode());
-		}
+		// send update to server
 	}
 
 }
-
-//NumberFormat.getInstance().format(characters)

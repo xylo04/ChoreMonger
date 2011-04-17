@@ -1,5 +1,9 @@
 package com.choremonger.test;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
@@ -28,7 +32,17 @@ public class UserSaxHandler extends DefaultHandler {
 			user.setName(characters);
 		}
 		else if (qName.equalsIgnoreCase("rewardPoints")) {
-			user.
+			user.setRewardPoints(Double.parseDouble(characters));
+		}
+		else if (qName.equalsIgnoreCase("email")) {
+			user.setEmail(characters);
+		}
+		else if (qName.equalsIgnoreCase("dob")) {
+			DateFormat formatter = new SimpleDateFormat();
+			try{user.setDob(formatter.parse(characters));}
+			catch (ParseException e) {
+				System.out.println("error parsing!!!");
+			}
 		}
 
 		// if we hit an end element that didn't have any characters, we don't
