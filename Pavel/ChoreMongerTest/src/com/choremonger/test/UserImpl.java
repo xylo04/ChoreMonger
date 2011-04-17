@@ -131,6 +131,9 @@ public class UserImpl implements User {
 
 	@Override
 	public Date getDob() {
+		if (Dob == null) {
+			System.exit(1);
+		}
 		return Dob;
 	}
 
@@ -212,7 +215,7 @@ public class UserImpl implements User {
 	public void update() {
 		String DobString = "";
 		if (Dob != null) {
-			DobString = "1";
+			DobString = Dob.toString();
 		}
 		HttpPut request = new HttpPut(HttpRequestExecutor.RESOURCE_ROOT
 				+ "user/" + id);
