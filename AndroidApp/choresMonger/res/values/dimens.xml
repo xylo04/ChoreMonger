@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<dimen name="titleFontSize">20pt</dimen>
+	<dimen name="versionFontSize">5pt</dimen>
+	<dimen name="lineSpacingFontSize">3pt</dimen>
+	<dimen name="menu_title">12pt</dimen>
+	<dimen name="menu_item">12pt</dimen>
+	<dimen name="button">12pt</dimen>
+</resources>

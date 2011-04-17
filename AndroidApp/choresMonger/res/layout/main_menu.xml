@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent"
+  android:background="#4062F7">
+  
+    <TableLayout android:id="@+id/TableLayout01" 
+	android:layout_width="fill_parent" 
+	android:layout_height="wrap_content"
+	android:stretchColumns="*">
+	
+	<TableRow android:id="@+id/TableRow01"
+	android:layout_width="fill_parent" 
+	android:layout_height="wrap_content">
+	
+	 <ImageView android:id="@+id/ImageViewLogo" 
+	android:layout_width="wrap_content" 
+	android:layout_height="wrap_content"
+	android:src="@drawable/choresmonger"
+	android:layout_alignParentLeft="true"
+    android:layout_alignParentTop="true">
+	</ImageView>
+	        <TextView
+            android:id="@+id/TextView01"
+            android:layout_height="wrap_content"
+            android:text="Chore Monger"
+            android:textSize="8pt"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="10"
+            android:layout_width="wrap_content"
+            android:layout_gravity="fill_horizontal|center"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:textColor="#FFF"/>
+  	</TableRow>
+  
+  	<TableRow android:id="@+id/TableRow02"
+	android:layout_width="fill_parent" 
+	android:layout_height="wrap_content"
+	android:background="#eee">
+	
+	<TextView
+    android:id="@+id/TextView_DisplayName"
+    android:layout_height="wrap_content"
+    android:layout_width="wrap_content"
+    android:textSize="8pt"
+    android:textColor="#00331A"/>
+	
+	</TableRow>
+	  	<TableRow android:id="@+id/TableRow03"
+	android:layout_width="fill_parent" 
+	android:layout_height="wrap_content"
+	android:background="#eee"
+	android:paddingTop="5px"
+	android:paddingBottom="5px">
+		
+	<TextView
+    	android:id="@+id/TextView_assignedChores"
+    	android:layout_height="wrap_content"
+    	android:layout_width="wrap_content"
+    	android:textColor="#00331A"
+    	android:textSize="8pt"
+    	android:text="Assigned Chores: "/>
+  
+  	<TextView
+    	android:id="@+id/TextView_assignedChoresVal"
+    	android:layout_height="wrap_content"
+    	android:layout_width="wrap_content"
+    	android:textSize="8pt"
+    	android:textColor="#00331A"/>
+    </TableRow>
+
+	<TableRow android:id="@+id/TableRow02"
+		android:layout_width="fill_parent" 
+		android:layout_height="wrap_content"
+		android:background="#1A0019"
+		android:paddingTop="5px"
+		android:paddingBottom="5px">
+		
+   <Button
+         android:id="@+id/Button_myChores"
+         android:layout_width="fill_parent"
+         android:layout_height="wrap_content"
+         android:text="My Chores"></Button>
+            <Button
+         android:id="@+id/Button_ChoresManagement"
+         android:layout_width="fill_parent"
+         android:layout_height="wrap_content"
+         android:text="Chores Management"></Button>
+         
+	</TableRow>
+		<TableRow android:id="@+id/TableRow03"
+		android:layout_width="fill_parent" 
+		android:layout_height="wrap_content"
+		android:background="#1A0019"
+		android:paddingTop="5px"
+		android:paddingBottom="5px">
+		
+	   <Button
+         android:id="@+id/Button_UserManagement"
+         android:layout_width="fill_parent"
+         android:layout_height="wrap_content"
+         android:text="User Management"></Button>
+            <Button
+         android:id="@+id/Button_RewardsCenter"
+         android:layout_width="fill_parent"
+         android:layout_height="wrap_content"
+         android:text="Rewards Center"></Button>
+	
+	</TableRow>
+	
+			<TableRow android:id="@+id/TableRow04"
+		android:layout_width="fill_parent" 
+		android:layout_height="wrap_content"
+		android:background="#1A0019"
+		android:paddingTop="5px"
+		android:paddingBottom="5px">
+		
+	   <Button
+         android:id="@+id/Button_Profile"
+         android:layout_width="fill_parent"
+         android:layout_height="wrap_content"
+         android:text="Profile"></Button>
+            <Button
+         android:id="@+id/Button_Settings"
+         android:layout_width="fill_parent"
+         android:layout_height="wrap_content"
+         android:text="Settings"></Button>
+	
+	</TableRow>
+
+  </TableLayout>
+  
+</LinearLayout>

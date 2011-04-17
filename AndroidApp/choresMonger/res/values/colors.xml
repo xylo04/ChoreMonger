@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<color name="goldenYellow">#F0B400</color>
+	<color name="grayishWhite">#E3E3E3</color>
+	<color name="deepBlue">#22008A</color>
+	<color name="orange">#F55314</color>
+	<color name="menu_header">#FFF</color>
+	<color name="menu_item">#DBDB11</color>
+	<color name="menu_glow">#F00</color>
+</resources>

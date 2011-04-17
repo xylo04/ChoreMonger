@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent">
+
+  
+  <TableLayout android:id="@+id/TableLayout01" 
+	android:layout_width="fill_parent" 
+	android:layout_height="wrap_content"
+	android:stretchColumns="*">
+	
+	<TableRow android:id="@+id/TableRow01" 
+	android:layout_width="wrap_content" 
+	android:layout_height="wrap_content">
+	
+    <ImageView android:id="@+id/ImageViewLogo" 
+	android:layout_width="wrap_content" 
+	android:layout_height="wrap_content"
+	android:src="@drawable/choresmonger"
+	android:layout_alignParentLeft="true"
+    android:layout_alignParentTop="true">
+	</ImageView>
+
+        <TextView
+            android:id="@+id/TextView01"
+            android:layout_height="wrap_content"
+            android:text="Sign Up New Family Member"
+            android:textSize="8pt"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="10"
+            android:layout_width="wrap_content"
+            android:layout_gravity="fill_horizontal|center"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:textColor="#FFF"></TextView>
+            </TableRow>
+</TableLayout>
+    
+    <ScrollView
+        android:id="@+id/ScrollView01"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:isScrollContainer="true"
+        android:scrollbars="vertical"
+        android:scrollbarAlwaysDrawVerticalTrack="true">
+        <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+<EditText
+  android:id="@+id/EditText_UserName_Family_Member"
+  android:layout_height="wrap_content"
+  android:maxLength="20"
+  android:layout_width="fill_parent"
+  android:maxLines="1"
+  android:inputType="textPersonName"
+  android:hint="User Name">
+ </EditText>
+         <EditText
+        android:id="@+id/PasswordText_Family_Member"
+        android:inputType="textPassword"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:maxLines="1"
+        android:hint="Password"
+        android:password="true"
+        android:imeOptions="actionSend" />
+        
+        	<EditText
+        android:id="@+id/ConfirmPasswordText_Family_Member"
+        android:inputType="textPassword"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:maxLines="1"
+        android:hint="Confirm Password"
+        android:password="true"
+        android:imeOptions="actionSend" />
+    <EditText
+  android:id="@+id/EditText_DisplayName__Family_Member"
+  android:layout_height="wrap_content"
+  android:maxLength="20"
+  android:layout_width="fill_parent"
+  android:maxLines="1"
+  android:inputType="textPersonName"
+  android:hint="Display Name">
+ </EditText>
+ 
+     <EditText
+  android:id="@+id/EditText_Email__Family_Member"
+  android:layout_height="wrap_content"
+  android:maxLength="20"
+  android:layout_width="fill_parent"
+  android:maxLines="1"
+  android:inputType="textEmailAddress"
+  android:hint="Email">
+ </EditText>
+
+            <LinearLayout
+                android:id="@+id/LinearLayout01"
+                android:orientation="horizontal"
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent">
+                <Button
+                    android:id="@+id/Button_DOB_Family_Member"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Date of Birth"></Button>
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:textSize="7pt"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:hint="Date not set"
+                    android:id="@+id/TextView_DOB_Info_Family_Member">
+                    </TextView>
+            </LinearLayout>
+             <Button
+                    android:id="@+id/Button_SignUp_Family_Member"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Sign Up Member"></Button>
+            </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

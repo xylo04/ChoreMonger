@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent"
+  android:background="#4062F7">
+  
+  <TableLayout android:id="@+id/TableLayout01" 
+	android:layout_width="fill_parent" 
+	android:layout_height="wrap_content"
+	android:stretchColumns="*">
+	
+	<TableRow android:id="@+id/TableRow01"
+	android:layout_width="fill_parent" 
+	android:layout_height="wrap_content">
+	
+    <ImageView android:id="@+id/ImageViewLogo" 
+	android:layout_width="wrap_content" 
+	android:layout_height="wrap_content"
+	android:src="@drawable/choresmonger"
+	android:layout_alignParentLeft="true"
+    android:layout_alignParentTop="true">
+	</ImageView>
+	        <TextView
+            android:id="@+id/TextView01"
+            android:layout_height="wrap_content"
+            android:text="Sign In"
+            android:textSize="8pt"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="10"
+            android:layout_width="wrap_content"
+            android:layout_gravity="fill_horizontal|center"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:textColor="#FFF"/>
+  </TableRow>
+  
+  <EditText
+  	android:id="@+id/EditText_UserNameSignIn"
+  	android:layout_height="wrap_content"
+  	android:maxLength="20"
+  	android:layout_width="fill_parent"
+  	android:maxLines="1"
+  	android:inputType="textPersonName"
+ 	android:hint="User Name">
+ </EditText>
+ 
+ <EditText
+        android:id="@+id/PasswordTextSignIn"
+        android:inputType="textPassword"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:maxLines="1"
+        android:hint="Password"
+        android:password="true"
+        android:imeOptions="actionSend" />
+ 
+	<Button
+     android:id="@+id/Button_SignIn"
+     android:layout_width="fill_parent"
+     android:layout_height="wrap_content"
+     android:text="Sign In"/>
+	<Button
+     android:id="@+id/Button_ForgotPassword"
+     android:layout_width="fill_parent"
+     android:layout_height="wrap_content"
+     android:text="Forgot My Password"/>
+</TableLayout>
+</LinearLayout>

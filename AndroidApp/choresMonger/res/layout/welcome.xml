@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#4062F7"
+    >
+<TextView  
+    android:layout_width="fill_parent" 
+    android:layout_height="wrap_content" 
+    android:text="@string/app_title"
+    android:textSize="@dimen/menu_title" 
+    />
+    <TableLayout android:id="@+id/TableLayout01" 
+	android:layout_width="fill_parent" 
+	android:layout_height="wrap_content"
+	android:stretchColumns="*">
+	
+	
+<TableRow android:id="@+id/TableRow01" 
+	android:layout_width="wrap_content" 
+	android:layout_height="wrap_content">
+	
+    <ImageView android:id="@+id/ImageViewLogo" 
+	android:layout_width="wrap_content" 
+	android:layout_height="wrap_content"
+	android:src="@drawable/choresmongermain">
+	</ImageView>
+</TableRow>
+<TableRow android:id="@+id/TableRow02" 
+	android:layout_width="wrap_content" 
+	android:layout_height="wrap_content">
+	
+	    <Button android:text="Sign Up Family"
+        android:id="@+id/SignUpFamilyButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="10pt"
+        android:textColor="#000"/>
+	</TableRow>
+	
+	<TableRow android:id="@+id/TableRow03" 
+	android:layout_width="wrap_content" 
+	android:layout_height="wrap_content">
+	
+	    <Button android:text="Sign In"
+        android:id="@+id/SignInButton"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:textSize="10pt"
+        android:textColor="#000"/>
+        
+	</TableRow>
+	
+	<TableRow android:id="@+id/TableRow04" 
+	android:layout_width="wrap_content" 
+	android:layout_height="wrap_content">
+	
+	    <Button android:text="Accept Invitation"
+        android:id="@+id/AcceptInvitationButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="10pt"
+        android:textColor="#000"/>
+	</TableRow>
+	
+	</TableLayout>
+</LinearLayout>
