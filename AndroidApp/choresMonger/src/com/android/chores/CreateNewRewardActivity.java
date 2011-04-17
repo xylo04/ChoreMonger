@@ -5,6 +5,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.CheckBox;
+import android.widget.TextView;
+import android.widget.EditText;
+import com.choremonger.shared.Reward;
 
 public class CreateNewRewardActivity extends Activity implements OnClickListener {
     @Override
@@ -21,11 +25,26 @@ public class CreateNewRewardActivity extends Activity implements OnClickListener
     	public void onClick(View v) {
         	switch(v.getId()){
         		case R.id.Button_Create_New_Reward:
-        		// create reward
+        		// create reward 
+        			double pointsValue=(Double.parseDouble(((EditText)findViewById(R.id.txviewRewardPointsVal)).getText().toString()));
+        			String rewardName=((EditText)findViewById(R.id.txviewRewardTitleVal)).getText().toString();
+        			String description=((EditText)findViewById(R.id.editxtRewardDescrVal)).getText().toString();
+        			CheckBox isOneTimeRewardChckBox=(CheckBox)findViewById(R.id.checkbox1);
+        			boolean isOneTimeReward;
+        			if(isOneTimeRewardChckBox.isChecked())
+        				isOneTimeReward=true;
+        			else
+        				isOneTimeReward=false;
+        			createReward(description, rewardName, pointsValue, isOneTimeReward);
         		break;
         	case R.id.Button_Cancel_Create_Reward:
         		startActivity(new Intent(CreateNewRewardActivity.this,RewardManagementActivity.class));
         		break;
         	}
     	}
+        
+        public void createReward(String description,String rewardName,double pointsValue,boolean isOneTimeReward){
+        	Reward reward=new RewardImpl(null,description,rewardName,pointsValue,isOneTimeReward);
+        	RewardImpl.createReward(reward);
+        }
 }

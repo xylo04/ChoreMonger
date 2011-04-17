@@ -118,6 +118,14 @@
 	android:layout_width="fill_parent" 
 	android:layout_height="wrap_content">
 	 
+	 <CheckBox android:id="@+id/checkbox1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="One Time Reward" />
+        </TableRow>
+           <TableRow android:id="@+id/TableRow07"
+	android:layout_width="fill_parent" 
+	android:layout_height="wrap_content">
    <Button
     android:id="@+id/Button_Create_New_Reward"
     android:layout_width="fill_parent"
