@@ -2,15 +2,17 @@ package com.choremonger.test;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Date;
+import java.util.List;
 
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
 import org.apache.http.HttpResponse;
+import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpPut;
 import org.apache.http.entity.StringEntity;
 
 import com.choremonger.shared.Chore;
@@ -26,9 +28,10 @@ public class UserImpl implements User {
 		HttpPost request = new HttpPost(HttpRequestExecutor.RESOURCE_ROOT
 				+ "user");
 		try {
-			request.setEntity(new StringEntity(
-					"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><user />",
-					"utf-8"));
+			request
+					.setEntity(new StringEntity(
+							"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><user />",
+							"utf-8"));
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
@@ -100,6 +103,11 @@ public class UserImpl implements User {
 	public UserImpl() {
 	}
 
+	@Override
+	public void setRewardPoints(double rewardPoints) {
+		RewardPoints = rewardPoints;
+	}
+	
 	@Override
 	public void addChore(Chore toAdd) {
 		chores.add(toAdd);
@@ -176,13 +184,41 @@ public class UserImpl implements User {
 	@Override
 	public void setName(String newName) {
 		name = newName;
-		// send update to server
+		HttpPut request = new HttpPut(HttpRequestExecutor.RESOURCE_ROOT
+				+ "user/" + id);
+		try {
+			request.setEntity(new StringEntity(
+					"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><user id=\""
+							+ id + "\"><name>" + newName + "</name></user>",
+					"utf-8"));
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		request.setHeader("Content-Type", "application/xml");
+
+		System.out
+				.println("UserImpl is building request for updating User from the server");
+		HttpResponse response = HttpRequestExecutor.executeRequest(request);
+		if (response != null) {
+			System.out.println("Got a response, code "
+					+ response.getStatusLine().getStatusCode());
+		}
 	}
 
 	@Override
 	public void subtractRewardPoints(double amountToSubtract) {
 		RewardPoints -= amountToSubtract;
 		// send update to server
+	}
+
+	public static void deleteUser(String id) {
+		HttpDelete request = new HttpDelete(HttpRequestExecutor.RESOURCE_ROOT
+				+ "user/" + id);
+		HttpResponse response = HttpRequestExecutor.executeRequest(request);
+		if (response != null) {
+			System.out.println("Got a response, code "
+					+ response.getStatusLine().getStatusCode());
+		}
 	}
 
 }

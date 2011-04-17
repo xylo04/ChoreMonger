@@ -10,7 +10,6 @@ public class UserSaxHandler extends DefaultHandler {
 
 	private String characters;
 	private User user;
-	private boolean payingAttention = true;
 
 	@Override
 	public void characters(char[] ch, int start, int length)
@@ -25,31 +24,11 @@ public class UserSaxHandler extends DefaultHandler {
 			throws SAXException {
 		System.out.println("endElement " + qName);
 
-		// Note to self: how can we do this without triggering User to update
-		// with server?
-		//
-		// Decorator Pattern!?
-		// Make a plain User implementor that just has data accessors, then
-		// Decorate it with the newtork updater and hand it back; the client
-		// (Driver class) never knows the difference.
-		//
-		if (qName.equalsIgnoreCase("chore")) {
-			// break off another parser with a chore handler
-			payingAttention = true;
-		} else if (qName.equalsIgnoreCase("reward")) {
-			// break off another parser with a reward handler
-			payingAttention = true;
-		} else if (qName.equalsIgnoreCase("user")) {
-			// break off another parser with a user handler
-			payingAttention = true;
-		}
-
-		if (!payingAttention) {
-			return;
-		}
-
 		if (qName.equalsIgnoreCase("name")) {
 			user.setName(characters);
+		}
+		else if (qName.equalsIgnoreCase("rewardPoints")) {
+			user.
 		}
 
 		// if we hit an end element that didn't have any characters, we don't
@@ -66,20 +45,7 @@ public class UserSaxHandler extends DefaultHandler {
 			Attributes attributes) throws SAXException {
 		System.out.println("startElement " + qName);
 
-		if (!payingAttention) {
-			return;
-		}
-
-		if (qName.equalsIgnoreCase("family")) {
-			// break off another parser with a family handler
-			payingAttention = false;
-		} else if (qName.equalsIgnoreCase("chore")) {
-			// break off another parser with a chore handler
-			payingAttention = false;
-		} else if (qName.equalsIgnoreCase("reward")) {
-			// break off another parser with a reward handler
-			payingAttention = false;
-		} else if (qName.equalsIgnoreCase("user")) {
+		if (qName.equalsIgnoreCase("user")) {
 			user = new UserImpl();
 			user.setId(attributes.getValue("id"));	
 		}

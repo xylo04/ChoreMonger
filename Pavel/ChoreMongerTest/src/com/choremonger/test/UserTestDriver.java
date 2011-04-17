@@ -18,6 +18,9 @@ public class UserTestDriver {
 		System.out.println("\n\nGot back a user:");
 		System.out.println(user.getName());
 		System.out.println(user.getId());
+		user.setName("Sir Awesome will Die");
+		System.out.println(user.getName());
+		UserImpl.deleteUser(user.getId());
 
 	}
 
