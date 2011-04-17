@@ -44,7 +44,7 @@ public class CreateNewRewardActivity extends Activity implements OnClickListener
     	}
         
         public void createReward(String description,String rewardName,double pointsValue,boolean isOneTimeReward){
-        	Reward reward=new RewardImpl(null,description,rewardName,pointsValue,isOneTimeReward);
+        	Reward reward=new RewardImpl("",description,rewardName,pointsValue,isOneTimeReward);
         	RewardImpl.createReward(reward);
         }
 }
