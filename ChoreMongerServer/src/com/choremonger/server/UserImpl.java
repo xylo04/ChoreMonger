@@ -1,6 +1,5 @@
 package com.choremonger.server;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -14,7 +13,6 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlID;
-import javax.xml.bind.annotation.XmlIDREF;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import com.choremonger.shared.Chore;
@@ -26,10 +24,10 @@ import com.choremonger.shared.User;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class UserImpl implements User {
 
-	@Persistent
-	@XmlElement(name = "chore")
-	@XmlIDREF
-	private List<ChoreImpl> chores = new ArrayList<ChoreImpl>();
+	// @Persistent
+	// @XmlElement(name = "chore")
+	// @XmlIDREF
+	// private List<ChoreImpl> chores = new ArrayList<ChoreImpl>();
 
 	@Persistent
 	@XmlElement
@@ -56,8 +54,8 @@ public class UserImpl implements User {
 
 	@Override
 	public void addChore(Chore toAdd) {
-		chores.add((ChoreImpl) toAdd);
-		toAdd.getUsers().add(this);
+		// chores.add((ChoreImpl) toAdd);
+		// toAdd.getUsers().add(this);
 	}
 
 	@Override
@@ -67,9 +65,10 @@ public class UserImpl implements User {
 
 	@Override
 	public List<Chore> getChores() {
-		List<Chore> retval = new ArrayList<Chore>();
-		retval.addAll(chores);
-		return retval;
+		// List<Chore> retval = new ArrayList<Chore>();
+		// retval.addAll(chores);
+		// return retval;
+		return null;
 	}
 
 	@Override
@@ -104,8 +103,9 @@ public class UserImpl implements User {
 
 	@Override
 	public boolean removeChore(Chore toRemove) {
-		toRemove.getUsers().remove(this);
-		return chores.remove(toRemove);
+		// toRemove.getUsers().remove(this);
+		// return chores.remove(toRemove);
+		return true;
 	}
 
 	@Override

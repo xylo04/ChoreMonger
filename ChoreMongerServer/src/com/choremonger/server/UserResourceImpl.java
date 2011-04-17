@@ -1,16 +1,11 @@
 package com.choremonger.server;
 
-import java.util.List;
 import java.util.logging.Logger;
 
-import javax.jdo.JDOObjectNotFoundException;
-import javax.jdo.PersistenceManager;
-import javax.jdo.Query;
 import javax.ws.rs.Path;
 import javax.ws.rs.WebApplicationException;
 
-import com.google.appengine.api.datastore.Key;
-import com.google.appengine.api.datastore.KeyFactory;
+import com.choremonger.shared.User;
 
 @Path("/user")
 public class UserResourceImpl implements UserResource {
@@ -20,101 +15,92 @@ public class UserResourceImpl implements UserResource {
 	@Override
 	public UserImpl createUser(UserImpl toCreate) {
 		log.info("Creating username " + toCreate.getName());
-		PersistenceManager pm = PMF.get().getPersistenceManager();
-		UserImpl created = null;
-		try {
-			created = new UserImpl();
-			pm.makePersistent(created);
-			log.info("User got ID " + created.getId());
-			created.setName(toCreate.getName());
-		} catch (Exception e) {
-			log.warning(e.getMessage());
-		} finally {
-			pm.close();
-		}
-
-		return created;
+		toCreate.setId(null);
+		FamilyResource fr = new FamilyResourceImpl();
+		FamilyImpl f = fr.getFamily();
+		log.info("Starting with " + f.getUsers().size() + " users");
+		f.addUser(toCreate);
+		fr.updateFamily(f.getId(), f);
+		log.info("User got id " + toCreate.getId());
+		f = fr.getFamily();
+		log.info("Now there are " + f.getUsers().size() + " users");
+		return toCreate;
 	}
 
 	@Override
 	public void deleteUser(String id) {
-		log.info("Deleting user id " + id);
-		PersistenceManager pm = PMF.get().getPersistenceManager();
-		UserImpl toDelete = null;
-		try {
-			Key k = KeyFactory.stringToKey(id);
-			toDelete = pm.getObjectById(UserImpl.class, k);
-			pm.deletePersistent(toDelete);
-			log.info("OK");
-		} catch (JDOObjectNotFoundException e) {
-			log.warning("Not found");
-			throw new WebApplicationException(404);
-		} finally {
-			pm.close();
+		log.info("Delete user id " + id);
+		boolean found = false;
+		FamilyResource fr = new FamilyResourceImpl();
+		FamilyImpl f = fr.getFamily();
+		for (User u : f.getUsers()) {
+			if (u.getId().equals(id)) {
+				f.removeUser(u);
+				found = true;
+			}
 		}
-
-		return;
+		if (found) {
+			fr.updateFamily(f.getId(), f);
+			log.info("OK");
+		} else {
+			log.warning("Not found");
+		}
 	}
 
 	@Override
 	public UserImpl getUser(String id) {
 		log.info("Retrieve user id " + id);
-		PersistenceManager pm = PMF.get().getPersistenceManager();
+		FamilyResource fr = new FamilyResourceImpl();
+		FamilyImpl f = fr.getFamily();
 		UserImpl retval = null;
-		try {
-			Key k = KeyFactory.stringToKey(id);
-			retval = pm.getObjectById(UserImpl.class, k);
-			log.info("OK");
-		} catch (JDOObjectNotFoundException e) {
+		for (User u : f.getUsers()) {
+			if (u.getId().equals(id)) {
+				retval = (UserImpl) u;
+			}
+		}
+		if (retval == null) {
 			log.warning("Not found");
 			throw new WebApplicationException(404);
-		} finally {
-			pm.close();
 		}
-
+		log.info("OK");
 		return retval;
 	}
 
 	@Override
 	public UserList getUsers() {
 		log.info("Retrieve user list");
-		PersistenceManager pm = PMF.get().getPersistenceManager();
+		FamilyResource fr = new FamilyResourceImpl();
+		FamilyImpl f = fr.getFamily();
 		UserList retval = new UserList();
-		try {
-			Query query = pm.newQuery(RewardImpl.class);
-			@SuppressWarnings("unchecked")
-			List<UserImpl> persistChoreList = (List<UserImpl>) query.execute();
-			retval.addAllUsers(persistChoreList);
-			log.info("OK");
-		} catch (JDOObjectNotFoundException e) {
-			log.warning("Not found");
-			throw new WebApplicationException(404);
-		} finally {
-			pm.close();
+		for (User u : f.getUsers()) {
+			retval.addUser((UserImpl) u);
 		}
-
+		log.info("OK");
 		return retval;
 	}
 
 	@Override
 	public void updateUser(String id, UserImpl newValue) {
 		log.info("Update user id " + id);
-		PersistenceManager pm = PMF.get().getPersistenceManager();
-		@SuppressWarnings("unused")
+		if (!newValue.getId().equals(id)) {
+			// uri and xml document didn't refer to the same ID
+			throw new WebApplicationException(400);
+		}
+		FamilyResource fr = new FamilyResourceImpl();
+		FamilyImpl f = fr.getFamily();
 		UserImpl toUpdate = null;
-		try {
-			Key k = KeyFactory.stringToKey(id);
-			toUpdate = pm.getObjectById(UserImpl.class, k);
-			toUpdate = newValue;
-			log.info("OK");
-		} catch (JDOObjectNotFoundException e) {
+		for (User u : f.getUsers()) {
+			if (u.getId().equals(id)) {
+				toUpdate = (UserImpl) u;
+			}
+		}
+		if (toUpdate == null) {
 			log.warning("Not found");
 			throw new WebApplicationException(404);
-		} finally {
-			pm.close();
 		}
-
-		return;
+		f.removeUser(toUpdate);
+		f.addUser(newValue);
+		fr.updateFamily(f.getId(), f);
+		log.info("OK");
 	}
-
 }

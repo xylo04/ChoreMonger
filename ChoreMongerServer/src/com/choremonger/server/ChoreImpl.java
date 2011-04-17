@@ -1,6 +1,5 @@
 package com.choremonger.server;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.jdo.annotations.Extension;
@@ -13,7 +12,6 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlID;
-import javax.xml.bind.annotation.XmlIDREF;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import com.choremonger.shared.Chore;
@@ -51,10 +49,10 @@ public class ChoreImpl implements Chore {
 	@XmlElement
 	private String status;
 
-	@Persistent
-	@XmlElement(name = "user")
-	@XmlIDREF
-	private List<UserImpl> users = new ArrayList<UserImpl>();
+	// @Persistent
+	// @XmlElement(name = "user")
+	// @XmlIDREF
+	// private List<UserImpl> users = new ArrayList<UserImpl>();
 
 	@Override
 	public void addUser(User toAdd) {
@@ -93,9 +91,9 @@ public class ChoreImpl implements Chore {
 
 	@Override
 	public List<User> getUsers() {
-		List<User> retval = new ArrayList<User>();
-		retval.addAll(users);
-		return retval;
+		// List<User> retval = new ArrayList<User>(); retval.addAll(users);
+		// return retval;
+		return null;
 	}
 
 	@Override

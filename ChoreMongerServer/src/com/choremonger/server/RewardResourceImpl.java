@@ -1,16 +1,11 @@
 package com.choremonger.server;
 
-import java.util.List;
 import java.util.logging.Logger;
 
-import javax.jdo.JDOObjectNotFoundException;
-import javax.jdo.PersistenceManager;
-import javax.jdo.Query;
 import javax.ws.rs.Path;
 import javax.ws.rs.WebApplicationException;
 
-import com.google.appengine.api.datastore.Key;
-import com.google.appengine.api.datastore.KeyFactory;
+import com.choremonger.shared.Reward;
 
 @Path("/reward")
 public class RewardResourceImpl implements RewardResource {
@@ -20,99 +15,89 @@ public class RewardResourceImpl implements RewardResource {
 	@Override
 	public RewardImpl createReward(RewardImpl toCreate) {
 		log.info("Create reward " + toCreate.getName());
-		PersistenceManager pm = PMF.get().getPersistenceManager();
-		try {
-			pm.makePersistent(toCreate);
-			log.info("Reward got ID " + toCreate.getId());
-		} catch (Exception e) {
-			log.warning(e.getMessage());
-		} finally {
-			pm.close();
-		}
-
+		toCreate.setId(null);
+		FamilyResource fr = new FamilyResourceImpl();
+		FamilyImpl f = fr.getFamily();
+		f.addReward(toCreate);
+		fr.updateFamily(f.getId(), f);
+		log.info("Reward got id " + toCreate.getId());
 		return toCreate;
 	}
 
 	@Override
 	public void deleteReward(String id) {
 		log.info("Delete reward id " + id);
-		PersistenceManager pm = PMF.get().getPersistenceManager();
-		RewardImpl toDelete = null;
-		try {
-			Key k = KeyFactory.stringToKey(id);
-			toDelete = pm.getObjectById(RewardImpl.class, k);
-			pm.deletePersistent(toDelete);
-			log.info("OK");
-		} catch (JDOObjectNotFoundException e) {
-			log.warning("Not found");
-			throw new WebApplicationException(404);
-		} finally {
-			pm.close();
+		boolean found = false;
+		FamilyResource fr = new FamilyResourceImpl();
+		FamilyImpl f = fr.getFamily();
+		for (Reward r : f.getRewards()) {
+			if (r.getId().equals(id)) {
+				f.removeReward(r);
+				found = true;
+			}
 		}
-
-		return;
+		if (found) {
+			fr.updateFamily(f.getId(), f);
+			log.info("OK");
+		} else {
+			log.warning("Not found");
+		}
 	}
 
 	@Override
 	public RewardImpl getReward(String id) {
 		log.info("Retrieve reward id " + id);
-		PersistenceManager pm = PMF.get().getPersistenceManager();
+		FamilyResource fr = new FamilyResourceImpl();
+		FamilyImpl f = fr.getFamily();
 		RewardImpl retval = null;
-		try {
-			Key k = KeyFactory.stringToKey(id);
-			retval = pm.getObjectById(RewardImpl.class, k);
-			log.info("OK");
-		} catch (JDOObjectNotFoundException e) {
+		for (Reward r : f.getRewards()) {
+			if (r.getId().equals(id)) {
+				retval = (RewardImpl) r;
+			}
+		}
+		if (retval == null) {
 			log.warning("Not found");
 			throw new WebApplicationException(404);
-		} finally {
-			pm.close();
 		}
-
+		log.info("OK");
 		return retval;
 	}
 
 	@Override
 	public RewardList getRewards() {
 		log.info("Get rewards list");
-		PersistenceManager pm = PMF.get().getPersistenceManager();
+		FamilyResource fr = new FamilyResourceImpl();
+		FamilyImpl f = fr.getFamily();
 		RewardList retval = new RewardList();
-		try {
-			Query query = pm.newQuery(RewardImpl.class);
-			@SuppressWarnings("unchecked")
-			List<RewardImpl> persistChoreList = (List<RewardImpl>) query
-					.execute();
-			retval.addAllRewards(persistChoreList);
-			log.info("OK");
-		} catch (JDOObjectNotFoundException e) {
-			log.warning("Not Found");
-			throw new WebApplicationException(404);
-		} finally {
-			pm.close();
+		for (Reward r : f.getRewards()) {
+			retval.addReward((RewardImpl) r);
 		}
-
+		log.info("OK");
 		return retval;
 	}
 
 	@Override
 	public void updateReward(String id, RewardImpl newValue) {
 		log.info("Update reward id " + id);
-		PersistenceManager pm = PMF.get().getPersistenceManager();
-		@SuppressWarnings("unused")
+		if (!newValue.getId().equals(id)) {
+			// uri and xml document didn't refer to the same ID
+			throw new WebApplicationException(400);
+		}
+		FamilyResource fr = new FamilyResourceImpl();
+		FamilyImpl f = fr.getFamily();
 		RewardImpl toUpdate = null;
-		try {
-			Key k = KeyFactory.stringToKey(id);
-			toUpdate = pm.getObjectById(RewardImpl.class, k);
-			toUpdate = newValue;
-			log.info("OK");
-		} catch (JDOObjectNotFoundException e) {
+		for (Reward r : f.getRewards()) {
+			if (r.getId().equals(id)) {
+				toUpdate = (RewardImpl) r;
+			}
+		}
+		if (toUpdate == null) {
 			log.warning("Not found");
 			throw new WebApplicationException(404);
-		} finally {
-			pm.close();
 		}
-
-		return;
+		f.removeReward(toUpdate);
+		f.addReward(newValue);
+		fr.updateFamily(f.getId(), f);
+		log.info("OK");
 	}
-
 }

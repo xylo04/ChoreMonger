@@ -119,4 +119,25 @@ public class FamilyImpl implements Family {
 		name = newName;
 	}
 
+	public void copyFrom(FamilyImpl newValue) {
+		this.chores.clear();
+		for (Chore c : newValue.getChores()) {
+			this.chores.add((ChoreImpl) c);
+		}
+
+		this.id = newValue.getId();
+
+		this.name = newValue.getName();
+
+		this.rewards.clear();
+		for (Reward r : newValue.getRewards()) {
+			this.rewards.add((RewardImpl) r);
+		}
+
+		this.users.clear();
+		for (User u : newValue.getUsers()) {
+			this.users.add((UserImpl) u);
+		}
+	}
+
 }

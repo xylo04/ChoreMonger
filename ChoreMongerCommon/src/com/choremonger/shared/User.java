@@ -112,4 +112,11 @@ public interface User {
 	 * @param amountToSubtract
 	 */
 	public void subtractRewardPoints(double amountToSubtract);
+
+	/**
+	 * Set the reward points for this {@link User}.
+	 *
+	 * @param rewardPoints
+	 */
+	public void setRewardPoints(double rewardPoints);
 }
