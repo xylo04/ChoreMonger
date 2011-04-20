@@ -96,7 +96,6 @@ public class UserImpl implements User {
 	private double RewardPoints;
 	private Date Dob;
 	private String email;
-
 	private String name;
 
 	public UserImpl() {
@@ -104,6 +103,20 @@ public class UserImpl implements User {
 		Dob = null;
 		email = "";
 		name = "";
+	}
+	
+	public UserImpl(String n, double r, String e, Date d, String choreList) {
+		name = n;
+		RewardPoints = r;
+		email = e;
+		Dob = d;
+		if (choreList != "") {
+			String[] temp = choreList.split(".");
+			for(int i = 0; i < temp.length; i++){
+				ChoreImpl temp_chore = new ChoreImpl(temp[i]);
+				chores.add(temp_chore);
+			}
+		}
 	}
 
 	@Override
@@ -115,7 +128,7 @@ public class UserImpl implements User {
 	@Override
 	public void addChore(Chore toAdd) {
 		chores.add(toAdd);
-		// send update to server
+		this.update();
 	}
 
 	@Override
@@ -132,7 +145,7 @@ public class UserImpl implements User {
 	@Override
 	public Date getDob() {
 		if (Dob == null) {
-			System.exit(1);
+			System.out.println("No Dob");
 		}
 		return Dob;
 	}
@@ -168,8 +181,10 @@ public class UserImpl implements User {
 
 	@Override
 	public boolean removeChore(Chore toRemove) {
-		return chores.remove(toRemove);
-		// send update to server
+		boolean success;
+		success = chores.remove(toRemove);
+		this.update();
+		return success;
 	}
 
 	@Override
@@ -214,6 +229,14 @@ public class UserImpl implements User {
 	
 	public void update() {
 		String DobString = "";
+		String ChoreString = "";
+		if (chores.size() > 0) {
+			ChoreString = "<chores>";
+			for (int i = 0; i < chores.size();i++) {
+				ChoreString += chores.get(i).getId() + ".";
+			}
+			ChoreString += "</chores>";
+		}
 		if (Dob != null) {
 			DobString = Dob.toString();
 		}
@@ -224,7 +247,7 @@ public class UserImpl implements User {
 					"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><user id=\""
 							+ id + "\"><dob>" + DobString + "</dob><email>" + email + 
 							"</email><name>" + name + "</name><rewardPoints>" + RewardPoints +
-							"</rewardPoints></user>",
+							"</rewardPoints>" + ChoreString + "</user>",
 					"utf-8"));
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
@@ -241,5 +264,3 @@ public class UserImpl implements User {
 	}
 
 }
-
-//NumberFormat.getInstance().format(characters)

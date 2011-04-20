@@ -1,5 +1,8 @@
 package com.android.chores;
 
+
+import java.util.List;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
@@ -11,7 +14,12 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.choremonger.shared.Reward;
+
 public class RewardManagementActivity extends Activity implements OnClickListener {
+	private List<Reward> myrewardsCollection;
+	
+	
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.reward_management);
@@ -20,9 +28,14 @@ public class RewardManagementActivity extends Activity implements OnClickListene
         
        ListView menuListView=(ListView)findViewById(R.id.ListView_My_RewardsManagement_Menu);
        menuListView.setCacheColorHint(Color.BLUE); 
-       String[] items={"Going For a Bike Ride",
-         		"Hiking",
-         		"$20 Amazon Gift Card"};
+       RewardImpl myrewardImpl=new RewardImpl();
+       myrewardsCollection= myrewardImpl.getRewardsCollection();
+       String[] items=new String[myrewardsCollection.size()];
+       int i=0;
+       for(Reward reward:myrewardsCollection){
+    	   items[i]=reward.getName();
+    	   i++;
+       }
         
         ArrayAdapter<String>adapt=new ArrayAdapter<String>(this, R.layout.menu_item,items);
         menuListView.setAdapter(adapt);
@@ -30,18 +43,19 @@ public class RewardManagementActivity extends Activity implements OnClickListene
         menuListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
 			@Override
-			public void onItemClick(AdapterView<?> arg0, View itemClicked, int arg2,
-					long arg3) {
-				 TextView textView = (TextView) itemClicked;
-	             String strText = textView.getText().toString();
-	             startActivity(new Intent(RewardManagementActivity.this,EditRewardActivity.class));
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+	             
+	             if(position>=0){
+	            	Intent intent=new Intent(RewardManagementActivity.this,EditRewardActivity.class);
+	             	intent.putExtra("rewardID", myrewardsCollection.get(position).getId());
+	             	startActivity(intent);
+	             }
 			}
         });
     }
 
 	@Override
 	public void onClick(View v) {
-		// TODO Auto-generated method stub
     	switch (v.getId()){
 		case R.id.Button_Create_Reward:
 			startActivity(new Intent(RewardManagementActivity.this,CreateNewRewardActivity.class));

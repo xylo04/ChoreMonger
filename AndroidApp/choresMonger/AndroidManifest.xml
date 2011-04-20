@@ -29,4 +29,10 @@
 <activity android:name="CreateNewRewardActivity"></activity>
 </application>
     <uses-sdk android:minSdkVersion="8" />
+<<<<<<< HEAD
+
+<uses-permission android:name="android.permission.INTERNET">
+</uses-permission>
+=======
+>>>>>>> c23ccbf20aa0d982618e09b3e87082657053a769
 </manifest> 

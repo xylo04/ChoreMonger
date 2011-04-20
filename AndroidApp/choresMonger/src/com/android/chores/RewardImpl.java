@@ -1,33 +1,61 @@
 package com.android.chores;
 
+<<<<<<< HEAD
+
 import java.io.UnsupportedEncodingException;
 
+import java.util.List;
+
+
+
+=======
+import java.io.UnsupportedEncodingException;
+
+>>>>>>> c23ccbf20aa0d982618e09b3e87082657053a769
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
 import org.apache.http.HttpResponse;
+<<<<<<< HEAD
+
+=======
+>>>>>>> c23ccbf20aa0d982618e09b3e87082657053a769
 import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
 import org.apache.http.entity.StringEntity;
 
+<<<<<<< HEAD
+
+=======
+>>>>>>> c23ccbf20aa0d982618e09b3e87082657053a769
 import android.util.Log;
 
 import com.choremonger.shared.Reward;
 import com.choremonger.shared.User;
 
 public class RewardImpl implements Reward {
+<<<<<<< HEAD
+	private static final String TAG =RewardImpl.class.getName();
+=======
 
 	public static final String TAG = RewardImpl.class.getName();
 
+>>>>>>> c23ccbf20aa0d982618e09b3e87082657053a769
 	private String id;
 	private String description;
 	private String rewardName;
 	private double pointsValue;
 	private boolean isOneTimeReward;
+<<<<<<< HEAD
+	
+	
+	public RewardImpl(){
+=======
 
 	public RewardImpl() {
+>>>>>>> c23ccbf20aa0d982618e09b3e87082657053a769
 	}
 
 	public RewardImpl(String id, String description, String rewardName,
@@ -38,9 +66,15 @@ public class RewardImpl implements Reward {
 		this.pointsValue = pointsValue;
 		this.isOneTimeReward = isOneTimeReward;
 	}
+<<<<<<< HEAD
+	
+	public static Reward createReward(Reward myreward){
+		
+=======
 
 	public static Reward createReward(Reward myreward) {
 
+>>>>>>> c23ccbf20aa0d982618e09b3e87082657053a769
 		Reward retrievedReward = null;
 
 		HttpPost request = new HttpPost(HttpRequestExecutor.RESOURCE_ROOT
@@ -61,11 +95,10 @@ public class RewardImpl implements Reward {
 		}
 		request.setHeader("Content-Type", "application/xml");
 
-		System.out
-				.println("RewardImpl is building request for new Reward from the server");
+		Log.d(TAG,"RewardImpl is building request for new Reward from the server");
 		HttpResponse response = HttpRequestExecutor.executeRequest(request);
 		if (response != null) {
-			System.out.println("Got a response, code "
+			Log.d(TAG,"Got a response, code "
 					+ response.getStatusLine().getStatusCode());
 		} else {
 			Log.e(TAG, "Response was null, something is wrong...");
@@ -105,8 +138,7 @@ public class RewardImpl implements Reward {
 		}
 		request.setHeader("Content-Type", "application/xml");
 
-		System.out
-				.println("RewardImpl is building request for new Reward from the server");
+		Log.d(TAG,"RewardImpl is building request for new Reward from the server");
 		HttpResponse response = HttpRequestExecutor.executeRequest(request);
 		if (response != null) {
 			System.out.println("Got a response, code "
@@ -121,6 +153,25 @@ public class RewardImpl implements Reward {
 		// and return that
 		return retrievedReward;
 	}
+<<<<<<< HEAD
+	
+public static void deleteReward(String id){
+	
+	HttpDelete request = new HttpDelete(HttpRequestExecutor.RESOURCE_ROOT
+			+ "/reward/"+id);
+	HttpResponse response = HttpRequestExecutor.executeRequest(request);
+	
+	if (response != null) {
+		Log.d(TAG,"Deleted "
+				+ response.getStatusLine().getStatusCode());
+	}
+	if (response.getStatusLine().getStatusCode() == 204) {
+		Log.d(TAG,"Got a response, Succeessfully Deleted");
+	}
+}
+	public static Reward parseReward(HttpResponse response,Reward retrievedReward){
+		Log.d(TAG,"Going to try and parse out a Reward");
+=======
 
 	public static void deleteReward(String id) {
 
@@ -140,6 +191,7 @@ public class RewardImpl implements Reward {
 	public static Reward parseReward(HttpResponse response,
 			Reward retrievedReward) {
 		System.out.println("Going to try and parse out a Reward");
+>>>>>>> c23ccbf20aa0d982618e09b3e87082657053a769
 		SAXParserFactory factory = SAXParserFactory.newInstance();
 		try {
 			SAXParser saxParser = factory.newSAXParser();
@@ -151,6 +203,29 @@ public class RewardImpl implements Reward {
 		}
 		return retrievedReward;
 	}
+<<<<<<< HEAD
+	public static List<Reward> parseRewardsCollection(HttpResponse response,List<Reward> retrievedRewardLists){
+		Log.d(TAG,"Going to try and parse lists of Rewards");
+		SAXParserFactory factory = SAXParserFactory.newInstance();
+		try {
+			SAXParser saxParser = factory.newSAXParser();
+			RewardSaxHandler handler = new RewardSaxHandler();
+			saxParser.parse(response.getEntity().getContent(), handler);
+			retrievedRewardLists = handler.getRewardsCollections();
+		} 
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		return retrievedRewardLists;
+	}
+	
+	public static Reward getReward(String id){
+		
+		Reward retrievedReward = null;
+		HttpGet request = new HttpGet(HttpRequestExecutor.RESOURCE_ROOT
+				+ "/reward/"+id);
+		Log.d(TAG,"RewardImpl is building request to get Reward from the server");
+=======
 
 	public static Reward getReward(String id) {
 
@@ -159,11 +234,17 @@ public class RewardImpl implements Reward {
 				+ "/reward/" + id);
 		System.out
 				.println("RewardImpl is building request to get Reward from the server");
+>>>>>>> c23ccbf20aa0d982618e09b3e87082657053a769
 		HttpResponse response = HttpRequestExecutor.executeRequest(request);
 
 		if (response != null) {
+<<<<<<< HEAD
+			Log.d(TAG,"Got a response, code "
+			+ response.getStatusLine().getStatusCode());
+=======
 			System.out.println("Got a response, code "
 					+ response.getStatusLine().getStatusCode());
+>>>>>>> c23ccbf20aa0d982618e09b3e87082657053a769
 		}
 
 		if (response.getStatusLine().getStatusCode() == 200) {
@@ -173,9 +254,37 @@ public class RewardImpl implements Reward {
 		// parse response XML into a FamilyImpl object
 		// and return that
 		return retrievedReward;
+<<<<<<< HEAD
+}
+	public List<Reward> getRewardsCollection(){
+		
+		List<Reward> rewardsList=null;
+		HttpGet request = new HttpGet(HttpRequestExecutor.RESOURCE_ROOT
+				+ "/reward/");
+		Log.d(TAG,"RewardImpl is building request to get Reward from the server");
+		HttpResponse response = HttpRequestExecutor.executeRequest(request);
+		
+		if (response != null) {
+			Log.d(TAG,"Got a response, code "
+			+ response.getStatusLine().getStatusCode());
+		}
+		
+		if (response.getStatusLine().getStatusCode() == 200) {
+			rewardsList = parseRewardsCollection(response, rewardsList);
+		}
+		
+		// parse response XML into a FamilyImpl object
+		// 	and return that
+		
+		return rewardsList;
+		
+	}
+	public String getDescription(){
+=======
 	}
 
 	public String getDescription() {
+>>>>>>> c23ccbf20aa0d982618e09b3e87082657053a769
 		return description;
 	}
 
