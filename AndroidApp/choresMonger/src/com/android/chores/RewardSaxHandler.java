@@ -1,5 +1,10 @@
 package com.android.chores;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
@@ -11,19 +16,25 @@ public class RewardSaxHandler extends DefaultHandler {
 	private String characters;
 	private Reward currentReward;
 	private boolean payingAttention = true;
+	private List<Reward> rewards;
 	
+	
+	@Override
+    public void startDocument() throws SAXException {
+		rewards=new ArrayList<Reward>();
+	}
 	@Override
 	public void characters(char[] ch, int start, int length)
 			throws SAXException {
 		// stash these until we know what they mean (in endElement)
 		characters = new String(ch, start, length);
-		System.out.println("characters " + characters);
+		//System.out.println("characters " + characters);
 	}
 
 	@Override
 	public void endElement(String uri, String localName, String qName)
 			throws SAXException {
-		System.out.println("endElement " + qName);
+		//System.out.println("endElement " + qName);
 
 		// Note to self: how can we do this without triggering Family to update
 		// with server?
@@ -50,25 +61,36 @@ public class RewardSaxHandler extends DefaultHandler {
 		if (qName.equalsIgnoreCase("name")) {
 			currentReward.setName(characters);
 		}
-
+		else if (qName.equalsIgnoreCase("pointValue")){
+			currentReward.setPointValue(Double.parseDouble(characters));
+		}
+		else if (qName.equalsIgnoreCase("description")){
+			currentReward.setDescription(characters);
+		}
+		else if (qName.equalsIgnoreCase("isOneTime")){
+			currentReward.setOneTime(Boolean.parseBoolean(characters));
+		}
+		else if(qName.equalsIgnoreCase("reward")){
+			rewards.add(currentReward);
+		}
 		// if we hit an end element that didn't have any characters, we don't
 		// want this left over
 		characters = "";
-		
 	}
 
 	public Reward getReward() {
 		return currentReward;
 	}
-
+	public List<Reward>getRewardsCollections(){
+		return rewards;
+	}
 	@Override
 	public void startElement(String uri, String localName, String qName,
 			Attributes attributes) throws SAXException {
-		System.out.println("startElement " + qName);
+		//System.out.println("startElement " + qName);
 		if (!payingAttention) {
 			return;
 		}
-
 		if (qName.equalsIgnoreCase("family")) {
 			payingAttention=false;
 		} else if (qName.equalsIgnoreCase("chore")) {

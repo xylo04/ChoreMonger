@@ -59,8 +59,8 @@
 	android:layout_width="fill_parent" 
 	android:layout_height="wrap_content">
 	
-<EditText android:id="@+id/txviewRewardTitleVal"
-			android:textColor="#FFF"
+<EditText android:id="@+id/editTxtRewardTitleVal"
+			android:textColor="#000"
 			android:textSize="10pt"
 			android:layout_height="wrap_content"
 			android:layout_width="wrap_content"	/>	
@@ -84,7 +84,7 @@
 	android:layout_height="wrap_content">	
 	
 <EditText android:id="@+id/editxtRewardDescrVal"
-			android:textColor="#FFF"
+			android:textColor="#000"
 			android:textSize="10pt"
 			android:layout_height="wrap_content"
 			android:layout_width="wrap_content"	/>	
@@ -103,37 +103,53 @@
 
 </TableRow>
 <TableRow android:id="@+id/TableRow08"
-	android:layout_width="fill_parent" 
+	android:layout_width="fill_parent"
 	android:layout_height="wrap_content">
 
 <EditText android:id="@+id/txviewRewardPointsVal"
-			android:textColor="#FFF"
+			android:textColor="#000"
 			android:textSize="10pt"
 			android:layout_height="wrap_content"
 			android:layout_width="wrap_content"	/>	
 </TableRow>
-   
-   <TableRow android:id="@+id/TableRow06"
+      <TableRow android:id="@+id/TableRow09"
 	android:layout_width="fill_parent" 
+	android:layout_height="wrap_content">
+	
+		 <CheckBox android:id="@+id/checkboxUpdateOneTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="One Time Reward" />
+	
+	</TableRow>
+   <TableRow android:id="@+id/TableRow10"
+	android:layout_width="wrap_content" 
 	android:layout_height="wrap_content">
 	 
    <Button
     android:id="@+id/Button_Update_Reward"
-    android:layout_width="fill_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:layout_alignParentLeft="true"
+    android:layout_alignParentBottom="true"
     android:text="Update"></Button>
     
     <Button
     android:id="@+id/Button_Cancel_Edit_Reward"
-    android:layout_width="fill_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:layout_centerHorizontal="true"
+    android:layout_alignParentBottom="true"
     android:text="Cancel"></Button>
     
    <Button
     android:id="@+id/Button_Delete_Reward"
-    android:layout_width="fill_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:layout_alignParentRight="true"
+    android:layout_alignParentBottom="true"
     android:text="Delete"></Button>       
+   
    </TableRow>
  </TableLayout>
 </LinearLayout>

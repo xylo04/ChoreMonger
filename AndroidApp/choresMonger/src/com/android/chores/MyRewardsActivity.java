@@ -1,5 +1,9 @@
 package com.android.chores;
 
+import java.util.List;
+
+import com.choremonger.shared.Reward;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
@@ -12,28 +16,36 @@ import android.widget.TextView;
 import android.content.Intent;
 
 public class MyRewardsActivity extends Activity {
+	private List<Reward> myrewardsCollection;
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.my_rewards);
         ListView menuListView=(ListView)findViewById(R.id.ListView_My_Rewards_Menu);
         menuListView.setCacheColorHint(Color.BLUE); 
-        String[] items={"Going For a Bike Ride",
-         		"Hiking",
-         		"$20 Amazon Gift Card"};
-         
+
+        RewardImpl myrewardImpl=new RewardImpl();
+        myrewardsCollection= myrewardImpl.getRewardsCollection();
+        String[] items=new String[myrewardsCollection.size()];
+        int i=0;
+        for(Reward reward:myrewardsCollection){
+     	   items[i]=reward.getName();
+     	   i++;
+        }
+        
          ArrayAdapter<String>adapt=new ArrayAdapter<String>(this, R.layout.menu_item,items);
          menuListView.setAdapter(adapt);
-         menuListView.setClickable(true);
          
          menuListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
  			@Override
- 			public void onItemClick(AdapterView<?> arg0, View itemClicked, int arg2,
- 					long arg3) {
- 				 TextView textView = (TextView) itemClicked;
- 	                String strText = textView.getText().toString();
- 	                // Listen for item clicks 
- 	                startActivity(new Intent(MyRewardsActivity.this, RewardDetailsActivity.class));
+ 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+ 	             
+ 	             if(position>=0){
+ 	            	Intent intent=new Intent(MyRewardsActivity.this,RewardDetailsActivity.class);
+ 	             	intent.putExtra("rewardID", myrewardsCollection.get(position).getId());
+ 	             	startActivity(intent);
+ 	             }
  			}
          });
 	}

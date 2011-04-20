@@ -60,7 +60,7 @@
 	android:layout_height="wrap_content">
 	
 <EditText android:id="@+id/txviewRewardTitleVal"
-			android:textColor="#FFF"
+			android:textColor="#000"
 			android:textSize="10pt"
 			android:layout_height="wrap_content"
 			android:layout_width="wrap_content"	/>	
@@ -84,7 +84,7 @@
 	android:layout_height="wrap_content">	
 	
 <EditText android:id="@+id/editxtRewardDescrVal"
-			android:textColor="#FFF"
+			android:textColor="#000"
 			android:textSize="10pt"
 			android:layout_height="wrap_content"
 			android:layout_width="wrap_content"	/>	
@@ -108,7 +108,7 @@
 	android:layout_height="wrap_content">
 
 <EditText android:id="@+id/txviewRewardPointsVal"
-			android:textColor="#FFF"
+			android:textColor="#000"
 			android:textSize="10pt"
 			android:layout_height="wrap_content"
 			android:layout_width="wrap_content"	/>	
@@ -124,17 +124,17 @@
         android:text="One Time Reward" />
         </TableRow>
            <TableRow android:id="@+id/TableRow07"
-	android:layout_width="fill_parent" 
+	android:layout_width="wrap_content" 
 	android:layout_height="wrap_content">
    <Button
     android:id="@+id/Button_Create_New_Reward"
-    android:layout_width="fill_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:text="Create"></Button>
     
     <Button
     android:id="@+id/Button_Cancel_Create_Reward"
-    android:layout_width="fill_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:text="Cancel"></Button>
         
