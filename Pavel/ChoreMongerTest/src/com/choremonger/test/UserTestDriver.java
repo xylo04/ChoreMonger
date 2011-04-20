@@ -18,9 +18,9 @@ public class UserTestDriver {
 		System.out.println("\n\nGot back a user:");
 		System.out.println(user.getName());
 		System.out.println(user.getId());
-		user.setName("Sir Awesome will Die");
-		user.setEmail("specialperson@gmail.com");
-		user.setRewardPoints(15);
+		user.setName("Sir Awesome will Die More Now! Mwahahaha");
+		user.setEmail("death@gmail.com");
+		user.setRewardPoints(90000);
 		System.out.println(user.getId());
 		System.out.println(user.getName());
 		System.out.println(user.getRewardPoints());

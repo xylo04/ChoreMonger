@@ -105,6 +105,13 @@ public class UserImpl implements User {
 		email = "";
 		name = "";
 	}
+	
+	public UserImpl(String n, double r, String e, Date d) {
+		name = n;
+		RewardPoints = r;
+		email = e;
+		Dob = d;
+	}
 
 	@Override
 	public void setRewardPoints(double rewardPoints) {
@@ -132,7 +139,7 @@ public class UserImpl implements User {
 	@Override
 	public Date getDob() {
 		if (Dob == null) {
-			System.exit(1);
+			System.out.println("No Dob");
 		}
 		return Dob;
 	}
