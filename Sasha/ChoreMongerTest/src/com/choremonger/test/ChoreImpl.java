@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
+import java.util.ArrayList;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -29,6 +30,7 @@ public class ChoreImpl implements Chore
 	String status;
 	double priority;
 	String str;
+	String list_of_users;
 
 	public ChoreImpl()
 	{
@@ -56,17 +58,24 @@ public class ChoreImpl implements Chore
 		this.priority = priority;
 		this.status = "Not Started";
 		this.str = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><chore id=\"\"><instructions>"+this.intsructions+"</instructions><name>"+this.name+"</name><pointValue>"+Double.toString(this.points)+"</pointValue>";
-/*		if (this.users_assigned != null)
+		this.str += "<users>";
+		if (this.users_assigned != null)
 		{
 			for  (int i = 0; i < this.users_assigned.size(); i++)
 			{ 
 				String temp = this.users_assigned.get(i).getId();
-				this.str.concat("<users><user id=").concat(temp).concat(" uri=\"/user/").concat(temp).concat("\" />");
+				list_of_users += temp + ".";
 			}
 		}
-		this.str.concat("</users>");
-		*/
+		else
+		{
+			this.users_assigned = new ArrayList<User>();
+			this.list_of_users = null;
+		}
+		this.str += this.list_of_users;
+		this.str += "</users>";
 		this.str+="<priority>"+Double.toString(this.priority)+"</priority><status>"+this.status+"</status></chore>";
+		System.out.println(this.str);
 		HttpPost request = new HttpPost(HttpRequestExecutor.RESOURCE_ROOT + "chore/");
 		try {
 			request.setEntity(new StringEntity(this.str));
@@ -82,9 +91,7 @@ public class ChoreImpl implements Chore
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		//System.out.println(str);
 		this.id = str.substring(str.indexOf("<chore id=\"")+11, str.indexOf("\"><instru"));						//name
-		//System.out.println(this.id);
 		HttpPut Request = new HttpPut(HttpRequestExecutor.RESOURCE_ROOT + "chore/" + this.id);
 		try {
 			Request.setEntity(new StringEntity(this.str));
@@ -107,7 +114,7 @@ public class ChoreImpl implements Chore
 			try {
 				BufferedReader BR = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
 				this.str = BR.readLine();
-				System.out.println(this.str);
+				String str = this.str;
 				if ((str.indexOf("<name>") != -1))
 					this.name = str.substring(str.indexOf("<name>")+6, str.indexOf("</name>"));						//name
 				else 
@@ -128,14 +135,18 @@ public class ChoreImpl implements Chore
 					this.priority = Double.parseDouble(str.substring(str.indexOf("<priority>")+10, str.indexOf("</priority>")));		//priority
 				else 
 					this.priority = 0.0;
-				/*//users
-				for (int i = 0; i>-5; i++)
+				//users
+				if(str.indexOf("<users>") != -1)
 				{
-					value = str.substring(str.indexOf("<user id=")+9, str.indexOf(" uri="));
-					str = str.substring(str.indexOf(" uri="));
-					this.users_assigned.add(UserImpl.getUser(value));
+					String[] temp;
+					this.list_of_users = str.substring(str.indexOf("<users>")+8, str.indexOf("</users>"));
+					temp = str.substring(str.indexOf("<users>")+8, str.indexOf("</users>")).split(".");
+					for (int i = 0; i<temp.length; i++)
+					{
+						this.users_assigned.add(UserImpl.getUser(temp[i]));
+					}
 				}
-				*///users
+				//users
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -163,13 +174,14 @@ public class ChoreImpl implements Chore
 	{
 		this.str = str.replace(this.status, status);
 		this.status = status;
-		//if (this.status  = "Completed")
-		//{
-			//Iterator itr = List.iterator();
-			//while(itr.hasNext())
-				//itr.give_reward(this.points);
-		//}
-
+		HttpPut request = new HttpPut(HttpRequestExecutor.RESOURCE_ROOT + "chore/" + this.id);
+		try {
+			request.setEntity(new StringEntity(this.str));
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		request.setHeader("Content-Type", "application/xml");
+		HttpRequestExecutor.executeRequest(request);
 	}
 	public double getPriority()
 	{
@@ -193,9 +205,12 @@ public class ChoreImpl implements Chore
 /**/	public void addUser(User toAdd)
 	{
 		String[] temp;
+		if (toAdd == null)
+			System.out.println("object is null");
 		this.users_assigned.add(toAdd);	
-		temp = this.str.split("<users>");
-		this.str = temp[0].concat("<users>").concat("<user id=\""+toAdd.getId()+"\" uri=\"/user/"+toAdd.getId()+"\">").concat(temp[1]);
+		this.list_of_users += toAdd.getId() + ".";
+		temp = this.str.split("<users>");	
+				this.str = temp[0] + "<users>"+this.list_of_users+temp[1];
 		HttpPut request = new HttpPut(HttpRequestExecutor.RESOURCE_ROOT + "chore/" + this.id);
 		try {
 			request.setEntity(new StringEntity(this.str));
@@ -230,7 +245,7 @@ public class ChoreImpl implements Chore
 
 /**/	public boolean removeUser(User toRemove)
 	{
-		this.str = str.replace("<user id=\""+toRemove.getId()+"\" uri=\"/user/"+toRemove.getId()+"\">", "");
+		this.str = str.replace(toRemove.getId()+".", "");
 		HttpPut request = new HttpPut(HttpRequestExecutor.RESOURCE_ROOT + "chore/" + this.id);
 		try {
 			request.setEntity(new StringEntity(this.str));
@@ -275,7 +290,6 @@ public class ChoreImpl implements Chore
 	{
 		this.str = str.replace("<pointValue>"+this.points, "<pointValue>"+Double.toString(newPointValue));
 		this.points = newPointValue;
-		System.out.println(this.str);
 		HttpPut request = new HttpPut(HttpRequestExecutor.RESOURCE_ROOT + "chore/" + this.id);
 		try {
 			request.setEntity(new StringEntity(this.str));
