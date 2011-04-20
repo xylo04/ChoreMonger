@@ -20,6 +20,7 @@ public class UserSaxHandler extends DefaultHandler {
 	private Date DoB = null;
 	private User user;
 	private String Id = "";
+	private String ChoreString = "";
 
 	@Override
 	public void characters(char[] ch, int start, int length)
@@ -50,8 +51,11 @@ public class UserSaxHandler extends DefaultHandler {
 				System.out.println("error parsing!!!");
 			}
 		}
+		else if (qName.equalsIgnoreCase("chores")) {
+			ChoreString = characters;
+		}
 		else if (qName.equalsIgnoreCase("user")) {
-			user = new UserImpl(Name,RewardPoints,Email,DoB);
+			user = new UserImpl(Name,RewardPoints,Email,DoB,ChoreString);
 			user.setId(Id);
 		}
 		characters = "";
