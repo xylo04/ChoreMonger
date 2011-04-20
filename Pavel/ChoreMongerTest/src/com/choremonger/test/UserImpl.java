@@ -122,7 +122,7 @@ public class UserImpl implements User {
 	@Override
 	public void addChore(Chore toAdd) {
 		chores.add(toAdd);
-		// send update to server
+		this.update();
 	}
 
 	@Override
@@ -175,8 +175,10 @@ public class UserImpl implements User {
 
 	@Override
 	public boolean removeChore(Chore toRemove) {
-		return chores.remove(toRemove);
-		// send update to server
+		boolean success;
+		success = chores.remove(toRemove);
+		this.update();
+		return success;
 	}
 
 	@Override
@@ -248,5 +250,3 @@ public class UserImpl implements User {
 	}
 
 }
-
-//NumberFormat.getInstance().format(characters)

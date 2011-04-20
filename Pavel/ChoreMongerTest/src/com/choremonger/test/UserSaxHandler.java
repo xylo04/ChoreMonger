@@ -14,12 +14,12 @@ import com.choremonger.shared.User;
 public class UserSaxHandler extends DefaultHandler {
 
 	private String characters;
-	private String Name;
-	private Double RewardPoints;
-	private String Email;
-	private Date DoB;
+	private String Name = "";
+	private Double RewardPoints = 0.0;
+	private String Email = "";
+	private Date DoB = null;
 	private User user;
-	private String Id;
+	private String Id = "";
 
 	@Override
 	public void characters(char[] ch, int start, int length)
