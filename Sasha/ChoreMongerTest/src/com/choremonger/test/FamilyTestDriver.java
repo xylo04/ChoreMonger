@@ -1,6 +1,9 @@
 package com.choremonger.test;
 
+import java.util.List;
+
 import com.choremonger.shared.Chore;
+import com.choremonger.shared.User;
 
 public class FamilyTestDriver {
 
@@ -10,21 +13,21 @@ public class FamilyTestDriver {
 	public static void main(String[] args) {
 		System.out.println("Driver is asking to get Chore");
 		String temp;
+		List<User> test_users;
+		
+		
 		ChoreImpl chore0 = new ChoreImpl();
-
-		System.out.println("Name: " + chore0.getName());
-		System.out.println("Instructions: " + chore0.getInstructions());
-		System.out.println("PointValue: " + chore0.getPointValue());
 		temp = chore0.getId();
-		chore0.setName("Newest Chore");
-		chore0.setInstructions("Test every funciton in the chore");
-		chore0.setPointValue(56);
+
+		User user0 = UserImpl.createUser();
+		chore0.addUser(user0);
+		
 		ChoreImpl chore1 = new ChoreImpl(temp);
-		System.out.println("Name: " + chore1.getName());
-		System.out.println("Instructions: " + chore1.getInstructions());
-		System.out.println("PointValue: " + chore1.getPointValue());
-		chore0.clean();
-		chore1.clean();
+		test_users = chore1.getUsers();
+		System.out.println("User id: "+test_users.get(0).getId());
+	
+	//		chore0.clean();
+//		chore1.clean();
 	}
 
 }

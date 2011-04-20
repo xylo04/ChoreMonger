@@ -39,6 +39,10 @@ public class ChoreImpl implements Chore {
 
 	@Persistent
 	@XmlElement
+	private String chores;
+
+	@Persistent
+	@XmlElement
 	private double pointValue;
 
 	@Persistent
