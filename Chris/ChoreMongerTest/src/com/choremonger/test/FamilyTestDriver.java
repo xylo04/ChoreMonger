@@ -11,7 +11,7 @@ public class FamilyTestDriver {
 
 		// CREATE
 		System.out.println("Driver is asking to create a family");
-		Family family = FamilyImpl.createFamily("Test family");
+		Family family = FamilyImpl.createFamily("Test Family");
 		if (family == null) {
 			System.out.println("Family was null!");
 			System.exit(1);

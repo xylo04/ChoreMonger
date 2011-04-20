@@ -11,6 +11,7 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpPut;
 import org.apache.http.entity.StringEntity;
 
 import com.choremonger.shared.Chore;
@@ -20,47 +21,14 @@ import com.choremonger.shared.User;
 
 public class FamilyImpl implements Family {
 
-	public static Family createFamily(String name) {
+	public static Family createFamily(String familyName) {
 		Family retval = null;
-
-		String xmlDocument = "<family><name>" + name + "</name></family>";
+		FamilyImpl toCreate = new FamilyImpl(null, familyName);
+		String xmlDocument = toCreate.toXML();
+		System.out.println(xmlDocument);
 
 		HttpPost request = new HttpPost(HttpRequestExecutor.RESOURCE_ROOT
 				+ "family");
-		try {
-			request.setEntity(new StringEntity(
-					"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>"
-							+ xmlDocument, "utf-8"));
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}
-		request.setHeader("Content-Type", "application/xml");
-
-		System.out
-				.println("FamilyImpl is building request for new Family from the server");
-		HttpResponse response = HttpRequestExecutor.executeRequest(request);
-		if (response != null) {
-			System.out.println("Got a response, code "
-					+ response.getStatusLine().getStatusCode());
-		}
-
-		if (response.getStatusLine().getStatusCode() == 200) {
-			retval = parseFamily(response, retval);
-		}
-
-		return retval;
-	}
-
-	public static void updateFamily(Family toUpdate) {
-
-		String xmlDocument = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>"
-				+ "<family id=\""
-				+ toUpdate.getId()
-				+ "\"><name>"
-				+ toUpdate.getName() + "</name></family>";
-
-		HttpPost request = new HttpPost(HttpRequestExecutor.RESOURCE_ROOT
-				+ "family/" + toUpdate.getId());
 		try {
 			request.setEntity(new StringEntity(xmlDocument, "utf-8"));
 		} catch (UnsupportedEncodingException e) {
@@ -69,27 +37,7 @@ public class FamilyImpl implements Family {
 		request.setHeader("Content-Type", "application/xml");
 
 		System.out
-				.println("FamilyImpl is building request to update Family on the server");
-		HttpResponse response = HttpRequestExecutor.executeRequest(request);
-		if (response != null) {
-			System.out.println("Got a response, code "
-					+ response.getStatusLine().getStatusCode());
-		}
-
-		if (response.getStatusLine().getStatusCode() != 204) {
-			System.out.println("That wasn't quite right!");
-			System.exit(1);
-		}
-	}
-
-	public static Family getFamily(String id) {
-		Family retval = null;
-
-		HttpGet request = new HttpGet(HttpRequestExecutor.RESOURCE_ROOT
-				+ "family/" + id);
-
-		System.out
-				.println("FamilyImpl is building request to get Family from the server");
+				.println("FamilyImpl is building request for new Family from the server");
 		HttpResponse response = HttpRequestExecutor.executeRequest(request);
 		if (response != null) {
 			System.out.println("Got a response, code "
@@ -124,6 +72,27 @@ public class FamilyImpl implements Family {
 		return retval;
 	}
 
+	public static Family getFamily(String id) {
+		Family retval = null;
+
+		HttpGet request = new HttpGet(HttpRequestExecutor.RESOURCE_ROOT
+				+ "family/" + id);
+
+		System.out
+				.println("FamilyImpl is building request to get Family from the server");
+		HttpResponse response = HttpRequestExecutor.executeRequest(request);
+		if (response != null) {
+			System.out.println("Got a response, code "
+					+ response.getStatusLine().getStatusCode());
+		}
+
+		if (response.getStatusLine().getStatusCode() == 200) {
+			retval = parseFamily(response, retval);
+		}
+
+		return retval;
+	}
+
 	private static Family parseFamily(HttpResponse response, Family retval) {
 		System.out.println("Going to try and parse out a Family");
 		SAXParserFactory factory = SAXParserFactory.newInstance();
@@ -138,9 +107,36 @@ public class FamilyImpl implements Family {
 		return retval;
 	}
 
-	private List<Chore> chores = new ArrayList<Chore>();
-	private String id;
+	public static void updateFamily(Family toUpdate) {
 
+		String xmlDocument = ((FamilyImpl) toUpdate).toXML();
+
+		HttpPut request = new HttpPut(HttpRequestExecutor.RESOURCE_ROOT
+				+ "family/" + toUpdate.getId());
+		try {
+			request.setEntity(new StringEntity(xmlDocument, "utf-8"));
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		request.setHeader("Content-Type", "application/xml");
+
+		System.out
+				.println("FamilyImpl is building request to update Family on the server");
+		HttpResponse response = HttpRequestExecutor.executeRequest(request);
+		if (response != null) {
+			System.out.println("Got a response, code "
+					+ response.getStatusLine().getStatusCode());
+		}
+
+		if (response.getStatusLine().getStatusCode() != 204) {
+			System.out.println("That wasn't quite right!");
+			System.exit(1);
+		}
+	}
+
+	private List<Chore> chores = new ArrayList<Chore>();
+
+	private String id;
 	private String name;
 
 	private List<Reward> rewards = new ArrayList<Reward>();
@@ -228,6 +224,49 @@ public class FamilyImpl implements Family {
 	public void setName(String newName) {
 		name = newName;
 		updateFamily(this);
+	}
+
+	private String toXML() {
+		String retval = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>";
+		retval += "<family";
+		if (id != null) {
+			retval += " id=\"" + id + "\"";
+		}
+		retval += ">";
+
+		if (name != null) {
+			retval += "<name>" + name + "</name>";
+		}
+
+		if (!chores.isEmpty()) {
+			// TODO need to specify whole chore
+			retval += "<chores>";
+			for (Chore c : chores) {
+				retval += "<chore id=\n" + c.getId() + "\" />";
+			}
+			retval += "</chores>";
+		}
+
+		if (!rewards.isEmpty()) {
+			// TODO need to specify whole reward
+			retval += "<rewards>";
+			for (Reward r : rewards) {
+				retval += "<reward id=\n" + r.getId() + "\" />";
+			}
+			retval += "</rewards>";
+		}
+
+		if (!users.isEmpty()) {
+			// TODO need to specify whole user
+			retval += "<users>";
+			for (User u : users) {
+				retval += "<user id=\n" + u.getId() + "\" />";
+			}
+			retval += "</users>";
+		}
+
+		retval += "</family>";
+		return retval;
 	}
 
 }

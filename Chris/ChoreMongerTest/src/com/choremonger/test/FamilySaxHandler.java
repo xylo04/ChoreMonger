@@ -54,7 +54,7 @@ public class FamilySaxHandler extends DefaultHandler {
 		if (qName.equalsIgnoreCase("name")) {
 			name = characters;
 		}
-		
+
 		if (qName.equalsIgnoreCase("family")) {
 			family = new FamilyImpl(id, name);
 		}
@@ -79,6 +79,7 @@ public class FamilySaxHandler extends DefaultHandler {
 
 		if (qName.equalsIgnoreCase("family")) {
 			id = attributes.getValue("id");
+			System.out.println("Attribute id=" + id);
 		} else if (qName.equalsIgnoreCase("chore")) {
 			// break off another parser with a chore handler
 			payingAttention = false;

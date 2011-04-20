@@ -24,10 +24,10 @@ import com.choremonger.shared.User;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class UserImpl implements User {
 
-	// @Persistent
-	// @XmlElement(name = "chore")
-	// @XmlIDREF
-	// private List<ChoreImpl> chores = new ArrayList<ChoreImpl>();
+	@SuppressWarnings("unused")
+	@Persistent
+	@XmlElement
+	private String chores;
 
 	@Persistent
 	@XmlElement
@@ -131,6 +131,10 @@ public class UserImpl implements User {
 	@Override
 	public void subtractRewardPoints(double amountToSubtract) {
 		rewardPoints -= amountToSubtract;
+	}
+
+	public void setRewardPoints(double rewardPoints) {
+		
 	}
 
 }

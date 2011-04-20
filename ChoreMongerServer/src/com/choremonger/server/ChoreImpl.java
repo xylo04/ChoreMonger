@@ -49,10 +49,10 @@ public class ChoreImpl implements Chore {
 	@XmlElement
 	private String status;
 
-	// @Persistent
-	// @XmlElement(name = "user")
-	// @XmlIDREF
-	// private List<UserImpl> users = new ArrayList<UserImpl>();
+	@SuppressWarnings("unused")
+	@Persistent
+	@XmlElement
+	private String users;
 
 	@Override
 	public void addUser(User toAdd) {
