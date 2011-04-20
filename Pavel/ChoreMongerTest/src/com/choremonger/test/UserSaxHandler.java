@@ -3,6 +3,7 @@ package com.choremonger.test;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
@@ -13,7 +14,12 @@ import com.choremonger.shared.User;
 public class UserSaxHandler extends DefaultHandler {
 
 	private String characters;
+	private String Name = "";
+	private Double RewardPoints = 0.0;
+	private String Email = "";
+	private Date DoB = null;
 	private User user;
+	private String Id = "";
 
 	@Override
 	public void characters(char[] ch, int start, int length)
@@ -29,24 +35,25 @@ public class UserSaxHandler extends DefaultHandler {
 		System.out.println("endElement " + qName);
 
 		if (qName.equalsIgnoreCase("name")) {
-			user.setName(characters);
+			Name = characters;
 		}
 		else if (qName.equalsIgnoreCase("rewardPoints")) {
-			user.setRewardPoints(Double.parseDouble(characters));
+			RewardPoints = Double.parseDouble(characters);
 		}
 		else if (qName.equalsIgnoreCase("email")) {
-			user.setEmail(characters);
+			Email = characters;
 		}
 		else if (qName.equalsIgnoreCase("dob")) {
-			DateFormat formatter = new SimpleDateFormat();
-			try{user.setDob(formatter.parse(characters));}
+			DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+			try{DoB = formatter.parse(characters);}
 			catch (ParseException e) {
 				System.out.println("error parsing!!!");
 			}
 		}
-
-		// if we hit an end element that didn't have any characters, we don't
-		// want this left over
+		else if (qName.equalsIgnoreCase("user")) {
+			user = new UserImpl(Name,RewardPoints,Email,DoB);
+			user.setId(Id);
+		}
 		characters = "";
 	}
 
@@ -60,8 +67,7 @@ public class UserSaxHandler extends DefaultHandler {
 		System.out.println("startElement " + qName);
 
 		if (qName.equalsIgnoreCase("user")) {
-			user = new UserImpl();
-			user.setId(attributes.getValue("id"));	
+			Id = attributes.getValue("id");	
 		}
 	}
 

@@ -105,6 +105,13 @@ public class UserImpl implements User {
 		email = "";
 		name = "";
 	}
+	
+	public UserImpl(String n, double r, String e, Date d) {
+		name = n;
+		RewardPoints = r;
+		email = e;
+		Dob = d;
+	}
 
 	@Override
 	public void setRewardPoints(double rewardPoints) {
@@ -115,7 +122,7 @@ public class UserImpl implements User {
 	@Override
 	public void addChore(Chore toAdd) {
 		chores.add(toAdd);
-		// send update to server
+		this.update();
 	}
 
 	@Override
@@ -131,6 +138,9 @@ public class UserImpl implements User {
 
 	@Override
 	public Date getDob() {
+		if (Dob == null) {
+			System.out.println("No Dob");
+		}
 		return Dob;
 	}
 
@@ -165,8 +175,10 @@ public class UserImpl implements User {
 
 	@Override
 	public boolean removeChore(Chore toRemove) {
-		return chores.remove(toRemove);
-		// send update to server
+		boolean success;
+		success = chores.remove(toRemove);
+		this.update();
+		return success;
 	}
 
 	@Override
@@ -212,7 +224,7 @@ public class UserImpl implements User {
 	public void update() {
 		String DobString = "";
 		if (Dob != null) {
-			DobString = "1";
+			DobString = Dob.toString();
 		}
 		HttpPut request = new HttpPut(HttpRequestExecutor.RESOURCE_ROOT
 				+ "user/" + id);
@@ -238,5 +250,3 @@ public class UserImpl implements User {
 	}
 
 }
-
-//NumberFormat.getInstance().format(characters)

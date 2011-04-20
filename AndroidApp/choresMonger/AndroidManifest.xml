@@ -3,6 +3,7 @@
       package="com.android.chores"
       android:versionCode="1"
       android:versionName="1.0">
+    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
     <application android:icon="@drawable/choresmonger" android:label="@string/app_name" android:debuggable="true">
   
         <activity android:name=".MainMenuActivity"
@@ -28,7 +29,10 @@
 <activity android:name="CreateNewRewardActivity"></activity>
 </application>
     <uses-sdk android:minSdkVersion="8" />
+<<<<<<< HEAD
 
 <uses-permission android:name="android.permission.INTERNET">
 </uses-permission>
+=======
+>>>>>>> c23ccbf20aa0d982618e09b3e87082657053a769
 </manifest> 

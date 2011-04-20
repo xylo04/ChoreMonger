@@ -53,6 +53,7 @@ public class CreateNewRewardActivity extends Activity implements OnClickListener
         
         public void createReward(String description,String rewardName,double pointsValue,boolean isOneTimeReward){
         	Reward reward=new RewardImpl("",description,rewardName,pointsValue,isOneTimeReward);
+<<<<<<< HEAD
         	Reward createdReward=RewardImpl.createReward(reward);
         	if (createdReward==null){
 				Log.e(TAG,"Oooops! No rewards created!");
@@ -62,5 +63,8 @@ public class CreateNewRewardActivity extends Activity implements OnClickListener
 			Log.d(TAG,"Reward Created");
 			Log.d(TAG,createdReward.getName());
 			Log.d(TAG,createdReward.getId());
+=======
+        	RewardImpl.createReward(reward);
+>>>>>>> c23ccbf20aa0d982618e09b3e87082657053a769
         }
 }

@@ -1,5 +1,6 @@
 package com.android.chores;
 
+<<<<<<< HEAD
 
 import java.io.UnsupportedEncodingException;
 
@@ -7,57 +8,88 @@ import java.util.List;
 
 
 
+=======
+import java.io.UnsupportedEncodingException;
+
+>>>>>>> c23ccbf20aa0d982618e09b3e87082657053a769
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
 import org.apache.http.HttpResponse;
+<<<<<<< HEAD
 
+=======
+>>>>>>> c23ccbf20aa0d982618e09b3e87082657053a769
 import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
 import org.apache.http.entity.StringEntity;
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> c23ccbf20aa0d982618e09b3e87082657053a769
 import android.util.Log;
 
 import com.choremonger.shared.Reward;
 import com.choremonger.shared.User;
 
 public class RewardImpl implements Reward {
+<<<<<<< HEAD
 	private static final String TAG =RewardImpl.class.getName();
+=======
+
+	public static final String TAG = RewardImpl.class.getName();
+
+>>>>>>> c23ccbf20aa0d982618e09b3e87082657053a769
 	private String id;
 	private String description;
 	private String rewardName;
-	private double pointsValue; 
+	private double pointsValue;
 	private boolean isOneTimeReward;
+<<<<<<< HEAD
 	
 	
 	public RewardImpl(){
+=======
+
+	public RewardImpl() {
+>>>>>>> c23ccbf20aa0d982618e09b3e87082657053a769
 	}
-	public RewardImpl(String id, String description,String rewardName,double pointsValue,boolean isOneTimeReward){
-		this.id=id;
-		this.description=description;
-		this.rewardName=rewardName;
-		this.pointsValue=pointsValue;
-		this.isOneTimeReward=isOneTimeReward;
+
+	public RewardImpl(String id, String description, String rewardName,
+			double pointsValue, boolean isOneTimeReward) {
+		this.id = id;
+		this.description = description;
+		this.rewardName = rewardName;
+		this.pointsValue = pointsValue;
+		this.isOneTimeReward = isOneTimeReward;
 	}
+<<<<<<< HEAD
 	
 	public static Reward createReward(Reward myreward){
 		
+=======
+
+	public static Reward createReward(Reward myreward) {
+
+>>>>>>> c23ccbf20aa0d982618e09b3e87082657053a769
 		Reward retrievedReward = null;
 
 		HttpPost request = new HttpPost(HttpRequestExecutor.RESOURCE_ROOT
 				+ "/reward");
 		try {
-			String rewardXML="<reward><description>"+myreward.getDescription()+"</description>"+
-			"<isOneTime>"+Boolean.toString(myreward.isOneTime())+"</isOneTime>"+
-			"<name>"+myreward.getName()+"</name>"+
-			"<pointValue>"+Double.toString(myreward.getPointValue())+"</pointValue></reward>";
+			String rewardXML = "<reward><description>"
+					+ myreward.getDescription() + "</description>"
+					+ "<isOneTime>" + Boolean.toString(myreward.isOneTime())
+					+ "</isOneTime>" + "<name>" + myreward.getName()
+					+ "</name>" + "<pointValue>"
+					+ Double.toString(myreward.getPointValue())
+					+ "</pointValue></reward>";
 			request.setEntity(new StringEntity(
-					"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>" +
-					rewardXML,
-					"utf-8"));
+					"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>"
+							+ rewardXML, "utf-8"));
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
@@ -68,6 +100,9 @@ public class RewardImpl implements Reward {
 		if (response != null) {
 			Log.d(TAG,"Got a response, code "
 					+ response.getStatusLine().getStatusCode());
+		} else {
+			Log.e(TAG, "Response was null, something is wrong...");
+			return null;
 		}
 
 		if (response.getStatusLine().getStatusCode() == 200) {
@@ -78,23 +113,26 @@ public class RewardImpl implements Reward {
 		// and return that
 		return retrievedReward;
 	}
-	
-public static Reward updateReward(Reward myreward){
-		
+
+	public static Reward updateReward(Reward myreward) {
+
 		Reward retrievedReward = null;
 
 		HttpPut request = new HttpPut(HttpRequestExecutor.RESOURCE_ROOT
-				+ "/reward/"+myreward.getId());
+				+ "/reward/" + myreward.getId());
 		try {
-			String rewardXML="<reward id=\""+myreward.getId()+"\">><description>"+myreward.getDescription()+"</description>"+
-			"<isOneTime>"+Boolean.toString(myreward.isOneTime())+"</isOneTime>"+
-			"<name>"+myreward.getName()+"</name>"+
-			"<pointValue>"+Double.toString(myreward.getPointValue())+"</pointValue></reward>";
+			String rewardXML = "<reward id=\"" + myreward.getId()
+					+ "\">><description>" + myreward.getDescription()
+					+ "</description>" + "<isOneTime>"
+					+ Boolean.toString(myreward.isOneTime()) + "</isOneTime>"
+					+ "<name>" + myreward.getName() + "</name>"
+					+ "<pointValue>"
+					+ Double.toString(myreward.getPointValue())
+					+ "</pointValue></reward>";
 			request.setEntity(new StringEntity(
-					"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>" +
-					rewardXML,
-					"utf-8"));
-			
+					"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>"
+							+ rewardXML, "utf-8"));
+
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
@@ -115,6 +153,7 @@ public static Reward updateReward(Reward myreward){
 		// and return that
 		return retrievedReward;
 	}
+<<<<<<< HEAD
 	
 public static void deleteReward(String id){
 	
@@ -132,6 +171,27 @@ public static void deleteReward(String id){
 }
 	public static Reward parseReward(HttpResponse response,Reward retrievedReward){
 		Log.d(TAG,"Going to try and parse out a Reward");
+=======
+
+	public static void deleteReward(String id) {
+
+		HttpDelete request = new HttpDelete(HttpRequestExecutor.RESOURCE_ROOT
+				+ "/reward/" + id);
+		HttpResponse response = HttpRequestExecutor.executeRequest(request);
+
+		if (response != null) {
+			System.out.println("Deleted "
+					+ response.getStatusLine().getStatusCode());
+		}
+		if (response.getStatusLine().getStatusCode() == 204) {
+			System.out.println("Got a response, Succeessfully Deleted");
+		}
+	}
+
+	public static Reward parseReward(HttpResponse response,
+			Reward retrievedReward) {
+		System.out.println("Going to try and parse out a Reward");
+>>>>>>> c23ccbf20aa0d982618e09b3e87082657053a769
 		SAXParserFactory factory = SAXParserFactory.newInstance();
 		try {
 			SAXParser saxParser = factory.newSAXParser();
@@ -143,6 +203,7 @@ public static void deleteReward(String id){
 		}
 		return retrievedReward;
 	}
+<<<<<<< HEAD
 	public static List<Reward> parseRewardsCollection(HttpResponse response,List<Reward> retrievedRewardLists){
 		Log.d(TAG,"Going to try and parse lists of Rewards");
 		SAXParserFactory factory = SAXParserFactory.newInstance();
@@ -164,20 +225,36 @@ public static void deleteReward(String id){
 		HttpGet request = new HttpGet(HttpRequestExecutor.RESOURCE_ROOT
 				+ "/reward/"+id);
 		Log.d(TAG,"RewardImpl is building request to get Reward from the server");
+=======
+
+	public static Reward getReward(String id) {
+
+		Reward retrievedReward = null;
+		HttpGet request = new HttpGet(HttpRequestExecutor.RESOURCE_ROOT
+				+ "/reward/" + id);
+		System.out
+				.println("RewardImpl is building request to get Reward from the server");
+>>>>>>> c23ccbf20aa0d982618e09b3e87082657053a769
 		HttpResponse response = HttpRequestExecutor.executeRequest(request);
-		
+
 		if (response != null) {
+<<<<<<< HEAD
 			Log.d(TAG,"Got a response, code "
 			+ response.getStatusLine().getStatusCode());
+=======
+			System.out.println("Got a response, code "
+					+ response.getStatusLine().getStatusCode());
+>>>>>>> c23ccbf20aa0d982618e09b3e87082657053a769
 		}
-		
+
 		if (response.getStatusLine().getStatusCode() == 200) {
 			retrievedReward = parseReward(response, retrievedReward);
 		}
 
 		// parse response XML into a FamilyImpl object
-		// 	and return that
+		// and return that
 		return retrievedReward;
+<<<<<<< HEAD
 }
 	public List<Reward> getRewardsCollection(){
 		
@@ -203,6 +280,11 @@ public static void deleteReward(String id){
 		
 	}
 	public String getDescription(){
+=======
+	}
+
+	public String getDescription() {
+>>>>>>> c23ccbf20aa0d982618e09b3e87082657053a769
 		return description;
 	}
 
@@ -211,7 +293,7 @@ public static void deleteReward(String id){
 	 * 
 	 * @return
 	 */
-	public String getId(){
+	public String getId() {
 		return id;
 	}
 
@@ -220,27 +302,30 @@ public static void deleteReward(String id){
 	 * 
 	 * @return
 	 */
-	public String getName(){
+	public String getName() {
 		return rewardName;
 	}
+
 	/**
 	 * Get this {@link Reward}'s point value.
 	 * 
 	 * @return
 	 */
-	public double getPointValue(){
+	public double getPointValue() {
 		return pointsValue;
 	}
+
 	/**
 	 * Get whether this {@link Reward} is "one time" or not. If it is a one time
 	 * reward, then it will be removed after it is redeemed.
 	 * 
 	 * @return
 	 */
-	public boolean isOneTime(){
-		//TODO
+	public boolean isOneTime() {
+		// TODO
 		return isOneTimeReward;
 	}
+
 	/**
 	 * Redeem this {@link Reward} for the given {@link User}. The point value of
 	 * this {@link Reward} is subtracted from the {@link User}. A redemption is
@@ -249,35 +334,37 @@ public static void deleteReward(String id){
 	 * 
 	 * @param isRedeeming
 	 */
-		
-	public void redeemReward(User isRedeeming){
-		
+
+	public void redeemReward(User isRedeeming) {
+
 	}
+
 	/**
 	 * Set this {@link Reward}'s description.
 	 * 
 	 * @param newDescription
 	 */
-	public void setDescription(String newDescription){
-		this.description=newDescription;
+	public void setDescription(String newDescription) {
+		this.description = newDescription;
 	}
+
 	/**
 	 * Set this {@link Reward}'s ID.
 	 * 
 	 * @param newId
 	 */
-	public void setId(String newId){
-		this.id=newId;
+	public void setId(String newId) {
+		this.id = newId;
 	}
+
 	/**
 	 * Set this {@link Reward}'s name.
 	 * 
 	 * @param newName
 	 */
-	public void setName(String newName){
-		this.rewardName=newName;
+	public void setName(String newName) {
+		this.rewardName = newName;
 	}
-	
 
 	/**
 	 * Set whether this {@link Reward} is "one time" or not. If it is a one time
@@ -285,17 +372,18 @@ public static void deleteReward(String id){
 	 * 
 	 * @param isOneTime
 	 */
-	
-	public void setOneTime(boolean isOneTime){
-		this.isOneTimeReward=isOneTime;
+
+	public void setOneTime(boolean isOneTime) {
+		this.isOneTimeReward = isOneTime;
 	}
+
 	/**
 	 * Set this {@link Reward}'s point value.
 	 * 
 	 * @param newPointValue
 	 */
-	
-	public void setPointValue(double newPointValue){
-		this.pointsValue=newPointValue;
+
+	public void setPointValue(double newPointValue) {
+		this.pointsValue = newPointValue;
 	}
 }
