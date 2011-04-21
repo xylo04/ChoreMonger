@@ -108,12 +108,13 @@ public class ChoreImpl implements Chore
 		HttpGet request = new HttpGet(HttpRequestExecutor.RESOURCE_ROOT + "chore/" + this.id);
 		HttpResponse response = HttpRequestExecutor.executeRequest(request);
 
-
+		
 		if (response.getStatusLine().getStatusCode() == 200)
 		{
 			try {
 				BufferedReader BR = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
 				this.str = BR.readLine();
+				System.out.println(this.str);
 				String str = this.str;
 				if ((str.indexOf("<name>") != -1))
 					this.name = str.substring(str.indexOf("<name>")+6, str.indexOf("</name>"));						//name
@@ -139,11 +140,12 @@ public class ChoreImpl implements Chore
 				if(str.indexOf("<users>") != -1)
 				{
 					String[] temp;
-					this.list_of_users = str.substring(str.indexOf("<users>")+8, str.indexOf("</users>"));
-					temp = str.substring(str.indexOf("<users>")+8, str.indexOf("</users>")).split(".");
-					for (int i = 0; i<temp.length; i++)
+					this.list_of_users = str.substring(str.indexOf("<users>")+7, str.indexOf("</users>"));
+					temp = str.substring(str.indexOf("<users>")+7, str.indexOf("</users>")).split("\\.");
+					System.out.println("id: " + temp[0]);
+					for (int i = 0; i<temp.length-1; i++)
 					{
-						this.users_assigned.add(UserImpl.getUser(temp[i]));
+						if (temp[i] != null){this.users_assigned.add(UserImpl.getUser(temp[i]));}
 					}
 				}
 				//users
@@ -208,9 +210,11 @@ public class ChoreImpl implements Chore
 		if (toAdd == null)
 			System.out.println("object is null");
 		this.users_assigned.add(toAdd);	
+		if(this.list_of_users == null){this.list_of_users = "";}
 		this.list_of_users += toAdd.getId() + ".";
-		temp = this.str.split("<users>");	
-				this.str = temp[0] + "<users>"+this.list_of_users+temp[1];
+		temp = this.str.split("<users>");
+		this.str = temp[0] + "<users>"+this.list_of_users+temp[1];
+		System.out.println(this.str);
 		HttpPut request = new HttpPut(HttpRequestExecutor.RESOURCE_ROOT + "chore/" + this.id);
 		try {
 			request.setEntity(new StringEntity(this.str));
