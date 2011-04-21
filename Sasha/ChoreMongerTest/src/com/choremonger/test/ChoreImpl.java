@@ -303,9 +303,9 @@ public class ChoreImpl implements Chore
 		request.setHeader("Content-Type", "application/xml");
 		HttpRequestExecutor.executeRequest(request);
 	}
-	public void clean()
+	public static void deleteChore(String id)
 	{
-		HttpDelete request = new HttpDelete(HttpRequestExecutor.RESOURCE_ROOT + "chore/" + this.id);
+		HttpDelete request = new HttpDelete(HttpRequestExecutor.RESOURCE_ROOT + "chore/" + id);
 		HttpRequestExecutor.executeRequest(request);
 	}
 }

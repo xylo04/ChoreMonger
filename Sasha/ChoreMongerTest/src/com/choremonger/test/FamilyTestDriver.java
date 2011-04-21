@@ -38,8 +38,13 @@ public class FamilyTestDriver {
 		test_users = chore2.getUsers();
 		System.out.println("User 0 id: "+test_users.get(0).getId());
 		System.out.println("User 1 id: "+test_users.get(1).getId());
-	//		chore0.clean();
-//		chore1.clean();
+		
+		UserImpl.deleteUser(user0.getId());
+		UserImpl.deleteUser(user1.getId());
+		UserImpl.deleteUser(user2.getId());
+		ChoreImpl.deleteChore(chore0.getId());
+		ChoreImpl.deleteChore(chore1.getId());
+		ChoreImpl.deleteChore(chore2.getId());
 	}
 
 }
