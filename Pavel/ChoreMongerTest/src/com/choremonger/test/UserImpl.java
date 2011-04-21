@@ -111,10 +111,12 @@ public class UserImpl implements User {
 		email = e;
 		Dob = d;
 		if (choreList != "") {
-			String[] temp = choreList.split(".");
+			String[] temp = choreList.split("\\.");
+			System.out.println(temp.length);
 			for(int i = 0; i < temp.length; i++){
 				ChoreImpl temp_chore = new ChoreImpl(temp[i]);
 				chores.add(temp_chore);
+				System.out.println(chores.get(i).getId());
 			}
 		}
 	}
@@ -231,9 +233,9 @@ public class UserImpl implements User {
 		String DobString = "";
 		String ChoreString = "";
 		if (chores.size() > 0) {
-			ChoreString = "<chores>";
-			for (int i = 0; i < chores.size();i++) {
-				ChoreString += chores.get(i).getId() + ".";
+			ChoreString = "<chores>" + chores.get(0).getId();
+			for (int i = 1; i < chores.size();i++) {
+				ChoreString += "." + chores.get(i).getId();
 			}
 			ChoreString += "</chores>";
 		}
