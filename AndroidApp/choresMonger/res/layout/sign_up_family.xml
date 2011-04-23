@@ -49,15 +49,9 @@
             android:orientation="vertical"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent">
-<EditText
-  android:id="@+id/EditText_UserName"
-  android:layout_height="wrap_content"
-  android:maxLength="20"
-  android:layout_width="fill_parent"
-  android:maxLines="1"
-  android:inputType="textPersonName"
-  android:hint="User Name">
- </EditText>
+            <EditText android:layout_width="fill_parent" android:maxLength="20" android:maxLines="1" android:layout_height="wrap_content" android:inputType="textPersonName" android:hint="Family Name" android:id="@+id/FamilyName"></EditText>
+            <EditText android:layout_width="fill_parent" android:maxLength="20" android:maxLines="1" android:hint="Display Name" android:id="@+id/EditText_DisplayName" android:layout_height="wrap_content" android:inputType="textPersonName"></EditText>
+            <EditText android:layout_width="fill_parent" android:maxLength="60" android:maxLines="1" android:hint="Email" android:id="@+id/EditText_Email" android:layout_height="wrap_content" android:inputType="textEmailAddress"></EditText>
          <EditText
         android:id="@+id/PasswordText"
         android:inputType="textPassword"
@@ -77,25 +71,6 @@
         android:hint="Confirm Password"
         android:password="true"
         android:imeOptions="actionSend" />
-    <EditText
-  android:id="@+id/EditText_DisplayName"
-  android:layout_height="wrap_content"
-  android:maxLength="20"
-  android:layout_width="fill_parent"
-  android:maxLines="1"
-  android:inputType="textPersonName"
-  android:hint="Display Name">
- </EditText>
- 
-     <EditText
-  android:id="@+id/EditText_Email"
-  android:layout_height="wrap_content"
-  android:maxLength="60"
-  android:layout_width="fill_parent"
-  android:maxLines="1"
-  android:inputType="textEmailAddress"
-  android:hint="Email">
- </EditText>
 
  <LinearLayout
                 android:orientation="horizontal"

@@ -68,6 +68,9 @@ public class RewardSaxHandler extends DefaultHandler {
 		else if (qName.equalsIgnoreCase("isOneTime")){
 			currentReward.setOneTime(Boolean.parseBoolean(characters));
 		}
+		else if (qName.equalsIgnoreCase("users")){
+			((RewardImpl)currentReward).setUsers(characters);
+		}
 		else if(qName.equalsIgnoreCase("reward")){
 			rewards.add(currentReward);
 		}

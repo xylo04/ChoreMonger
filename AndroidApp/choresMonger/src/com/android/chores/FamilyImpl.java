@@ -30,7 +30,7 @@ public class FamilyImpl implements Family {
 		Log.d(TAG,xmlDocument);
 
 		HttpPost request = new HttpPost(HttpRequestExecutor.RESOURCE_ROOT
-				+ "family");
+				+ "/family");
 		try {
 			request.setEntity(new StringEntity(xmlDocument, "utf-8"));
 		} catch (UnsupportedEncodingException e) {

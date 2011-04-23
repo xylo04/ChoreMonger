@@ -105,6 +105,7 @@ android:layout_height="fill_parent"
 			android:textColor="#000"
 			android:textSize="10pt"
 			android:layout_span="2"
+			android:inputType="numberDecimal"
 			android:layout_height="wrap_content"
 			android:layout_width="fill_parent"	/>	
 </TableRow>
