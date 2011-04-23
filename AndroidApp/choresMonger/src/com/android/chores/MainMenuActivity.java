@@ -90,6 +90,7 @@ public class MainMenuActivity extends Activity implements OnClickListener {
     			// launch my chores activity here
     		break;
     		case R.id.Button_ChoresManagement:
+    			startActivity(new Intent(this,ChoreManagementActivity.class));
     			// launch chores management activity here
     		break;
     		case R.id.Button_RewardsCenter:

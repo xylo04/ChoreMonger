@@ -33,21 +33,21 @@ public class ChoreImpl implements Chore
 
 	public ChoreImpl()
 	{
-		this(null, null, null, 0.0, null, 0.0);
+		this(null, null, 0.0, null, null, 0.0);
 	}
-	public ChoreImpl(String name, String id, List<User> users)
+	public ChoreImpl(String name, String id, double points)
 	{
-		this(name, id, users, 0.0, null, 0.0);
+		this(name, id, points, null, null, 0.0);
 	}
-	public ChoreImpl(String name, String id, List<User> users, double points)
+	public ChoreImpl(String name, String id, double points, List<User> users)
 	{
-		this(name, id, users, points, null, 0.0);
+		this(name, id, points, users, null, 0.0);
 	}
-	public ChoreImpl(String name, String id, List<User> users, double points, String intsructions)
+	public ChoreImpl(String name, String id, double points, List<User> users, String intsructions)
 	{
-		this(name, id, users, points, intsructions, 0.0);
+		this(name, id, points, users, intsructions, 0.0);
 	}
-	public ChoreImpl(String name, String id, List<User> users, double points, String intsructions, double priority)
+	public ChoreImpl(String name, String id, double points, List<User> users, String intsructions, double priority)
 	{
 		this.id = id;
 		this.name = name;
