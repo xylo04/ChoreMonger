@@ -92,11 +92,21 @@ public class UserImpl implements User {
 	}
 
 	private List<Chore> chores = new ArrayList<Chore>();
+	private String FamilyId;
 	private String id;
 	private double RewardPoints;
 	private Date Dob;
 	private String email;
 	private String name;
+	
+	public Family getFamily() {
+		Family temp = FamilyImpl.getFamily(FamilyId);
+		return temp;
+	}
+	
+	public void setFamily(Family newFamily) {
+		FamilyId = newFamily.getId();
+	}
 
 	public UserImpl() {
 		RewardPoints = 0;
@@ -105,18 +115,17 @@ public class UserImpl implements User {
 		name = "";
 	}
 	
-	public UserImpl(String n, double r, String e, Date d, String choreList) {
+	public UserImpl(String n, double r, String e, Date d, String choreList, String f) {
 		name = n;
 		RewardPoints = r;
 		email = e;
 		Dob = d;
+		FamilyId = f;
 		if (choreList != "") {
 			String[] temp = choreList.split("\\.");
-			System.out.println(temp.length);
 			for(int i = 0; i < temp.length; i++){
 				ChoreImpl temp_chore = new ChoreImpl(temp[i]);
 				chores.add(temp_chore);
-				System.out.println(chores.get(i).getId());
 			}
 		}
 	}
@@ -146,9 +155,6 @@ public class UserImpl implements User {
 
 	@Override
 	public Date getDob() {
-		if (Dob == null) {
-			System.out.println("No Dob");
-		}
 		return Dob;
 	}
 
@@ -249,7 +255,8 @@ public class UserImpl implements User {
 					"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><user id=\""
 							+ id + "\"><dob>" + DobString + "</dob><email>" + email + 
 							"</email><name>" + name + "</name><rewardPoints>" + RewardPoints +
-							"</rewardPoints>" + ChoreString + "</user>",
+							"</rewardPoints>" + ChoreString + "<familyId>" + FamilyId +
+							"</familyId></user>",
 					"utf-8"));
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();

@@ -21,6 +21,7 @@ public class UserSaxHandler extends DefaultHandler {
 	private User user;
 	private String Id = "";
 	private String ChoreString = "";
+	private String FamilyId = "";
 
 	@Override
 	public void characters(char[] ch, int start, int length)
@@ -54,8 +55,11 @@ public class UserSaxHandler extends DefaultHandler {
 		else if (qName.equalsIgnoreCase("chores")) {
 			ChoreString = characters;
 		}
+		else if (qName.equalsIgnoreCase("familyId")) {
+			FamilyId = characters;
+		}
 		else if (qName.equalsIgnoreCase("user")) {
-			user = new UserImpl(Name,RewardPoints,Email,DoB,ChoreString);
+			user = new UserImpl(Name,RewardPoints,Email,DoB,ChoreString,FamilyId);
 			user.setId(Id);
 		}
 		characters = "";
