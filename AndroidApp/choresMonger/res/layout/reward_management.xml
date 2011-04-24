@@ -1,54 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-  xmlns:android="http://schemas.android.com/apk/res/android"
-  android:layout_width="fill_parent"
-  android:layout_height="fill_parent">
-  
-<TableLayout android:id="@+id/TableLayout01" 
-	android:layout_width="fill_parent" 
-	android:layout_height="wrap_content"
-	android:stretchColumns="*">
 
-	<TableRow android:id="@+id/TableRow01"
-	android:layout_width="fill_parent" 
-	android:layout_height="wrap_content">
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android" 
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#4062F7">
+
+<RelativeLayout 
+	android:id="@+id/RelativeLayout01" 
+	android:layout_width="wrap_content" 
+	android:layout_height="wrap_content"
+	android:background="#000">
 	
-	<ImageView android:id="@+id/ImageView_LeftIcon" 
+<ImageView android:id="@+id/ImageView_LeftIcon" 
 		android:layout_width="wrap_content" 
 		android:layout_height="wrap_content"
-		android:layout_alignParentLeft="true"
+		android:layout_alignParentRight="true"
 		android:layout_alignParentTop="true"
+		android:layout_gravity="right|center_vertical"
 		android:src="@drawable/choresmonger">
 	</ImageView>
-
-</TableRow>
-
-<TableRow android:id="@+id/TableRow02"
-	android:layout_width="fill_parent" 
-	android:layout_height="wrap_content">
-
 <TextView 
 		android:id="@+id/TextView01" 
 		android:layout_height="wrap_content" 
-		android:text="Rewards Management"
+		android:text="My Rewards" 
 		android:textSize="@dimen/menu_title" 
 		android:shadowDx="0" 
 		android:shadowDy="0" 
 		android:shadowRadius="10" 
-		android:layout_width="wrap_content"
+		android:layout_width="fill_parent"
 		android:layout_gravity="fill_horizontal|center" 
 		android:layout_alignParentTop="true" 
-		android:layout_centerHorizontal="true" 
+		android:layout_centerHorizontal="true"
 		android:shadowColor="@color/menu_glow" 
 		android:textColor="@color/menu_header"/>
+</RelativeLayout>
+  <Button
+    android:id="@+id/Button_Create_Reward"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentTop="true"
+    android:text="Create New Reward"/>
 
-</TableRow>
+   <RelativeLayout
+        android:id="@+id/RelativeLayout02"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content">
 
-	<TableRow android:id="@+id/TableRow03"
-	android:layout_width="fill_parent" 
-	android:layout_height="wrap_content">
-	
-	<ListView
+    
+    <ListView
 		android:id="@+id/ListView_My_RewardsManagement_Menu"
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
@@ -56,19 +57,7 @@
 		android:divider="#FFF"
 		android:dividerHeight="8px">
 	</ListView>
-	
-</TableRow>
-     <TableRow android:id="@+id/TableRow04"
-	android:layout_width="fill_parent" 
-	android:layout_height="wrap_content">
-	 
-  <Button
-    android:id="@+id/Button_Create_Reward"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:text="Create New Reward"></Button>
-                    
-   </TableRow>
-  </TableLayout>
-  
+    
+</RelativeLayout>
 </LinearLayout>
+	

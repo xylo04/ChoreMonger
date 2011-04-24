@@ -30,13 +30,15 @@ public class RewardManagementActivity extends Activity implements OnClickListene
        menuListView.setCacheColorHint(Color.BLUE); 
        RewardImpl myrewardImpl=new RewardImpl();
        myrewardsCollection= myrewardImpl.getRewardsCollection();
-       String[] items=new String[myrewardsCollection.size()];
+   
+        String[] items=new String[myrewardsCollection.size()];
+      
        int i=0;
        for(Reward reward:myrewardsCollection){
     	   items[i]=reward.getName();
     	   i++;
        }
-        
+
         ArrayAdapter<String>adapt=new ArrayAdapter<String>(this, R.layout.menu_item,items);
         menuListView.setAdapter(adapt);
        

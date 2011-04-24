@@ -24,10 +24,8 @@ public class EditRewardActivity extends Activity implements OnClickListener  {
         
         
         View ButtonUpdateReward= findViewById(R.id.Button_Update_Reward);
-        View ButtonCancelReward = findViewById(R.id.Button_Cancel_Edit_Reward);
         View ButtonDeleteReward = findViewById(R.id.Button_Delete_Reward);
         ButtonUpdateReward.setOnClickListener(this);
-        ButtonCancelReward.setOnClickListener(this);
         ButtonDeleteReward.setOnClickListener(this);
     }
         @Override
@@ -41,9 +39,6 @@ public class EditRewardActivity extends Activity implements OnClickListener  {
             		// delete reward
         			deleteReward();
             		break;
-        	case R.id.Button_Cancel_Edit_Reward:
-        		startActivity(new Intent(EditRewardActivity.this,RewardManagementActivity.class));
-        		break;
         	}
     	}
         

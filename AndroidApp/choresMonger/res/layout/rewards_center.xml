@@ -9,8 +9,16 @@
 <RelativeLayout 
 	android:id="@+id/RelativeLayout01" 
 	android:layout_width="wrap_content" 
-	android:layout_height="wrap_content">
-
+	android:layout_height="wrap_content"
+	android:background="#000">
+<ImageView android:id="@+id/ImageView_LeftIcon" 
+		android:layout_width="wrap_content" 
+		android:layout_height="wrap_content"
+		android:layout_alignParentRight="true"
+		android:layout_alignParentTop="true"
+		android:layout_gravity="right|center_vertical"
+		android:src="@drawable/choresmonger">
+	</ImageView>
 <TextView 
 		android:id="@+id/TextView01" 
 		android:layout_height="wrap_content" 
@@ -19,24 +27,17 @@
 		android:shadowDx="0" 
 		android:shadowDy="0" 
 		android:shadowRadius="10" 
-		android:layout_width="wrap_content"
+		android:layout_width="fill_parent"
 		android:layout_gravity="fill_horizontal|center" 
 		android:layout_alignParentTop="true" 
-		android:layout_centerHorizontal="true" 
+		android:layout_centerHorizontal="true"
 		android:shadowColor="@color/menu_glow" 
 		android:textColor="@color/menu_header"/>
 
-<ImageView android:id="@+id/ImageView_LeftIcon" 
-		android:layout_width="wrap_content" 
-		android:layout_height="wrap_content"
-		android:layout_alignParentLeft="true"
-		android:layout_alignParentTop="true"
-		android:src="@drawable/choresmonger">
-	</ImageView>
-	
-
 
 </RelativeLayout>
+
+
 <RelativeLayout
 	android:id="@+id/RelativeLayout02" 
 	android:layout_width="wrap_content" 

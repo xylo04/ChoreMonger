@@ -26,8 +26,10 @@ public class MyRewardsActivity extends Activity {
 
         RewardImpl myrewardImpl=new RewardImpl();
         myrewardsCollection= myrewardImpl.getRewardsCollection();
-        String[] items=new String[myrewardsCollection.size()];
-        int i=0;
+
+         String[] items=new String[myrewardsCollection.size()];
+        
+      int i=0;
         for(Reward reward:myrewardsCollection){
      	   items[i]=reward.getName();
      	   i++;
