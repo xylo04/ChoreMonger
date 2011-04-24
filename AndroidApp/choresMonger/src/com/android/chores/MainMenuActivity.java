@@ -11,6 +11,8 @@ import org.apache.http.client.params.ClientPNames;
 import org.apache.http.cookie.Cookie;
 import org.apache.http.impl.client.DefaultHttpClient;
 
+import com.choremonger.shared.Chore;
+
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.accounts.AccountManagerCallback;
@@ -18,7 +20,9 @@ import android.accounts.AccountManagerFuture;
 import android.accounts.AuthenticatorException;
 import android.accounts.OperationCanceledException;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
@@ -28,7 +32,8 @@ import android.widget.Toast;
 
 public class MainMenuActivity extends Activity implements OnClickListener {
 	DefaultHttpClient http_client = new DefaultHttpClient();
-	
+	public static final String CookieValPersist = "CookieValPersist";
+	private  String cookieVal;
 	/** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -61,6 +66,7 @@ public class MainMenuActivity extends Activity implements OnClickListener {
 		Account account = (Account)intent.getExtras().get("account");
 		accountManager.getAuthToken(account, "ah", false, new GetAuthTokenCallback(), null);
 	}
+
     @Override
 	public void onClick(View v) {
     	switch(v.getId()){
@@ -126,8 +132,13 @@ public class MainMenuActivity extends Activity implements OnClickListener {
     				return false;
 
     			for(Cookie cookie : http_client.getCookieStore().getCookies()) {
-    				if(cookie.getName().equals("ACSID"))
+    				if(cookie.getName().equals("ACSID")){
+    					
+    					SharedPreferences.Editor sharedprefEditor=MainMenuActivity.this.getSharedPreferences("MainMenuActivity", Context.MODE_PRIVATE).edit();
+    					sharedprefEditor.putString("AUTHVAL", cookie.getValue());
+    					sharedprefEditor.commit();
     					return true;
+    				}
     			}
     		} catch (ClientProtocolException e) {
     			// TODO Auto-generated catch block

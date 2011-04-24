@@ -1,7 +1,9 @@
 package com.android.chores;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -53,8 +55,9 @@ public class CreateNewRewardActivity extends Activity implements OnClickListener
         
         public void createReward(String description,String rewardName,double pointsValue,boolean isOneTimeReward){
         	Reward reward=new RewardImpl("",description,rewardName,pointsValue,isOneTimeReward);
-
-        	Reward createdReward=RewardImpl.createReward(reward);
+        	SharedPreferences settings = getSharedPreferences("MainMenuActivity", Context.MODE_PRIVATE);
+        	String authVal=settings.getString("AUTHVAL", "");
+        	Reward createdReward=RewardImpl.createReward(reward,authVal);
         	if (createdReward==null){
 				Log.e(TAG,"Oooops! No rewards created!");
 				System.exit(1);
@@ -63,6 +66,5 @@ public class CreateNewRewardActivity extends Activity implements OnClickListener
 			Log.d(TAG,"Reward Created");
 			Log.d(TAG,createdReward.getName());
 			Log.d(TAG,createdReward.getId());
-        	RewardImpl.createReward(reward);
         }
 }

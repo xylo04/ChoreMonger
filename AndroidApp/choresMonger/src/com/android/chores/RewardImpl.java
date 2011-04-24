@@ -49,7 +49,7 @@ public class RewardImpl implements Reward {
 	}
 
 
-	public static Reward createReward(Reward myreward) {
+	public static Reward createReward(Reward myreward, String authCookie) {
 
 
 		Reward retrievedReward = null;
@@ -71,7 +71,7 @@ public class RewardImpl implements Reward {
 			e.printStackTrace();
 		}
 		request.setHeader("Content-Type", "application/xml");
-
+		request.addHeader("Cookie",authCookie);
 		Log.d(TAG,"RewardImpl is building request for new Reward from the server");
 		HttpResponse response = HttpRequestExecutor.executeRequest(request);
 		if (response != null) {
@@ -91,7 +91,7 @@ public class RewardImpl implements Reward {
 		return retrievedReward;
 	}
 
-	public static Reward updateReward(Reward myreward) {
+	public static Reward updateReward(Reward myreward, String authCookie) {
 
 		Reward retrievedReward = null;
 
@@ -114,7 +114,8 @@ public class RewardImpl implements Reward {
 			e.printStackTrace();
 		}
 		request.setHeader("Content-Type", "application/xml");
-
+		request.addHeader("Cookie",authCookie);
+		
 		Log.d(TAG,"RewardImpl is building request for new Reward from the server");
 		HttpResponse response = HttpRequestExecutor.executeRequest(request);
 		if (response != null) {
@@ -132,12 +133,12 @@ public class RewardImpl implements Reward {
 	}
 
 	
-public static void deleteReward(String id){
+public static void deleteReward(String id, String authCookie){
 	
 	HttpDelete request = new HttpDelete(HttpRequestExecutor.RESOURCE_ROOT
 			+ "/reward/"+id);
 	HttpResponse response = HttpRequestExecutor.executeRequest(request);
-	
+	request.addHeader("Cookie",authCookie);
 	if (response != null) {
 		Log.d(TAG,"Deleted "
 				+ response.getStatusLine().getStatusCode());
@@ -179,13 +180,14 @@ public static void deleteReward(String id){
 	}
 	
 
-	public static Reward getReward(String id) {
+	public static Reward getReward(String id, String authCookie) {
 
 		Reward retrievedReward = null;
+		
 		HttpGet request = new HttpGet(HttpRequestExecutor.RESOURCE_ROOT
 				+ "/reward/" + id);
-		System.out
-				.println("RewardImpl is building request to get Reward from the server");
+		request.addHeader("Cookie",authCookie);
+		Log.d(TAG,"RewardImpl is building request to get Reward from the server");
 
 		HttpResponse response = HttpRequestExecutor.executeRequest(request);
 
