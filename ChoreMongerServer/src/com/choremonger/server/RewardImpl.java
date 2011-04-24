@@ -43,6 +43,11 @@ public class RewardImpl implements Reward {
 	@XmlElement
 	private double pointValue;
 
+	@SuppressWarnings("unused")
+	@Persistent
+	@XmlElement
+	private String users;
+
 	@Override
 	public String getDescription() {
 		return description;

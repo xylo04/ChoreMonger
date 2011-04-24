@@ -37,6 +37,7 @@ public class ChoreImpl implements Chore {
 	@XmlElement
 	private String name;
 
+	@SuppressWarnings("unused")
 	@Persistent
 	@XmlElement
 	private String chores;

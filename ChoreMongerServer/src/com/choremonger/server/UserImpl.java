@@ -52,6 +52,11 @@ public class UserImpl implements User {
 	@XmlElement
 	private double rewardPoints;
 
+	@SuppressWarnings("unused")
+	@Persistent
+	@XmlElement
+	private String familyId;
+
 	@Override
 	public void addChore(Chore toAdd) {
 		// chores.add((ChoreImpl) toAdd);
@@ -134,7 +139,7 @@ public class UserImpl implements User {
 	}
 
 	public void setRewardPoints(double rewardPoints) {
-		
+		this.rewardPoints = rewardPoints;
 	}
 
 }
