@@ -3,7 +3,9 @@ package com.choremonger.test;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
@@ -22,6 +24,12 @@ public class UserSaxHandler extends DefaultHandler {
 	private String Id = "";
 	private String ChoreString = "";
 	private String FamilyId = "";
+	private List<User> users;
+	
+	@Override
+    public void startDocument() throws SAXException {
+                users=new ArrayList<User>();
+        }
 
 	@Override
 	public void characters(char[] ch, int start, int length)
@@ -61,6 +69,7 @@ public class UserSaxHandler extends DefaultHandler {
 		else if (qName.equalsIgnoreCase("user")) {
 			user = new UserImpl(Name,RewardPoints,Email,DoB,ChoreString,FamilyId);
 			user.setId(Id);
+			users.add(user);
 		}
 		characters = "";
 	}
@@ -68,6 +77,11 @@ public class UserSaxHandler extends DefaultHandler {
 	public User getUser() {
 		return user;
 	}
+	
+	public List<User>getUsersCollections(){
+        return users;
+}
+
 
 	@Override
 	public void startElement(String uri, String localName, String qName,

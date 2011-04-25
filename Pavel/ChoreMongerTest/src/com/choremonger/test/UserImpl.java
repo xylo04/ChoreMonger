@@ -8,6 +8,7 @@ import java.util.List;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
+import org.apache.http.HeaderIterator;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
@@ -53,6 +54,46 @@ public class UserImpl implements User {
 		// and return that
 		return retval;
 	}
+	
+	public static User getUserByName(String name) {
+		User retval = null;
+		List<User> temp = getUsersCollection();
+		for (int i = 1; i < temp.size();i++) {
+			if (temp.get(i).getName() == name) {
+				retval = temp.get(i);
+			}
+		}
+		
+		return retval;
+	}
+	
+	public static List<User> parseUsersCollection(HttpResponse response,List<User> retrievedUserLists){
+        SAXParserFactory factory = SAXParserFactory.newInstance();
+        try {
+                SAXParser saxParser = factory.newSAXParser();
+                UserSaxHandler handler = new UserSaxHandler();
+                saxParser.parse(response.getEntity().getContent(), handler);
+                retrievedUserLists = handler.getUsersCollections();
+        }
+        catch (Exception e) {
+                e.printStackTrace();
+        }
+        return retrievedUserLists;
+}
+
+	public static List<User> getUsersCollection(){
+
+        List<User> usersList=null;
+        HttpGet request = new HttpGet(HttpRequestExecutor.RESOURCE_ROOT
+                        + "/user/");
+        HttpResponse response = HttpRequestExecutor.executeRequest(request);
+
+        if (response.getStatusLine().getStatusCode() == 200) {
+                usersList = parseUsersCollection(response, usersList);
+        }
+        return usersList;
+	}
+
 
 	public static User getUser(String id) {
 		User retval = null;
