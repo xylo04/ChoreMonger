@@ -45,10 +45,7 @@ public class EditRewardActivity extends Activity implements OnClickListener  {
     	}
         
         public void initalizeElements(){
-        	SharedPreferences settings = getSharedPreferences("MainMenuActivity", Context.MODE_PRIVATE);
-        	String authVal=settings.getString("AUTHVAL", "");
-        	
-        	reward=RewardImpl.getReward(rewardID,authVal);
+        	reward=RewardImpl.getReward(rewardID);
         	((EditText)(findViewById(R.id.editTxtRewardTitleVal))).setText(reward.getName(), TextView.BufferType.EDITABLE);
         	((EditText)(findViewById(R.id.editxtRewardDescrVal))).setText(reward.getDescription(), TextView.BufferType.EDITABLE);
         	((EditText)(findViewById(R.id.txviewRewardPointsVal))).setText(Double.toString(reward.getPointValue()), TextView.BufferType.EDITABLE);
@@ -67,17 +64,11 @@ public class EditRewardActivity extends Activity implements OnClickListener  {
         	if(chkBox.isChecked())
         		reward.setOneTime(true);
         	else
-        		reward.setOneTime(false);
-        	SharedPreferences settings = getSharedPreferences("MainMenuActivity", Context.MODE_PRIVATE);
-        	String authVal=settings.getString("AUTHVAL", "");
-        	
-        	reward=RewardImpl.updateReward(reward,authVal);
+        		reward.setOneTime(false);        	
+        	reward=RewardImpl.updateReward(reward);
         	
         }
-        public void deleteReward(){
-        	SharedPreferences settings = getSharedPreferences("MainMenuActivity", Context.MODE_PRIVATE);
-        	String authVal=settings.getString("AUTHVAL", "");
-        	
-        	RewardImpl.deleteReward(reward.getId(),authVal);
+        public void deleteReward(){     	
+        	RewardImpl.deleteReward(reward.getId());
         }
 }

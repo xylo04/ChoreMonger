@@ -26,15 +26,11 @@ import com.choremonger.shared.User;
 public class RewardImpl implements Reward {
 
 	private static final String TAG =RewardImpl.class.getName();
-
-
 	private String id;
 	private String description;
 	private String rewardName;
 	private double pointsValue;
 	private boolean isOneTimeReward;
-
-	
 	
 	public RewardImpl(){
 	}
@@ -47,9 +43,37 @@ public class RewardImpl implements Reward {
 		this.pointsValue = pointsValue;
 		this.isOneTimeReward = isOneTimeReward;
 	}
+	
+	// Remove this part to the userImpl
+	/*public static String getUserID(String userName){
+		String userID="";
+		HttpGet request = new HttpGet(HttpRequestExecutor.RESOURCE_ROOT
+				+ "/user/");
+		Log.d(TAG,"RewardImpl is building request to get a user from the server");
 
+		HttpResponse response = HttpRequestExecutor.executeRequest(request);
 
-	public static Reward createReward(Reward myreward, String authCookie) {
+		if (response != null) {
+
+			Log.d(TAG,"Got a response, code "
+			+ response.getStatusLine().getStatusCode());
+
+			Log.d(TAG,"Got a response, code "
+					+ response.getStatusLine().getStatusCode());
+
+		}
+
+		if (response.getStatusLine().getStatusCode() == 200) {
+			userID = parseUserToGetID(response, userName);
+		}
+
+		return userID;
+	}
+	private static String parseUserToGetID(HttpResponse response, String userName){
+		return "agtjaG9yZW1vbmdlcnIgCxIKRmFtaWx5SW1wbBjxLgwLEghVc2VySW1wbBi4Hww";
+	}*/
+	
+	public static Reward createReward(Reward myreward) {
 
 
 		Reward retrievedReward = null;
@@ -71,7 +95,6 @@ public class RewardImpl implements Reward {
 			e.printStackTrace();
 		}
 		request.setHeader("Content-Type", "application/xml");
-		request.addHeader("Cookie",authCookie);
 		Log.d(TAG,"RewardImpl is building request for new Reward from the server");
 		HttpResponse response = HttpRequestExecutor.executeRequest(request);
 		if (response != null) {
@@ -91,7 +114,7 @@ public class RewardImpl implements Reward {
 		return retrievedReward;
 	}
 
-	public static Reward updateReward(Reward myreward, String authCookie) {
+	public static Reward updateReward(Reward myreward) {
 
 		Reward retrievedReward = null;
 
@@ -114,12 +137,11 @@ public class RewardImpl implements Reward {
 			e.printStackTrace();
 		}
 		request.setHeader("Content-Type", "application/xml");
-		request.addHeader("Cookie",authCookie);
 		
 		Log.d(TAG,"RewardImpl is building request for new Reward from the server");
 		HttpResponse response = HttpRequestExecutor.executeRequest(request);
 		if (response != null) {
-			System.out.println("Got a response, code "
+			Log.d(TAG,"Got a response, code "
 					+ response.getStatusLine().getStatusCode());
 		}
 
@@ -133,12 +155,11 @@ public class RewardImpl implements Reward {
 	}
 
 	
-public static void deleteReward(String id, String authCookie){
+public static void deleteReward(String id){
 	
 	HttpDelete request = new HttpDelete(HttpRequestExecutor.RESOURCE_ROOT
 			+ "/reward/"+id);
 	HttpResponse response = HttpRequestExecutor.executeRequest(request);
-	request.addHeader("Cookie",authCookie);
 	if (response != null) {
 		Log.d(TAG,"Deleted "
 				+ response.getStatusLine().getStatusCode());
@@ -151,7 +172,7 @@ public static void deleteReward(String id, String authCookie){
 
 	public static Reward parseReward(HttpResponse response,
 			Reward retrievedReward) {
-		System.out.println("Going to try and parse out a Reward");
+		Log.d(TAG,"Going to try and parse out a Reward");
 		SAXParserFactory factory = SAXParserFactory.newInstance();
 		try {
 			SAXParser saxParser = factory.newSAXParser();
@@ -180,13 +201,12 @@ public static void deleteReward(String id, String authCookie){
 	}
 	
 
-	public static Reward getReward(String id, String authCookie) {
+	public static Reward getReward(String id) {
 
 		Reward retrievedReward = null;
 		
 		HttpGet request = new HttpGet(HttpRequestExecutor.RESOURCE_ROOT
 				+ "/reward/" + id);
-		request.addHeader("Cookie",authCookie);
 		Log.d(TAG,"RewardImpl is building request to get Reward from the server");
 
 		HttpResponse response = HttpRequestExecutor.executeRequest(request);
@@ -196,7 +216,7 @@ public static void deleteReward(String id, String authCookie){
 			Log.d(TAG,"Got a response, code "
 			+ response.getStatusLine().getStatusCode());
 
-			System.out.println("Got a response, code "
+			Log.d(TAG,"Got a response, code "
 					+ response.getStatusLine().getStatusCode());
 
 		}

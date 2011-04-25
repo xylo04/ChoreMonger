@@ -1,50 +1,46 @@
 package com.android.chores;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.util.Date;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.params.ClientPNames;
-import org.apache.http.cookie.Cookie;
-import org.apache.http.impl.client.DefaultHttpClient;
-
-import com.choremonger.shared.Chore;
-
-import android.accounts.Account;
-import android.accounts.AccountManager;
-import android.accounts.AccountManagerCallback;
-import android.accounts.AccountManagerFuture;
-import android.accounts.AuthenticatorException;
-import android.accounts.OperationCanceledException;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import com.choremonger.shared.User;
 
 public class MainMenuActivity extends Activity implements OnClickListener {
-	DefaultHttpClient http_client = new DefaultHttpClient();
-	public static final String CookieValPersist = "CookieValPersist";
-	private  String cookieVal;
+	private static String user_id;
+	private User current_user;
+	
 	/** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_menu);
         
-        // TODO: Change this later
-        TextView txvwDisplayName=(TextView)findViewById(R.id.TextView_DisplayName);
-        txvwDisplayName.setText("Khalid");
-        TextView txvwEarnedPointsVal=(TextView)findViewById(R.id.TextView_assignedChoresVal);
-        txvwEarnedPointsVal.setText("2");
+        
+        SharedPreferences sharedprefs=getSharedPreferences(SignInActivity.PREFS_NAME, Context.MODE_PRIVATE);
+        user_id=sharedprefs.getString("USER_ID", "");
+        current_user=UserImpl.getUser(user_id);
+        //  Display user name and points
+        TextView txvwWelcomeView=(TextView)findViewById(R.id.TextView_WelcomeView);
+        txvwWelcomeView.setText(getGreetingExpression());
+        TextView txvwDisplayNameVal=(TextView)findViewById(R.id.TextView_DisplayNameVal);
+        txvwDisplayNameVal.setText(current_user.getName());
+        TextView txvwAssingedChoresVal=(TextView)findViewById(R.id.TextView_assignedChoresVal);
+        //TODO: Get the number of chores assigned to this user 
+        txvwAssingedChoresVal.setText("");
+        
+        TextView txvwEarnedPointsVal=(TextView)findViewById(R.id.TextView_usrEarnedPointsVal);
+        txvwEarnedPointsVal.setText(Double.toString(current_user.getRewardPoints()));
         
        View ButtonMyChores=findViewById(R.id.Button_myChores);
        View ButtonChoresManagement=findViewById(R.id.Button_ChoresManagement);
@@ -58,14 +54,6 @@ public class MainMenuActivity extends Activity implements OnClickListener {
        ButtonProfile.setOnClickListener(this);
        ButtonSettings.setOnClickListener(this);
     }
-	@Override
-	protected void onResume() {
-		super.onResume();
-		Intent intent = getIntent();
-		AccountManager accountManager = AccountManager.get(getApplicationContext());
-		Account account = (Account)intent.getExtras().get("account");
-		accountManager.getAuthToken(account, "ah", false, new GetAuthTokenCallback(), null);
-	}
 
     @Override
 	public void onClick(View v) {
@@ -88,105 +76,55 @@ public class MainMenuActivity extends Activity implements OnClickListener {
     		break;
     	}
 	}
-    private class GetAuthTokenCallback implements AccountManagerCallback<Bundle> {
-    	public void run(AccountManagerFuture<Bundle> result) {
-    		Bundle bundle;
-    		try {
-    			bundle = result.getResult();
-    			Intent intent = (Intent)bundle.get(AccountManager.KEY_INTENT);
-    			if(intent != null) {
-    				// User input required
-    				startActivity(intent);
-    			} else {
-    				onGetAuthToken(bundle);
-    			}
-    		} catch (OperationCanceledException e) {
-    			// TODO Auto-generated catch block
-    			e.printStackTrace();
-    		} catch (AuthenticatorException e) {
-    			// TODO Auto-generated catch block
-    			e.printStackTrace();
-    		} catch (IOException e) {
-    			// TODO Auto-generated catch block
-    			e.printStackTrace();
-    		}
-    	}
-    };
-
-    protected void onGetAuthToken(Bundle bundle) {
-    	String auth_token = bundle.getString(AccountManager.KEY_AUTHTOKEN);
-    	new GetCookieTask().execute(auth_token);
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.options_menu, menu);
+        return true;
     }
-
-    private class GetCookieTask extends AsyncTask<String, Void, Boolean> {
-    	protected Boolean doInBackground(String... tokens) {
-    		try {
-    			// Don't follow redirects
-    			http_client.getParams().setBooleanParameter(ClientPNames.HANDLE_REDIRECTS, false);
-
-    			HttpGet http_get = new HttpGet("http://choremonger.appspot.com/_ah/login?continue=http://localhost/&auth=" + tokens[0]);
-    			HttpResponse response;
-    			response = http_client.execute(http_get);
-    			if(response.getStatusLine().getStatusCode() != 302)
-    				// Response should be a redirect
-    				return false;
-
-    			for(Cookie cookie : http_client.getCookieStore().getCookies()) {
-    				if(cookie.getName().equals("ACSID")){
-    					
-    					SharedPreferences.Editor sharedprefEditor=MainMenuActivity.this.getSharedPreferences("MainMenuActivity", Context.MODE_PRIVATE).edit();
-    					sharedprefEditor.putString("AUTHVAL", cookie.getValue());
-    					sharedprefEditor.commit();
-    					return true;
-    				}
-    			}
-    		} catch (ClientProtocolException e) {
-    			// TODO Auto-generated catch block
-    			e.printStackTrace();
-    		} catch (IOException e) {
-    			// TODO Auto-generated catch block
-    			e.printStackTrace();
-    		} finally {
-    			http_client.getParams().setBooleanParameter(ClientPNames.HANDLE_REDIRECTS, true);
-    		}
-    		return false;
-    	}
-
-    	protected void onPostExecute(Boolean result) {
-    		new AuthenticatedRequestTask().execute("http://choremonger.appspot.com/admin/");
-    	}
+    
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+        case R.id.logout:
+            logout();
+            return true;
+        case R.id.help:
+            showHelp();
+            return true;
+        default:
+            return super.onOptionsItemSelected(item);
+        }
     }
-
-    private class AuthenticatedRequestTask extends AsyncTask<String, Void, HttpResponse> {
-    	@Override
-    	protected HttpResponse doInBackground(String... urls) {
-    		try {
-    			HttpGet http_get = new HttpGet(urls[0]);
-    			return http_client.execute(http_get);
-    		} catch (ClientProtocolException e) {
-    			// TODO Auto-generated catch block
-    			e.printStackTrace();
-    		} catch (IOException e) {
-    			// TODO Auto-generated catch block
-    			e.printStackTrace();
-    		}
-    		return null;
-    	}
-
-    	protected void onPostExecute(HttpResponse result) {
-    		try {
-    			BufferedReader reader = new BufferedReader(new InputStreamReader(result.getEntity().getContent()));
-    			String first_line = reader.readLine();
-    			Toast.makeText(getApplicationContext(), first_line, Toast.LENGTH_LONG).show();				
-    		} catch (IllegalStateException e) {
-    			// TODO Auto-generated catch block
-    			e.printStackTrace();
-    		} catch (IOException e) {
-    			// TODO Auto-generated catch block
-    			e.printStackTrace();
-    		}
-    	}
+    private void logout(){
+		SharedPreferences sharedprefs=getSharedPreferences(SignInActivity.PREFS_NAME, Context.MODE_PRIVATE);
+		if(sharedprefs.getString("USER_ID", "")!=null)	{
+			SharedPreferences.Editor editor=sharedprefs.edit().remove("USER_ID");
+			editor.commit();
+			startActivity(new Intent(this,WelcomeActivity.class));
+		}
+			
     }
-}
+    private void showHelp(){
+    	
+    }
+    private String getGreetingExpression(){
+    	
+    	 Date dt = new Date();
+         int hours = dt.getHours();
+         
+    	if(hours>=12 && hours<=18)
+    		return "Good afternoon  ";
+    	else if(hours>18 && hours<23)
+    		return "Good evening  ";
+    	else 
+    		return "Good morning  ";
+    		
+    	}
+
+    }
+   
+
 
 

@@ -55,9 +55,7 @@ public class CreateNewRewardActivity extends Activity implements OnClickListener
         
         public void createReward(String description,String rewardName,double pointsValue,boolean isOneTimeReward){
         	Reward reward=new RewardImpl("",description,rewardName,pointsValue,isOneTimeReward);
-        	SharedPreferences settings = getSharedPreferences("MainMenuActivity", Context.MODE_PRIVATE);
-        	String authVal=settings.getString("AUTHVAL", "");
-        	Reward createdReward=RewardImpl.createReward(reward,authVal);
+        	Reward createdReward=RewardImpl.createReward(reward);
         	if (createdReward==null){
 				Log.e(TAG,"Oooops! No rewards created!");
 				System.exit(1);

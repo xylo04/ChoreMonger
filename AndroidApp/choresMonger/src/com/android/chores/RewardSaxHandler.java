@@ -28,13 +28,13 @@ public class RewardSaxHandler extends DefaultHandler {
 			throws SAXException {
 		// stash these until we know what they mean (in endElement)
 		characters = new String(ch, start, length);
-		//System.out.println("characters " + characters);
+		//Log.d(TAG,"characters " + characters);
 	}
 
 	@Override
 	public void endElement(String uri, String localName, String qName)
 			throws SAXException {
-		//System.out.println("endElement " + qName);
+		//Log.d(TAG,"endElement " + qName);
 
 		// Note to self: how can we do this without triggering Family to update
 		// with server?
@@ -87,7 +87,7 @@ public class RewardSaxHandler extends DefaultHandler {
 	@Override
 	public void startElement(String uri, String localName, String qName,
 			Attributes attributes) throws SAXException {
-		//System.out.println("startElement " + qName);
+		//Log.d(TAG,"startElement " + qName);
 		if (!payingAttention) {
 			return;
 		}
