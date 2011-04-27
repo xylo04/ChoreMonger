@@ -8,9 +8,6 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.impl.client.DefaultHttpClient;
 
-import android.text.GetChars;
-import android.util.Log;
-
 public class HttpRequestExecutor {
 	
 public static final String RESOURCE_ROOT = "http://choremonger.appspot.com/resources";

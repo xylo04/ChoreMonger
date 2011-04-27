@@ -50,11 +50,15 @@ public class SignInActivity extends Activity implements OnClickListener {
     		SharedPreferences.Editor editor = sharedprefs.edit();
     		editor.putString("USER_ID", user_id);
     		editor.commit();
-    		startActivity(new Intent(this,MainMenuActivity.class));
+    		Intent signInIntent=new Intent(this,MainMenuActivity.class);
+    		signInIntent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+    		startActivity(signInIntent);
     	}
     	//TODO: else display error msg
     }
     public void forgotMyPassword(){
-    	startActivity(new Intent(this,LostPasswordActivity.class));
+		Intent forgotPWIntent=new Intent(this,LostPasswordActivity.class);
+		forgotPWIntent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+		startActivity(forgotPWIntent);
     }
 }

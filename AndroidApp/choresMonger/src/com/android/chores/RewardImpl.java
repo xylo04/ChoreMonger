@@ -5,8 +5,6 @@ import java.io.UnsupportedEncodingException;
 
 import java.util.List;
 
-import java.io.UnsupportedEncodingException;
-
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
@@ -44,37 +42,7 @@ public class RewardImpl implements Reward {
 		this.isOneTimeReward = isOneTimeReward;
 	}
 	
-	// Remove this part to the userImpl
-	/*public static String getUserID(String userName){
-		String userID="";
-		HttpGet request = new HttpGet(HttpRequestExecutor.RESOURCE_ROOT
-				+ "/user/");
-		Log.d(TAG,"RewardImpl is building request to get a user from the server");
-
-		HttpResponse response = HttpRequestExecutor.executeRequest(request);
-
-		if (response != null) {
-
-			Log.d(TAG,"Got a response, code "
-			+ response.getStatusLine().getStatusCode());
-
-			Log.d(TAG,"Got a response, code "
-					+ response.getStatusLine().getStatusCode());
-
-		}
-
-		if (response.getStatusLine().getStatusCode() == 200) {
-			userID = parseUserToGetID(response, userName);
-		}
-
-		return userID;
-	}
-	private static String parseUserToGetID(HttpResponse response, String userName){
-		return "agtjaG9yZW1vbmdlcnIgCxIKRmFtaWx5SW1wbBjxLgwLEghVc2VySW1wbBi4Hww";
-	}*/
-	
 	public static Reward createReward(Reward myreward) {
-
 
 		Reward retrievedReward = null;
 

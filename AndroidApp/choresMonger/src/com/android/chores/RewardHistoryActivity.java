@@ -13,15 +13,16 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-public class MyRewardsActivity extends Activity {
+public class RewardHistoryActivity extends Activity {
 	private List<Reward> myrewardsCollection;
-	@Override
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.my_rewards);
-        ListView menuListView=(ListView)findViewById(R.id.ListView_My_Rewards_Menu);
+        setContentView(R.layout.reward_history);
+        ListView menuListView=(ListView)findViewById(R.id.ListView_reward_history);
         menuListView.setCacheColorHint(Color.BLUE); 
-
+        
+        // TODO change this to get the redeemed rewards
         RewardImpl myrewardImpl=new RewardImpl();
         myrewardsCollection= myrewardImpl.getRewardsCollection();
 
@@ -42,8 +43,9 @@ public class MyRewardsActivity extends Activity {
  			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
  	             
  	             if(position>=0){
- 	            	Intent intent=new Intent(MyRewardsActivity.this,RewardDetailsActivity.class);
+ 	            	Intent intent=new Intent(RewardHistoryActivity.this,RewardDetailsActivity.class);
  	             	intent.putExtra("rewardID", myrewardsCollection.get(position).getId());
+ 	             	intent.putExtra("history", "history");
  	             	startActivity(intent);
  	             }
  			}

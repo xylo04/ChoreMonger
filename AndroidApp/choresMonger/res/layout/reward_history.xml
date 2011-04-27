@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-  xmlns:android="http://schemas.android.com/apk/res/android"
-  android:layout_width="fill_parent"
-  android:orientation="vertical"
-  android:layout_height="fill_parent"
-  android:background="#4062F7">
+  xmlns:android="http://schemas.android.com/apk/res/android" 
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#4062F7">
 
 <RelativeLayout 
 	android:layout_width="wrap_content" 
 	android:layout_height="wrap_content"
 	android:background="#000">
+	
 <ImageView 
 		android:layout_width="wrap_content" 
 		android:layout_height="wrap_content"
@@ -19,8 +20,9 @@
 		android:src="@drawable/choresmonger">
 	</ImageView>
 <TextView 
+
 		android:layout_height="wrap_content" 
-		android:text="Rewards Center" 
+		android:text="Rewards History" 
 		android:textSize="@dimen/menu_title" 
 		android:shadowDx="0" 
 		android:shadowDy="0" 
@@ -31,26 +33,19 @@
 		android:layout_centerHorizontal="true"
 		android:shadowColor="@color/menu_glow" 
 		android:textColor="@color/menu_header"/>
-
-
 </RelativeLayout>
 
-
-<RelativeLayout
-	android:layout_width="wrap_content" 
-	android:layout_height="wrap_content">
-	
-	<ListView
-		android:id="@+id/ListView_Rewards_Center_Menu"
+   <RelativeLayout
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content">
+        
+		<ListView
+		android:id="@+id/ListView_reward_history"
 		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		android:layout_alignParentTop="true"
+		android:layout_height="fill_parent"
 		android:divider="#FFF"
-		android:dividerHeight="8px"
-		android:listSelector="@drawable/textured">
+		android:dividerHeight="8px">
 	</ListView>
-	
-</RelativeLayout>
-  
-  
+
+	</RelativeLayout>
 </LinearLayout>

@@ -8,12 +8,11 @@
     android:background="#4062F7">
 
 <RelativeLayout 
-	android:id="@+id/RelativeLayout01" 
 	android:layout_width="wrap_content" 
 	android:layout_height="wrap_content"
 	android:background="#000">
 	
-<ImageView android:id="@+id/ImageView_LeftIcon" 
+<ImageView
 		android:layout_width="wrap_content" 
 		android:layout_height="wrap_content"
 		android:layout_alignParentRight="true"
@@ -22,9 +21,8 @@
 		android:src="@drawable/choresmonger">
 	</ImageView>
 <TextView 
-		android:id="@+id/TextView01" 
 		android:layout_height="wrap_content" 
-		android:text="My Rewards" 
+		android:text="Reward Management" 
 		android:textSize="@dimen/menu_title" 
 		android:shadowDx="0" 
 		android:shadowDy="0" 
@@ -44,7 +42,6 @@
     android:text="Create New Reward"/>
 
    <RelativeLayout
-        android:id="@+id/RelativeLayout02"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content">
 

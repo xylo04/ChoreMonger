@@ -1,6 +1,5 @@
 package com.android.chores;
 
-import android.R.color;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
@@ -44,7 +43,7 @@ public class RewardsCenterActivity extends Activity {
 	                }
 	                else if (strText.equalsIgnoreCase("Rewards History")) {
 	                    // Launch the Rewards History
-	                	//startActivity(new Intent(RewardsCenterActivity.this,MyRewardsActivity.class));
+	                	startActivity(new Intent(RewardsCenterActivity.this,RewardHistoryActivity.class));
 	                }
 				
 			}

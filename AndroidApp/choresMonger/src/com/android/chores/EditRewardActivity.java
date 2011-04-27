@@ -54,6 +54,7 @@ public class EditRewardActivity extends Activity implements OnClickListener  {
         		chkBox.setChecked(true);
         	else 
         		chkBox.setChecked(false);
+ 
         }
         
         public void updateReward(){

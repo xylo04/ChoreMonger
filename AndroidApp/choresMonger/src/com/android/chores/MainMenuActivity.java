@@ -24,37 +24,65 @@ public class MainMenuActivity extends Activity implements OnClickListener {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main_menu);
-        
         
         SharedPreferences sharedprefs=getSharedPreferences(SignInActivity.PREFS_NAME, Context.MODE_PRIVATE);
         user_id=sharedprefs.getString("USER_ID", "");
-        current_user=UserImpl.getUser(user_id);
-        //  Display user name and points
-        TextView txvwWelcomeView=(TextView)findViewById(R.id.TextView_WelcomeView);
-        txvwWelcomeView.setText(getGreetingExpression());
-        TextView txvwDisplayNameVal=(TextView)findViewById(R.id.TextView_DisplayNameVal);
-        txvwDisplayNameVal.setText(current_user.getName());
-        TextView txvwAssingedChoresVal=(TextView)findViewById(R.id.TextView_assignedChoresVal);
-        //TODO: Get the number of chores assigned to this user 
-        txvwAssingedChoresVal.setText("");
+        if(user_id==null||user_id==""){
+        	Intent intent=new Intent(this,WelcomeActivity.class);
+        	intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+        	startActivity(intent);
+        }
+        else
+        {
+        	current_user=UserImpl.getUser(user_id);
         
-        TextView txvwEarnedPointsVal=(TextView)findViewById(R.id.TextView_usrEarnedPointsVal);
-        txvwEarnedPointsVal.setText(Double.toString(current_user.getRewardPoints()));
+        	setContentView(R.layout.main_menu);
         
-       View ButtonMyChores=findViewById(R.id.Button_myChores);
-       View ButtonChoresManagement=findViewById(R.id.Button_ChoresManagement);
-       View ButtonRewardsCenter=findViewById(R.id.Button_RewardsCenter);
-       View ButtonProfile=findViewById(R.id.Button_Profile);
-       View ButtonSettings=findViewById(R.id.Button_Settings);
+        
+
+        	//  Display user name and points
+        	TextView txvwWelcomeView=(TextView)findViewById(R.id.TextView_greeting);
+        	txvwWelcomeView.setText(getGreetingExpression());
+        	TextView txvwDisplayNameVal=(TextView)findViewById(R.id.TextView_DisplayNameVal);
+        	txvwDisplayNameVal.setText(current_user.getName());
+        	TextView txvwAssingedChoresVal=(TextView)findViewById(R.id.TextView_assignedChoresVal);
+        	//TODO: Get the number of chores assigned to this user 
+        	txvwAssingedChoresVal.setText("");
+        
+        	TextView txvwEarnedPointsVal=(TextView)findViewById(R.id.TextView_usrEarnedPointsVal);
+        	txvwEarnedPointsVal.setText(Double.toString(current_user.getRewardPoints()));
+        
+        	View ButtonMyChores=findViewById(R.id.Button_myChores);
+        	View ButtonChoresManagement=findViewById(R.id.Button_ChoresManagement);
+        	View ButtonRewardsCenter=findViewById(R.id.Button_RewardsCenter);
+        	View ButtonProfile=findViewById(R.id.Button_Profile);
+        	View ButtonSettings=findViewById(R.id.Button_Settings);
        
-       ButtonMyChores.setOnClickListener(this);
-       ButtonChoresManagement.setOnClickListener(this);
-       ButtonRewardsCenter.setOnClickListener(this);
-       ButtonProfile.setOnClickListener(this);
-       ButtonSettings.setOnClickListener(this);
+        	ButtonMyChores.setOnClickListener(this);
+        	ButtonChoresManagement.setOnClickListener(this);
+        	ButtonRewardsCenter.setOnClickListener(this);
+        	ButtonProfile.setOnClickListener(this);
+        	ButtonSettings.setOnClickListener(this);
+        }
+    }
+    
+    //prevent this activity from going to the welcome in activity if the user dosen't log out
+   /* @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event)  {
+        if (  Integer.valueOf(android.os.Build.VERSION.SDK) < 7
+                && keyCode == KeyEvent.KEYCODE_BACK
+                && event.getRepeatCount() == 0) {
+            onBackPressed();
+        }
+
+        return super.onKeyDown(keyCode, event);
     }
 
+    @Override
+    public void onBackPressed() {
+    	finish();
+    }
+*/
     @Override
 	public void onClick(View v) {
     	switch(v.getId()){
@@ -102,7 +130,9 @@ public class MainMenuActivity extends Activity implements OnClickListener {
 		if(sharedprefs.getString("USER_ID", "")!=null)	{
 			SharedPreferences.Editor editor=sharedprefs.edit().remove("USER_ID");
 			editor.commit();
-			startActivity(new Intent(this,WelcomeActivity.class));
+			Intent logoutIntent=new Intent(this,WelcomeActivity.class);
+			logoutIntent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+			startActivity(logoutIntent);
 		}
 			
     }

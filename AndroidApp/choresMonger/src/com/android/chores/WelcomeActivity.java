@@ -15,9 +15,11 @@ public class WelcomeActivity extends Activity implements OnClickListener {
         
     	super.onCreate(savedInstanceState);
 		SharedPreferences sharedprefs=getSharedPreferences(SignInActivity.PREFS_NAME, Context.MODE_PRIVATE);
+		
 		if(sharedprefs.getString("USER_ID", null)!=null)	{
-			startActivity(new Intent(this,WelcomeActivity.class));
+			finish();
 		}
+		
 		else{
 				setContentView(R.layout.welcome);
 				View SignUpFamily_Button = findViewById(R.id.SignUpFamilyButton);
@@ -30,7 +32,13 @@ public class WelcomeActivity extends Activity implements OnClickListener {
     }
     
     @Override
-    /*protected void onResume(){
+    public void onBackPressed() {
+    	finish();
+    }
+    
+    /*
+    @Override
+    protected void onResume(){
     	super.onResume();
         // if the user has already signed in, ignore this activity and go to the main menu activity
 		SharedPreferences sharedprefs=getSharedPreferences(SignInActivity.PREFS_NAME, Context.MODE_PRIVATE);
@@ -43,13 +51,19 @@ public class WelcomeActivity extends Activity implements OnClickListener {
     public void onClick(View v) {
     	switch (v.getId()){
     		case R.id.SignUpFamilyButton:
-    			startActivity(new Intent(this,SignUpFamilyActivity.class));
+            	Intent familyIntent=new Intent(this,SignUpFamilyActivity.class);
+            	familyIntent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+    			startActivity(familyIntent);
     			break;
     		case R.id.SignInButton:
-    			startActivity(new Intent(this,SignInActivity.class));
+            	Intent signInIntent=new Intent(this,SignInActivity.class);
+            	signInIntent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+    			startActivity(signInIntent);
     			break;
     		case R.id.AcceptInvitationButton:
-    			startActivity(new Intent(this,AcceptInvitationActivity.class));
+            	Intent acceptInvitationIntent=new Intent(this,AcceptInvitationActivity.class);
+            	acceptInvitationIntent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+    			startActivity(acceptInvitationIntent);
     			break;
     	}
     }
