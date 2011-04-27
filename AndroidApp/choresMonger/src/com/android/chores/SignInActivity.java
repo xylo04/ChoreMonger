@@ -1,7 +1,10 @@
 package com.android.chores;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -12,8 +15,8 @@ import android.widget.EditText;
 import com.choremonger.shared.User;
 
 public class SignInActivity extends Activity implements OnClickListener {
-    /** Called when the activity is first created. */
 	public static final String PREFS_NAME="USER_ID";
+	private static final int ALERT_DIALOG_ID = 1;
     
 	@Override
     public void onCreate(Bundle savedInstanceState) {
@@ -43,9 +46,9 @@ public class SignInActivity extends Activity implements OnClickListener {
     	// Check if the user name is existed, then store the user's ID in the shared preferences
     	String user_name=((EditText)((View)findViewById(R.id.EditText_UserNameSignIn))).getText().toString();
     	User current_user=UserImpl.getUserByName(user_name);
-    	String user_id=current_user.getId();
         // store the User id in the shared prefs
-    	if(user_id!=null && user_id!=""){
+    	if(current_user!=null){
+    		String user_id=current_user.getId();
     		SharedPreferences sharedprefs = getSharedPreferences(PREFS_NAME,Context.MODE_PRIVATE);
     		SharedPreferences.Editor editor = sharedprefs.edit();
     		editor.putString("USER_ID", user_id);
@@ -55,7 +58,30 @@ public class SignInActivity extends Activity implements OnClickListener {
     		startActivity(signInIntent);
     	}
     	//TODO: else display error msg
+    	else{
+    		showDialog(ALERT_DIALOG_ID);
+    	}
     }
+    
+    protected Dialog onCreateDialog(int id) {
+    	switch(id){
+    	case ALERT_DIALOG_ID:
+    		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+    		builder.setMessage("Sorry, the user name doesn't exist!")
+    	       .setCancelable(false)
+    	       .setPositiveButton("Try Again", new DialogInterface.OnClickListener() {
+    	           public void onClick(DialogInterface dialog, int id) {
+    	        	   dialog.cancel();
+    	           }
+    	       });
+    		return builder.create();
+    	
+    	default:
+    		return null;
+    	}
+    }
+    
+    
     public void forgotMyPassword(){
 		Intent forgotPWIntent=new Intent(this,LostPasswordActivity.class);
 		forgotPWIntent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
