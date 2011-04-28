@@ -71,7 +71,9 @@ public class EditRewardActivity extends Activity implements OnClickListener  {
         	else
         		reward.setOneTime(false);        	
         	reward=RewardImpl.updateReward(reward);
-        	EditRewardActivity.this.finish();
+    		Intent intent=new Intent(this,RewardsCenterActivity.class);
+    		intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+    		startActivity(intent);
         }
         public void deleteReward(){     	
         	RewardImpl.deleteReward(reward.getId());

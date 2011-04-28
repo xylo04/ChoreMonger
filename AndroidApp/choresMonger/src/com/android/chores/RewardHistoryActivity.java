@@ -47,8 +47,6 @@ public class RewardHistoryActivity extends Activity {
         		 i++;
         		 user_has_rewards=true;
         	 }
-        	 else
-        		 i++;
          }
         if(!user_has_rewards)
         {
@@ -57,7 +55,11 @@ public class RewardHistoryActivity extends Activity {
         }
         else
         {
-        	ArrayAdapter<String>adapt=new ArrayAdapter<String>(this, R.layout.menu_item,items);
+         	String []rewarditems=new String[i];
+            for(int j=0;j<i;j++)
+            	rewarditems[j]=items[j];
+            
+        	ArrayAdapter<String>adapt=new ArrayAdapter<String>(this, R.layout.menu_item,rewarditems);
         	menuListView.setAdapter(adapt);
          
         	menuListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
