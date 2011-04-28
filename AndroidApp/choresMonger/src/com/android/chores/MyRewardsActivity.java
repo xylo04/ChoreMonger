@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 public class MyRewardsActivity extends Activity {
 	private List<Reward> myrewardsCollection;
@@ -21,22 +22,43 @@ public class MyRewardsActivity extends Activity {
         setContentView(R.layout.my_rewards);
         ListView menuListView=(ListView)findViewById(R.id.ListView_My_Rewards_Menu);
         menuListView.setCacheColorHint(Color.BLUE); 
-
+        
         RewardImpl myrewardImpl=new RewardImpl();
         myrewardsCollection= myrewardImpl.getRewardsCollection();
 
-         String[] items=new String[myrewardsCollection.size()];
-        
+      String[] items=new String[myrewardsCollection.size()];
       int i=0;
+      String users=null;
+      boolean user_can_redeem_rewards=false;
         for(Reward reward:myrewardsCollection){
-     	   items[i]=reward.getName();
-     	   i++;
+        	users=((RewardImpl)reward).getUsers();
+        	
+        	// Display redeemable reward
+        	if(users==null||(reward.isOneTime()==false&&users!=null))
+        	{
+    			items[i]=reward.getName();
+    			i++;
+    			user_can_redeem_rewards=true;
+        	}
+        	else
+        		{
+        			i++;
+        		}
+     	   
         }
+        if(!user_can_redeem_rewards)
+        {
+        	((TextView)(findViewById(R.id.txviewMyRewards))).setText("No redeemed rewards for you!", TextView.BufferType.EDITABLE);
+        	menuListView.setVisibility(View.INVISIBLE);
+        	
+        }
+        else{
+        	
         
-         ArrayAdapter<String>adapt=new ArrayAdapter<String>(this, R.layout.menu_item,items);
-         menuListView.setAdapter(adapt);
+        	ArrayAdapter<String>adapt=new ArrayAdapter<String>(this, R.layout.menu_item,items);
+        	menuListView.setAdapter(adapt);
          
-         menuListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        	menuListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
  			@Override
  			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -48,5 +70,7 @@ public class MyRewardsActivity extends Activity {
  	             }
  			}
          });
+        }
 	}
 }
+

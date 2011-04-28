@@ -32,12 +32,13 @@ public class RewardImpl implements Reward {
 	}
 
 	public RewardImpl(String id, String description, String rewardName,
-			double pointsValue, boolean isOneTimeReward) {
+			double pointsValue, boolean isOneTimeReward,String users) {
 		this.id = id;
 		this.description = description;
 		this.rewardName = rewardName;
 		this.pointsValue = pointsValue;
 		this.isOneTimeReward = isOneTimeReward;
+		this.users=users;
 	}
 
 	public static Reward createReward(Reward myreward) {
@@ -84,21 +85,25 @@ public class RewardImpl implements Reward {
 	public static Reward updateReward(Reward myreward) {
 
 		Reward retrievedReward = null;
-
+		String users=((RewardImpl)myreward).getUsers();
 		HttpPut request = new HttpPut(HttpRequestExecutor.RESOURCE_ROOT
 				+ "/reward/" + myreward.getId());
 		try {
 			String rewardXML = "<reward id=\"" + myreward.getId()
-					+ "\">><description>" + myreward.getDescription()
-					+ "</description>" + "<isOneTime>"
-					+ Boolean.toString(myreward.isOneTime()) + "</isOneTime>"
-					+ "<name>" + myreward.getName() + "</name>"
-					+ "<pointValue>"
-					+ Double.toString(myreward.getPointValue())
-					+ "</pointValue></reward>";
-			request.setEntity(new StringEntity(
-					"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>"
-							+ rewardXML, "utf-8"));
+			+ "\">><description>" + myreward.getDescription()
+			+ "</description>" + "<isOneTime>"
+			+ Boolean.toString(myreward.isOneTime()) + "</isOneTime>"
+			+ "<name>" + myreward.getName() + "</name>"
+			+ "<pointValue>"
+			+ Double.toString(myreward.getPointValue())
+			+ "</pointValue>";
+			if(users!=null||users!="")
+				rewardXML+="<users>"+users+"</users>";
+			
+			rewardXML+="</reward>";
+	request.setEntity(new StringEntity(
+			"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>"
+					+ rewardXML, "utf-8"));
 
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();

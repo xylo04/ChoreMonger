@@ -38,9 +38,7 @@ public class CreateNewChoreActivity extends Activity implements OnClickListener 
         			User user0 = UserImpl.getUserByName(user);
         			List<User> users= new ArrayList<User>();
         			users.add(user0);
-        			System.out.println("before create chore");
         			createChore(choreName, pointsValue, users);
-        			System.out.println("after create chore");
         			}
         			catch(Exception exception){
         				Log.e(TAG,exception.getMessage());
@@ -50,12 +48,9 @@ public class CreateNewChoreActivity extends Activity implements OnClickListener 
     	}
         
         public void createChore(String choreName,double pointsValue, List<User> users){
-			System.out.println("********************point 1********************");
         	ChoreImpl chore=new ChoreImpl(choreName, null, pointsValue, users);
-			System.out.println("********************point 2********************");
         	startActivity(new Intent(CreateNewChoreActivity.this,ChoreManagementActivity.class));
-    		System.out.println("********************point 3********************");
-    		users.get(1).addChore(chore);
+    		users.get(0).addChore(chore);
 			Log.d(TAG,"Reward Created");
 			Log.d(TAG,chore.getName());
 			Log.d(TAG,chore.getId());

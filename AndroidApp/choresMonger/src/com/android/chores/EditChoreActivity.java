@@ -39,34 +39,38 @@ public class EditChoreActivity extends Activity implements OnClickListener  {
     	public void onClick(View v) {
         	switch(v.getId()){
         		case R.id.Button_Update_Chore:
-        		// update reward
+        		// update chore
                 	showDialog(PROGRESS_DIALOG_ID);
-        			updateReward();
+        			updateChore();
         		break;
-        		case R.id.Button_Delete_Reward:
-            		// delete reward
-        			deleteReward();
+        		case R.id.Button_Delete_Chore:
+            		// delete chore
+        			deleteChore();
             		break;
         	}
     	}
         
         public void initalizeElements(){
         	chore=new ChoreImpl(choreID);
-        	((EditText)(findViewById(R.id.editTxtRewardTitleVal))).setText(chore.getName(), TextView.BufferType.EDITABLE);
-        	((EditText)(findViewById(R.id.editTxtRewardTitleVal))).setText(chore.getUsers().get(1).getId(), TextView.BufferType.EDITABLE);
-        	chore.removeUser(chore.getUsers().get(1));
-        	((EditText)(findViewById(R.id.txviewRewardPointsVal))).setText(Double.toString(chore.getPointValue()), TextView.BufferType.EDITABLE);
+        	((EditText)(findViewById(R.id.editTxtChoreTitleVal))).setText(chore.getName(), TextView.BufferType.EDITABLE);
+        	if (chore.getUsers().size() > 0)
+        		((EditText)(findViewById(R.id.editxtCreateChoreUserVal))).setText(chore.getUsers().get(0).getName(), TextView.BufferType.EDITABLE);
+        	else
+        		((EditText)(findViewById(R.id.editxtCreateChoreUserVal))).setText("", TextView.BufferType.EDITABLE);
+        		
+        	((EditText)(findViewById(R.id.txviewChorePointsVal))).setText(Double.toString(chore.getPointValue()), TextView.BufferType.EDITABLE);
         }
         
-        public void updateReward(){
-        	chore.setName(((EditText)findViewById(R.id.editTxtRewardTitleVal)).getText().toString());
-        	User user = UserImpl.getUserByName(((EditText)findViewById(R.id.editTxtRewardTitleVal)).getText().toString());
-        	chore.addUser(user);
-        	chore.setPointValue(Double.parseDouble(((EditText)findViewById(R.id.txviewRewardPointsVal)).getText().toString()));
+        public void updateChore(){
+        	chore.setName(((EditText)findViewById(R.id.editTxtChoreTitleVal)).getText().toString());
+        	User user = UserImpl.getUserByName(((EditText)findViewById(R.id.editxtCreateChoreUserVal)).getText().toString());
+        	if (chore.getUsers().size() > 0)
+        		chore.addUser(user);
+        	chore.setPointValue(Double.parseDouble(((EditText)findViewById(R.id.txviewChorePointsVal)).getText().toString()));
         	EditChoreActivity.this.finish();
         }
-        public void deleteReward(){     	
-        	RewardImpl.deleteReward(chore.getId());
+        public void deleteChore(){     	
+        	ChoreImpl.deleteChore(chore.getId());
         }
         
         protected Dialog onCreateDialog(int id) {
