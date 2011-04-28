@@ -20,21 +20,19 @@ public class CreateNewRewardActivity extends Activity implements OnClickListener
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_new_reward);
-        View ButtonCreateReward= findViewById(R.id.Button_Create_New_Reward);
-        View ButtonCancelReward = findViewById(R.id.Button_Cancel_Create_Reward);
+        View ButtonCreateReward= findViewById(R.id.Button_Create_Reward);
         ButtonCreateReward.setOnClickListener(this);
-        ButtonCancelReward.setOnClickListener(this);
     }
         @Override
     	public void onClick(View v) {
         	switch(v.getId()){
-        		case R.id.Button_Create_New_Reward:
+        		case R.id.Button_Create_Reward:
         			try{
         			// create reward 
-        			double pointsValue=(Double.parseDouble(((EditText)findViewById(R.id.txviewRewardPointsVal)).getText().toString()));
-        			String rewardName=((EditText)findViewById(R.id.txviewRewardTitleVal)).getText().toString();
-        			String description=((EditText)findViewById(R.id.editxtRewardDescrVal)).getText().toString();
-        			CheckBox isOneTimeRewardChckBox=(CheckBox)findViewById(R.id.checkbox1);
+        			double pointsValue=(Double.parseDouble(((EditText)findViewById(R.id.txviewCreateRewardPointsVal)).getText().toString()));
+        			String rewardName=((EditText)findViewById(R.id.editTxtCreateRewardTitleVal)).getText().toString();
+        			String description=((EditText)findViewById(R.id.editxtCreateRewardDescrVal)).getText().toString();
+        			CheckBox isOneTimeRewardChckBox=(CheckBox)findViewById(R.id.checkboxCreateRewardIsOneTime);
         			
         			boolean isOneTimeReward;
         			if(isOneTimeRewardChckBox.isChecked())
@@ -46,9 +44,6 @@ public class CreateNewRewardActivity extends Activity implements OnClickListener
         			catch(Exception exception){
         				Log.e(TAG,exception.getMessage());
         			}
-        		break;
-        	case R.id.Button_Cancel_Create_Reward:
-        		startActivity(new Intent(CreateNewRewardActivity.this,RewardManagementActivity.class));
         		break;
         	}
     	}
