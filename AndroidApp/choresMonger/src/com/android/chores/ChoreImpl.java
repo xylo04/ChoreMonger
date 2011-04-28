@@ -75,7 +75,7 @@ public class ChoreImpl implements Chore
 		this.str += "</users>";
 		this.str+="<priority>"+Double.toString(this.priority)+"</priority><status>"+this.status+"</status></chore>";
 		Log.d(TAG,this.str);
-		HttpPost request = new HttpPost(HttpRequestExecutor.RESOURCE_ROOT + "chore/");
+		HttpPost request = new HttpPost(HttpRequestExecutor.RESOURCE_ROOT + "/chore/");
 		try {
 			request.setEntity(new StringEntity(this.str));
 		} catch (UnsupportedEncodingException e) {
@@ -91,7 +91,7 @@ public class ChoreImpl implements Chore
 			e.printStackTrace();
 		}
 		this.id = str.substring(str.indexOf("<chore id=\"")+11, str.indexOf("\"><instru"));						//name
-		HttpPut Request = new HttpPut(HttpRequestExecutor.RESOURCE_ROOT + "chore/" + this.id);
+		HttpPut Request = new HttpPut(HttpRequestExecutor.RESOURCE_ROOT + "/chore/" + this.id);
 		try {
 			Request.setEntity(new StringEntity(this.str));
 		} catch (UnsupportedEncodingException e) {
@@ -104,7 +104,7 @@ public class ChoreImpl implements Chore
 	public ChoreImpl(String id)
 	{
 		this.id = id;
-		HttpGet request = new HttpGet(HttpRequestExecutor.RESOURCE_ROOT + "chore/" + this.id);
+		HttpGet request = new HttpGet(HttpRequestExecutor.RESOURCE_ROOT + "/chore/" + this.id);
 		HttpResponse response = HttpRequestExecutor.executeRequest(request);
 
 
@@ -168,7 +168,7 @@ public class ChoreImpl implements Chore
 	{
 		this.str = str.replace(this.status, status);
 		this.status = status;
-		HttpPut request = new HttpPut(HttpRequestExecutor.RESOURCE_ROOT + "chore/" + this.id);
+		HttpPut request = new HttpPut(HttpRequestExecutor.RESOURCE_ROOT + "/chore/" + this.id);
 		try {
 			request.setEntity(new StringEntity(this.str));
 		} catch (UnsupportedEncodingException e) {
@@ -185,7 +185,7 @@ public class ChoreImpl implements Chore
 	{
 		this.str = str.replace("<priority>"+Double.toString(this.priority), "<priority>"+Double.toString(priority));
 		this.priority = priority;
-		HttpPut request = new HttpPut(HttpRequestExecutor.RESOURCE_ROOT + "chore/" + this.id);
+		HttpPut request = new HttpPut(HttpRequestExecutor.RESOURCE_ROOT + "/chore/" + this.id);
 		try {
 			request.setEntity(new StringEntity(this.str));
 		} catch (UnsupportedEncodingException e) {
@@ -204,7 +204,7 @@ public class ChoreImpl implements Chore
 		temp = this.str.split("<users>");
 		this.str = temp[0] + "<users>"+this.list_of_users+temp[1];
 		Log.d(TAG,this.str);
-		HttpPut request = new HttpPut(HttpRequestExecutor.RESOURCE_ROOT + "chore/" + this.id);
+		HttpPut request = new HttpPut(HttpRequestExecutor.RESOURCE_ROOT + "/chore/" + this.id);
 		try {
 			request.setEntity(new StringEntity(this.str));
 		} catch (UnsupportedEncodingException e) {
@@ -249,7 +249,7 @@ public class ChoreImpl implements Chore
 /**/	public boolean removeUser(User toRemove)
 	{
 		this.str = str.replace(toRemove.getId()+".", "");
-		HttpPut request = new HttpPut(HttpRequestExecutor.RESOURCE_ROOT + "chore/" + this.id);
+		HttpPut request = new HttpPut(HttpRequestExecutor.RESOURCE_ROOT + "/chore/" + this.id);
 		try {
 			request.setEntity(new StringEntity(this.str));
 		} catch (UnsupportedEncodingException e) {
@@ -267,7 +267,7 @@ public class ChoreImpl implements Chore
 	{
 		this.str = str.replace("<instructions>"+this.intsructions, "<instructions>"+newInstructions);
 		this.intsructions = newInstructions;
-		HttpPut request = new HttpPut(HttpRequestExecutor.RESOURCE_ROOT + "chore/" + this.id);
+		HttpPut request = new HttpPut(HttpRequestExecutor.RESOURCE_ROOT + "/chore/" + this.id);
 		try {
 			request.setEntity(new StringEntity(this.str));
 		} catch (UnsupportedEncodingException e) {
@@ -280,7 +280,7 @@ public class ChoreImpl implements Chore
 	{
 		this.str = str.replace("<name>"+this.name, "<name>"+newName);
 		this.name = newName;
-		HttpPut request = new HttpPut(HttpRequestExecutor.RESOURCE_ROOT + "chore/" + this.id);
+		HttpPut request = new HttpPut(HttpRequestExecutor.RESOURCE_ROOT + "/chore/" + this.id);
 		try {
 			request.setEntity(new StringEntity(this.str));
 		} catch (UnsupportedEncodingException e) {
@@ -293,7 +293,7 @@ public class ChoreImpl implements Chore
 	{
 		this.str = str.replace("<pointValue>"+this.points, "<pointValue>"+Double.toString(newPointValue));
 		this.points = newPointValue;
-		HttpPut request = new HttpPut(HttpRequestExecutor.RESOURCE_ROOT + "chore/" + this.id);
+		HttpPut request = new HttpPut(HttpRequestExecutor.RESOURCE_ROOT + "/chore/" + this.id);
 		try {
 			request.setEntity(new StringEntity(this.str));
 		} catch (UnsupportedEncodingException e) {
@@ -304,7 +304,7 @@ public class ChoreImpl implements Chore
 	}
 	public static void deleteChore(String id)
 	{
-		HttpDelete request = new HttpDelete(HttpRequestExecutor.RESOURCE_ROOT + "chore/" + id);
+		HttpDelete request = new HttpDelete(HttpRequestExecutor.RESOURCE_ROOT + "/chore/" + id);
 		HttpRequestExecutor.executeRequest(request);
 	}
 }

@@ -29,13 +29,18 @@ public class CreateNewChoreActivity extends Activity implements OnClickListener 
         		case R.id.Button_Create_Chore:
         			try{
         			// create reward 
-        			double pointsValue=(Double.parseDouble(((EditText)findViewById(R.id.txviewCreateRewardPointsVal)).getText().toString()));
-        			String choreName=((EditText)findViewById(R.id.editTxtCreateRewardTitleVal)).getText().toString();
+        			double pointsValue=(Double.parseDouble(((EditText)findViewById(R.id.txviewCreateChorePointsVal)).getText().toString()));
+        			String choreName=((EditText)findViewById(R.id.editTxtCreateChoreTitleVal)).getText().toString();
         			String user=((EditText)findViewById(R.id.editxtCreateChoreUserVal)).getText().toString();
+        			//System.out.println("name: " + choreName);
+        			//System.out.println("points: " + pointsValue);
+        			//System.out.println("user: " + user);
         			User user0 = UserImpl.getUserByName(user);
         			List<User> users= new ArrayList<User>();
         			users.add(user0);
+        			System.out.println("before create chore");
         			createChore(choreName, pointsValue, users);
+        			System.out.println("after create chore");
         			}
         			catch(Exception exception){
         				Log.e(TAG,exception.getMessage());
@@ -45,8 +50,12 @@ public class CreateNewChoreActivity extends Activity implements OnClickListener 
     	}
         
         public void createChore(String choreName,double pointsValue, List<User> users){
+			System.out.println("********************point 1********************");
         	ChoreImpl chore=new ChoreImpl(choreName, null, pointsValue, users);
+			System.out.println("********************point 2********************");
         	startActivity(new Intent(CreateNewChoreActivity.this,ChoreManagementActivity.class));
+    		System.out.println("********************point 3********************");
+    		users.get(1).addChore(chore);
 			Log.d(TAG,"Reward Created");
 			Log.d(TAG,chore.getName());
 			Log.d(TAG,chore.getId());

@@ -66,7 +66,7 @@ public class RewardDetailsActivity extends Activity implements OnClickListener {
     public void redeemReward(){
     	if(current_user.getRewardPoints()>=reward.getPointValue())
     	{
-    		((RewardImpl)(reward)).add
+    		//((RewardImpl)(reward)).add
     		reward=RewardImpl.updateReward(reward);
     		reward=RewardImpl.updateReward(reward);
     	}

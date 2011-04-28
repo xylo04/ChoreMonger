@@ -16,7 +16,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.choremonger.shared.Chore;
-import com.choremonger.shared.Reward;
 import com.choremonger.shared.User;
 
 public class ChoreManagementActivity extends Activity implements OnClickListener {
@@ -29,8 +28,8 @@ public class ChoreManagementActivity extends Activity implements OnClickListener
 		String user_id;
 		User current_user;
         setContentView(R.layout.chore_management);
-        View ButtonCreateReward= findViewById(R.id.Button_Create_Chore);
-        ButtonCreateReward.setOnClickListener(this);
+        View ButtonCreateChore= findViewById(R.id.Button_Create_Chore);
+        ButtonCreateChore.setOnClickListener(this);
 
         SharedPreferences sharedprefs=getSharedPreferences(SignInActivity.PREFS_NAME, Context.MODE_PRIVATE);
         user_id=sharedprefs.getString("USER_ID", "");
@@ -39,7 +38,6 @@ public class ChoreManagementActivity extends Activity implements OnClickListener
         
        ListView menuListView=(ListView)findViewById(R.id.ListView_My_ChoreManagement_Menu);
        menuListView.setCacheColorHint(Color.BLUE); 
-       ChoreImpl myChoreImpl=new ChoreImpl();
        myChoresCollection= current_user.getChores();
    
         String[] items=new String[myChoresCollection.size()];

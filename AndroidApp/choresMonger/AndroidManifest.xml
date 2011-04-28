@@ -29,6 +29,9 @@
 <activity android:name="CreateNewRewardActivity"></activity>
 <activity android:name="WelcomeActivity"></activity>
 <activity android:name="RewardHistoryActivity"></activity>
+<activity android:name="ChoreManagementActivity"></activity>
+<activity android:name="CreateNewChoreActivity"></activity>
+<activity android:name="EditChoreActivity"></activity>
 </application>
     <uses-sdk android:minSdkVersion="8" />
 
