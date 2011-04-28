@@ -34,18 +34,17 @@ public class MyRewardsActivity extends Activity {
         	users=((RewardImpl)reward).getUsers();
         	
         	// Display redeemable reward
-        	if(users==null||(reward.isOneTime()==false&&users!=null))
+        	if(users==null||users==""||(reward.isOneTime()==false&&users!=null))
         	{
     			items[i]=reward.getName();
     			i++;
     			user_can_redeem_rewards=true;
         	}
-        	else
-        		{
-        			i++;
-        		}
      	   
         }
+
+
+        
         if(!user_can_redeem_rewards)
         {
         	((TextView)(findViewById(R.id.txviewMyRewards))).setText("No redeemed rewards for you!", TextView.BufferType.EDITABLE);
@@ -54,8 +53,11 @@ public class MyRewardsActivity extends Activity {
         }
         else{
         	
-        
-        	ArrayAdapter<String>adapt=new ArrayAdapter<String>(this, R.layout.menu_item,items);
+        	String []rewarditems=new String[i];
+            for(int j=0;j<i;j++)
+            	rewarditems[j]=items[j];
+            
+        	ArrayAdapter<String>adapt=new ArrayAdapter<String>(this, R.layout.menu_item,rewarditems);
         	menuListView.setAdapter(adapt);
          
         	menuListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

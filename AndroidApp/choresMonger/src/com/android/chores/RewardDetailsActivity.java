@@ -72,6 +72,7 @@ public class RewardDetailsActivity extends Activity implements OnClickListener {
     	if(current_user.getRewardPoints()>=reward.getPointValue())
     	{
     		((RewardImpl)(reward)).addUser(user_id);
+    		current_user.subtractRewardPoints(reward.getPointValue());
     		//reward=RewardImpl.updateReward(reward);
     		/*if(reward!=null)
     			{
