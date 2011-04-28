@@ -30,6 +30,7 @@ public class RewardHistoryActivity extends Activity {
         
       int i=0;
         for(Reward reward:myrewardsCollection){
+        	
      	   items[i]=reward.getName();
      	   i++;
         }
