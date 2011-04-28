@@ -140,6 +140,7 @@ public class UserImpl implements User {
 	private Date Dob;
 	private String email;
 	private String name;
+	private String rewards;
 
 	public Family getFamily() {
 		Family temp = FamilyImpl.getFamily(FamilyId);
@@ -323,4 +324,12 @@ public class UserImpl implements User {
 		}
 	}
 
+	public void setRewards(String newRewards) {
+		rewards = newRewards;
+		this.update();
+	}
+
+	public String getRewards() {
+		return rewards;
+	}
 }
