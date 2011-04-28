@@ -1,6 +1,8 @@
 package com.android.chores;
 
 import android.app.Activity;
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -14,6 +16,7 @@ import android.widget.TextView;
 import com.choremonger.shared.Reward;
 
 public class EditRewardActivity extends Activity implements OnClickListener  {
+	private static final int PROGRESS_DIALOG_ID=1;
 	private Reward reward;
 	private String rewardID;
 	@Override
@@ -35,6 +38,7 @@ public class EditRewardActivity extends Activity implements OnClickListener  {
         	switch(v.getId()){
         		case R.id.Button_Update_Reward:
         		// update reward
+                	showDialog(PROGRESS_DIALOG_ID);
         			updateReward();
         		break;
         		case R.id.Button_Delete_Reward:
@@ -67,9 +71,19 @@ public class EditRewardActivity extends Activity implements OnClickListener  {
         	else
         		reward.setOneTime(false);        	
         	reward=RewardImpl.updateReward(reward);
-        	
+        	EditRewardActivity.this.finish();
         }
         public void deleteReward(){     	
         	RewardImpl.deleteReward(reward.getId());
+        }
+        
+        protected Dialog onCreateDialog(int id) {
+        	switch(id){
+        	case PROGRESS_DIALOG_ID:
+        		return ProgressDialog.show(EditRewardActivity.this, "", 
+                        "Updating. Please wait...", true);
+        	default:
+        		return null;
+        	}
         }
 }

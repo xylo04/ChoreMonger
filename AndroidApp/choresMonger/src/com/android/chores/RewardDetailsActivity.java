@@ -21,7 +21,6 @@ public class RewardDetailsActivity extends Activity implements OnClickListener {
         setContentView(R.layout.reward_details);
         rewardID=getIntent().getStringExtra("rewardID");
         // if the calling activity is the history rewards then hide the redeem button
-        if(getIntent().getStringExtra("history")!=null)
         	
         initalizeElements();
         

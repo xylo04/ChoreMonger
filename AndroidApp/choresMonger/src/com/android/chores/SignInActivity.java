@@ -3,6 +3,7 @@ package com.android.chores;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -17,6 +18,7 @@ import com.choremonger.shared.User;
 public class SignInActivity extends Activity implements OnClickListener {
 	public static final String PREFS_NAME="USER_ID";
 	private static final int ALERT_DIALOG_ID = 1;
+	private static final int PROGRESS_DIALOG_ID=2;
     
 	@Override
     public void onCreate(Bundle savedInstanceState) {
@@ -44,8 +46,13 @@ public class SignInActivity extends Activity implements OnClickListener {
 	}
     public void signIn(){
     	// Check if the user name is existed, then store the user's ID in the shared preferences
+    	User current_user=null;
     	String user_name=((EditText)((View)findViewById(R.id.EditText_UserNameSignIn))).getText().toString();
-    	User current_user=UserImpl.getUserByName(user_name);
+    	if(user_name==null||user_name=="")
+    		return;
+    	showDialog(PROGRESS_DIALOG_ID);
+    	
+    	current_user=UserImpl.getUserByName(user_name);
         // store the User id in the shared prefs
     	if(current_user!=null){
     		String user_id=current_user.getId();
@@ -59,6 +66,7 @@ public class SignInActivity extends Activity implements OnClickListener {
     	}
     	//TODO: else display error msg
     	else{
+    		SignInActivity.this.dismissDialog(PROGRESS_DIALOG_ID);
     		showDialog(ALERT_DIALOG_ID);
     	}
     }
@@ -75,12 +83,13 @@ public class SignInActivity extends Activity implements OnClickListener {
     	           }
     	       });
     		return builder.create();
-    	
+    	case PROGRESS_DIALOG_ID:
+    		return ProgressDialog.show(SignInActivity.this, "", 
+                    "Signing in. Please wait...", true);
     	default:
     		return null;
     	}
     }
-    
     
     public void forgotMyPassword(){
 		Intent forgotPWIntent=new Intent(this,LostPasswordActivity.class);
