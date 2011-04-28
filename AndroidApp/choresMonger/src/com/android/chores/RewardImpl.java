@@ -324,8 +324,8 @@ public class RewardImpl implements Reward {
 		this.pointsValue = newPointValue;
 	}
 
-	public void setUsers(String newUsers) {
-		users = newUsers;
+	public void addUser(String newUser) {
+		users += ";" + newUser;
 		RewardImpl.updateReward(this);
 	}
 

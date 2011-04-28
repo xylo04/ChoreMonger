@@ -48,6 +48,11 @@ public class UserImpl implements User {
 	@XmlElement
 	private String name;
 
+	@SuppressWarnings("unused")
+	@Persistent
+	@XmlElement
+	private String rewards;
+
 	@Persistent
 	@XmlElement
 	private double rewardPoints;
