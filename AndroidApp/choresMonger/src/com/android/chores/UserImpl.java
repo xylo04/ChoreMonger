@@ -1,6 +1,8 @@
 package com.android.chores;
 
 import java.io.UnsupportedEncodingException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -24,7 +26,7 @@ import com.choremonger.shared.User;
 
 public class UserImpl implements User {
 
-	private static final String TAG=UserImpl.class.getName();
+	private static final String TAG = UserImpl.class.getName();
 
 	public static User createUser() {
 		User retval = null;
@@ -32,19 +34,18 @@ public class UserImpl implements User {
 		HttpPost request = new HttpPost(HttpRequestExecutor.RESOURCE_ROOT
 				+ "/user");
 		try {
-			request
-					.setEntity(new StringEntity(
-							"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><user />",
-							"utf-8"));
+			request.setEntity(new StringEntity(
+					"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><user />",
+					"utf-8"));
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
 		request.setHeader("Content-Type", "application/xml");
 
-		Log.d(TAG,"UserImpl is building request for new User from the server");
+		Log.d(TAG, "UserImpl is building request for new User from the server");
 		HttpResponse response = HttpRequestExecutor.executeRequest(request);
 		if (response != null) {
-			Log.d(TAG,"Got a response, code "
+			Log.d(TAG, "Got a response, code "
 					+ response.getStatusLine().getStatusCode());
 		}
 
@@ -60,7 +61,7 @@ public class UserImpl implements User {
 	public static User getUserByName(String name) {
 		User retval = null;
 		List<User> temp = getUsersCollection();
-		for (int i = 1; i < temp.size();i++) {
+		for (int i = 1; i < temp.size(); i++) {
 			if (temp.get(i).getName().equalsIgnoreCase(name)) {
 				retval = temp.get(i);
 			}
@@ -69,33 +70,32 @@ public class UserImpl implements User {
 		return retval;
 	}
 
-	public static List<User> parseUsersCollection(HttpResponse response,List<User> retrievedUserLists){
-        SAXParserFactory factory = SAXParserFactory.newInstance();
-        try {
-                SAXParser saxParser = factory.newSAXParser();
-                UserSaxHandler handler = new UserSaxHandler();
-                saxParser.parse(response.getEntity().getContent(), handler);
-                retrievedUserLists = handler.getUsersCollections();
-        }
-        catch (Exception e) {
-                e.printStackTrace();
-        }
-        return retrievedUserLists;
-}
-
-	public static List<User> getUsersCollection(){
-
-        List<User> usersList=null;
-        HttpGet request = new HttpGet(HttpRequestExecutor.RESOURCE_ROOT
-                        + "/user/");
-        HttpResponse response = HttpRequestExecutor.executeRequest(request);
-
-        if (response.getStatusLine().getStatusCode() == 200) {
-                usersList = parseUsersCollection(response, usersList);
-        }
-        return usersList;
+	public static List<User> parseUsersCollection(HttpResponse response,
+			List<User> retrievedUserLists) {
+		SAXParserFactory factory = SAXParserFactory.newInstance();
+		try {
+			SAXParser saxParser = factory.newSAXParser();
+			UserSaxHandler handler = new UserSaxHandler();
+			saxParser.parse(response.getEntity().getContent(), handler);
+			retrievedUserLists = handler.getUsersCollections();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return retrievedUserLists;
 	}
 
+	public static List<User> getUsersCollection() {
+
+		List<User> usersList = null;
+		HttpGet request = new HttpGet(HttpRequestExecutor.RESOURCE_ROOT
+				+ "/user/");
+		HttpResponse response = HttpRequestExecutor.executeRequest(request);
+
+		if (response.getStatusLine().getStatusCode() == 200) {
+			usersList = parseUsersCollection(response, usersList);
+		}
+		return usersList;
+	}
 
 	public static User getUser(String id) {
 		User retval = null;
@@ -103,10 +103,10 @@ public class UserImpl implements User {
 		HttpGet request = new HttpGet(HttpRequestExecutor.RESOURCE_ROOT
 				+ "/user/" + id);
 
-		Log.d(TAG,"UserImpl is building request to get User from the server");
+		Log.d(TAG, "UserImpl is building request to get User from the server");
 		HttpResponse response = HttpRequestExecutor.executeRequest(request);
 		if (response != null) {
-			Log.d(TAG,"Got a response, code "
+			Log.d(TAG, "Got a response, code "
 					+ response.getStatusLine().getStatusCode());
 		}
 
@@ -120,7 +120,7 @@ public class UserImpl implements User {
 	}
 
 	private static User parseUser(HttpResponse response, User retval) {
-		Log.d(TAG,"Going to try and parse out a User");
+		Log.d(TAG, "Going to try and parse out a User");
 		SAXParserFactory factory = SAXParserFactory.newInstance();
 		try {
 			SAXParser saxParser = factory.newSAXParser();
@@ -140,6 +140,7 @@ public class UserImpl implements User {
 	private Date Dob;
 	private String email;
 	private String name;
+	private String rewards;
 
 	public Family getFamily() {
 		Family temp = FamilyImpl.getFamily(FamilyId);
@@ -157,7 +158,8 @@ public class UserImpl implements User {
 		name = "";
 	}
 
-	public UserImpl(String n, double r, String e, Date d, String choreList, String f) {
+	public UserImpl(String n, double r, String e, Date d, String choreList,
+			String f) {
 		name = n;
 		RewardPoints = r;
 		email = e;
@@ -165,14 +167,13 @@ public class UserImpl implements User {
 		FamilyId = f;
 		if (choreList != "") {
 			String[] temp = choreList.split("\\.");
-			for(int i = 0; i < temp.length; i++){
+			for (int i = 0; i < temp.length; i++) {
 				ChoreImpl temp_chore = new ChoreImpl(temp[i]);
 				chores.add(temp_chore);
 			}
 		}
 	}
 
-	
 	public void setRewardPoints(double rewardPoints) {
 		RewardPoints = rewardPoints;
 		this.update();
@@ -269,10 +270,10 @@ public class UserImpl implements User {
 
 	public static void deleteUser(String id) {
 		HttpDelete request = new HttpDelete(HttpRequestExecutor.RESOURCE_ROOT
-				+ "user/" + id);
+				+ "/user/" + id);
 		HttpResponse response = HttpRequestExecutor.executeRequest(request);
 		if (response != null) {
-			Log.d(TAG,"Got a response, code "
+			Log.d(TAG, "Got a response, code "
 					+ response.getStatusLine().getStatusCode());
 		}
 	}
@@ -282,24 +283,33 @@ public class UserImpl implements User {
 		String ChoreString = "";
 		if (chores.size() > 0) {
 			ChoreString = "<chores>" + chores.get(0).getId();
-			for (int i = 1; i < chores.size();i++) {
+			for (int i = 1; i < chores.size(); i++) {
 				ChoreString += "." + chores.get(i).getId();
 			}
 			ChoreString += "</chores>";
 		}
 		if (Dob != null) {
-			DobString = Dob.toString();
+			DateFormat dfm = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+			DobString = dfm.format(Dob);
 		}
 		HttpPut request = new HttpPut(HttpRequestExecutor.RESOURCE_ROOT
-				+ "user/" + id);
+				+ "/user/" + id);
 		try {
-			request.setEntity(new StringEntity(
-					"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><user id=\""
-							+ id + "\"><dob>" + DobString + "</dob><email>" + email + 
-							"</email><name>" + name + "</name><rewardPoints>" + RewardPoints +
-							"</rewardPoints>" + ChoreString + "<familyId>" + FamilyId +
-							"</familyId></user>",
-					"utf-8"));
+			String xmlDocument = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><user id=\""
+					+ id
+					+ "\"><dob>"
+					+ DobString
+					+ "</dob><email>"
+					+ email
+					+ "</email><name>"
+					+ name
+					+ "</name><rewardPoints>"
+					+ RewardPoints
+					+ "</rewardPoints>"
+					+ ChoreString
+					+ "<familyId>" + FamilyId + "</familyId></user>";
+			Log.d(TAG, xmlDocument);
+			request.setEntity(new StringEntity(xmlDocument, "utf-8"));
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
@@ -309,9 +319,17 @@ public class UserImpl implements User {
 				.println("UserImpl is building request for updating User from the server");
 		HttpResponse response = HttpRequestExecutor.executeRequest(request);
 		if (response != null) {
-			Log.d(TAG,"Got a response, code "
+			Log.d(TAG, "Got a response, code "
 					+ response.getStatusLine().getStatusCode());
 		}
 	}
 
+	public void setRewards(String newRewards) {
+		rewards = newRewards;
+		this.update();
+	}
+
+	public String getRewards() {
+		return rewards;
+	}
 }

@@ -2,4 +2,5 @@
 <resources>
     <string name="app_name">Chore Monger</string>
     <string name="app_title">Chore Monger</string>
+    <string name="family_name">Family Name</string>
 </resources>
