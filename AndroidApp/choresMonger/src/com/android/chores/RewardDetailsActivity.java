@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
@@ -73,6 +74,10 @@ public class RewardDetailsActivity extends Activity implements OnClickListener {
     	{
     		((RewardImpl)(reward)).addUser(user_id);
     		current_user.subtractRewardPoints(reward.getPointValue());
+    		
+    		Intent intent=new Intent(this,RewardsCenterActivity.class);
+    		intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+    		startActivity(intent);
     		//reward=RewardImpl.updateReward(reward);
     		/*if(reward!=null)
     			{

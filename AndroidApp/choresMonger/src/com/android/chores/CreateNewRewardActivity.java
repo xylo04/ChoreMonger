@@ -53,9 +53,11 @@ public class CreateNewRewardActivity extends Activity implements OnClickListener
         	Reward createdReward=RewardImpl.createReward(reward);
         	if (createdReward==null){
 				Log.e(TAG,"Oooops! No rewards created!");
-				System.exit(1);
+				return;
 			}
-        	startActivity(new Intent(CreateNewRewardActivity.this,RewardManagementActivity.class));
+    		Intent rewardCenterIntent=new Intent(this,RewardsCenterActivity.class);
+    		rewardCenterIntent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+    		startActivity(rewardCenterIntent);
 			Log.d(TAG,"Reward Created");
 			Log.d(TAG,createdReward.getName());
 			Log.d(TAG,createdReward.getId());
