@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_width="fill_parent"
+android:layout_height="fill_parent"
+  android:background="#4062F7">
+ 
+ <TableLayout
+	android:layout_width="fill_parent" 
+	android:layout_height="wrap_content"
+	android:stretchColumns="0">
+<TableRow 
+	android:layout_width="wrap_content" 
+	android:layout_height="wrap_content"
+	android:background="#000">
+<TextView 
+		android:layout_height="wrap_content" 
+		android:text="Create Chore" 
+		android:textSize="@dimen/menu_title" 
+		android:shadowDx="0" 
+		android:shadowDy="0" 
+		android:shadowRadius="10" 
+		android:layout_width="wrap_content"
+		android:layout_gravity="fill_horizontal|center" 
+		android:layout_alignParentTop="true" 
+		android:layout_centerHorizontal="true"
+		android:shadowColor="@color/menu_glow" 
+		android:textColor="@color/menu_header"/>
+
+	 <ImageView
+	android:layout_width="wrap_content" 
+	android:layout_height="wrap_content"
+	android:src="@drawable/choresmonger"
+	android:layout_alignParentLeft="true"
+    android:layout_alignParentTop="true">
+	</ImageView>
+
+</TableRow>
+
+	<TableRow
+	android:layout_width="fill_parent" 
+	android:layout_height="wrap_content">
+	
+<TextView
+			android:textColor="#FFF"
+			android:text="Title:"
+			android:textSize="10pt"
+			android:layout_height="wrap_content"
+			android:layout_width="wrap_content"	/>	
+</TableRow>
+	<TableRow
+	android:layout_width="fill_parent" 
+	android:layout_height="wrap_content">
+	
+<EditText android:id="@+id/editTxtCreateChoreTitleVal"
+			android:textColor="#000"
+			android:textSize="10pt"
+			android:layout_span="2"
+			android:layout_height="wrap_content"
+			android:layout_width="fill_parent"	/>	
+	
+</TableRow>
+
+  
+  <TableRow 
+	android:layout_width="fill_parent" 
+	android:layout_height="wrap_content">
+	
+<TextView 
+			android:textColor="#FFF"
+			android:text="Points:"
+			android:textSize="10pt"
+			android:layout_height="wrap_content"
+			android:layout_width="wrap_content"	/>	
+
+</TableRow>
+<TableRow
+	android:layout_width="fill_parent"
+	android:layout_height="wrap_content">
+
+<EditText android:id="@+id/txviewCreateChorePointsVal"
+			android:textColor="#000"
+			android:textSize="10pt"
+			android:layout_span="2"
+			android:layout_height="wrap_content"
+			android:layout_width="fill_parent"	/>	
+</TableRow>
+
+  <TableRow 
+	android:layout_width="fill_parent" 
+	android:layout_height="wrap_content">
+	
+<TextView 
+			android:textColor="#FFF"
+			android:text="User:"
+			android:textSize="10pt"
+			android:layout_height="wrap_content"
+			android:layout_width="wrap_content"	/>	
+
+</TableRow>
+
+	<TableRow
+	android:layout_width="fill_parent" 
+	android:layout_height="wrap_content">	
+	
+<EditText android:id="@+id/editxtCreateChoreUserVal"
+			android:textColor="#000"
+			android:textSize="10pt"
+			android:layout_span="2"
+			android:layout_height="wrap_content"
+			android:layout_width="fill_parent"	/>	
+</TableRow>
+   
+   <TableRow
+	android:layout_width="wrap_content" 
+	android:layout_height="wrap_content">
+	
+   <Button
+    android:id="@+id/Button_Create_Chore"
+    android:layout_column="0"
+    android:layout_span="2"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentLeft="true"
+    android:layout_alignParentBottom="true"
+    android:text="Create New Chore"></Button>
+    </TableRow>
+
+</TableLayout>
+</ScrollView>  
