@@ -1,7 +1,10 @@
 package com.android.chores;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
@@ -16,6 +19,8 @@ public class RewardDetailsActivity extends Activity implements OnClickListener {
 	private String rewardID;
 	private String user_id;
 	private User current_user;
+	private static final int ALERT_DIALOG_ID = 1;
+	
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -66,12 +71,33 @@ public class RewardDetailsActivity extends Activity implements OnClickListener {
     public void redeemReward(){
     	if(current_user.getRewardPoints()>=reward.getPointValue())
     	{
-    		((RewardImpl)(reward)).add
-    		reward=RewardImpl.updateReward(reward);
-    		reward=RewardImpl.updateReward(reward);
+    		((RewardImpl)(reward)).addUser(user_id);
+    		//reward=RewardImpl.updateReward(reward);
+    		/*if(reward!=null)
+    			{
+    			// deduct the reward's points and update user
+    				current_user.subtractRewardPoints(reward.getPointValue());
+    			}*/
     	}
     	// TODO: Display error message
     	else
-    		return;
+    		showDialog(ALERT_DIALOG_ID);
+    }
+    
+    protected Dialog onCreateDialog(int id) {
+    	switch(id){
+    	case ALERT_DIALOG_ID:
+    		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+    		builder.setMessage("Sorry, you don't have enough points to redeem this reward!")
+    	       .setCancelable(false)
+    	       .setPositiveButton("OK!", new DialogInterface.OnClickListener() {
+    	           public void onClick(DialogInterface dialog, int id) {
+    	        	   dialog.cancel();
+    	           }
+    	       });
+    		return builder.create();
+    		default: 
+    			return null;
+    	}
     }
 }
