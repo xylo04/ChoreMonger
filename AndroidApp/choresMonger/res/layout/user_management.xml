@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android" 
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#4062F7">
+
+<RelativeLayout 
+	android:layout_width="wrap_content" 
+	android:layout_height="wrap_content"
+	android:background="#000">
+	
+<ImageView
+		android:layout_width="wrap_content" 
+		android:layout_height="wrap_content"
+		android:layout_alignParentRight="true"
+		android:layout_alignParentTop="true"
+		android:layout_gravity="right|center_vertical"
+		android:src="@drawable/choresmonger">
+	</ImageView>
+<TextView 
+		android:layout_height="wrap_content" 
+		android:text="User Management" 
+		android:textSize="@dimen/menu_title" 
+		android:shadowDx="0" 
+		android:shadowDy="0" 
+		android:shadowRadius="10" 
+		android:layout_width="fill_parent"
+		android:layout_gravity="fill_horizontal|center" 
+		android:layout_alignParentTop="true" 
+		android:layout_centerHorizontal="true"
+		android:shadowColor="@color/menu_glow" 
+		android:textColor="@color/menu_header"/>
+</RelativeLayout>
+  <Button
+    android:id="@+id/Button_Create_User"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentTop="true"
+    android:text="Create New User"/>
+<TextView 
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="#FFF"/>
+   <RelativeLayout
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content">
+
+    
+    <ListView
+		android:id="@+id/ListView_My_UserManagement_Menu"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_alignParentTop="true"
+		android:divider="#FFF"
+		android:dividerHeight="8px">
+	</ListView>
+    
+</RelativeLayout>
+</LinearLayout>
+	
