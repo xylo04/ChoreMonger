@@ -104,12 +104,6 @@
 		android:background="#1A0019"
 		android:paddingTop="5px"
 		android:paddingBottom="5px">
-		
-   <Button
-         android:id="@+id/Button_myChores"
-         android:layout_width="fill_parent"
-         android:layout_height="wrap_content"
-         android:text="My Chores"></Button>
             <Button
          android:id="@+id/Button_ChoresManagement"
          android:layout_width="fill_parent"
@@ -129,11 +123,6 @@
          android:layout_width="fill_parent"
          android:layout_height="wrap_content"
          android:text="User Management"></Button>
-       <Button
-         android:id="@+id/Button_RewardsCenter"
-         android:layout_width="fill_parent"
-         android:layout_height="wrap_content"
-         android:text="Rewards Center"></Button>
 	
 	</TableRow>
 	
@@ -143,17 +132,7 @@
 		android:background="#1A0019"
 		android:paddingTop="5px"
 		android:paddingBottom="5px">
-		
-	   <Button
-         android:id="@+id/Button_Profile"
-         android:layout_width="fill_parent"
-         android:layout_height="wrap_content"
-         android:text="Profile"></Button>
-            <Button
-         android:id="@+id/Button_Settings"
-         android:layout_width="fill_parent"
-         android:layout_height="wrap_content"
-         android:text="Settings"></Button>
+	   <Button android:text="Rewards Center" android:id="@+id/Button_RewardsCenter" android:layout_height="wrap_content" android:layout_width="fill_parent"></Button>
 	
 	</TableRow>
 
