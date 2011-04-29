@@ -82,6 +82,8 @@ public class EditUserActivity extends Activity implements OnClickListener  {
         public void updateUser(){
         	user.setName(((EditText)findViewById(R.id.editTxtUserNameVal)).getText().toString());
         	user.setEmail(((EditText)findViewById(R.id.editxtUserEmailVal)).getText().toString());
+        	user.subtractRewardPoints(user.getRewardPoints());
+        	user.addRewardPoints(Double.valueOf(((EditText)findViewById(R.id.txviewUserPointsVal)).getText().toString()));
         	Date DoB = new Date(selectedDay.toMillis(true));
         	user.setDob(DoB);
         	EditUserActivity.this.finish();

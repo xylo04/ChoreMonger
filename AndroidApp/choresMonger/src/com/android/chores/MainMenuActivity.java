@@ -54,6 +54,7 @@ public class MainMenuActivity extends Activity implements OnClickListener {
         
         	View ButtonMyChores=findViewById(R.id.Button_myChores);
         	View ButtonChoresManagement=findViewById(R.id.Button_ChoresManagement);
+        	View ButtonUserManagement=findViewById(R.id.Button_UserManagement);
         	View ButtonRewardsCenter=findViewById(R.id.Button_RewardsCenter);
         	View ButtonProfile=findViewById(R.id.Button_Profile);
         	View ButtonSettings=findViewById(R.id.Button_Settings);
@@ -63,6 +64,7 @@ public class MainMenuActivity extends Activity implements OnClickListener {
         	ButtonRewardsCenter.setOnClickListener(this);
         	ButtonProfile.setOnClickListener(this);
         	ButtonSettings.setOnClickListener(this);
+        	ButtonUserManagement.setOnClickListener(this);
         }
     }
     
@@ -88,6 +90,9 @@ public class MainMenuActivity extends Activity implements OnClickListener {
     	switch(v.getId()){
     		case R.id.Button_myChores:
     			// launch my chores activity here
+    		break;
+    		case R.id.Button_UserManagement:
+    			startActivity(new Intent(this,UserManagementActivity.class));
     		break;
     		case R.id.Button_ChoresManagement:
     			startActivity(new Intent(this,ChoreManagementActivity.class));
