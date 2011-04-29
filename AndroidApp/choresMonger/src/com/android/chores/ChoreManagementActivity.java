@@ -45,6 +45,9 @@ public class ChoreManagementActivity extends Activity implements OnClickListener
        int i=0;
        for(Chore chore:myChoresCollection){
     	   items[i]=chore.getName();
+    	   if(items[i] == null) {
+    		   items[i] = "";
+    	   }
     	   i++;
        }
 

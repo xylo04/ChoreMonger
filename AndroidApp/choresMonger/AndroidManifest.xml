@@ -32,6 +32,9 @@
 <activity android:name="ChoreManagementActivity"></activity>
 <activity android:name="CreateNewChoreActivity"></activity>
 <activity android:name="EditChoreActivity"></activity>
+<activity android:name="UserManagementActivity"></activity>
+<activity android:name="EditUserActivity"></activity>
+<activity android:name="CreateNewUserActivity"></activity>
 </application>
     <uses-sdk android:minSdkVersion="8" />
 

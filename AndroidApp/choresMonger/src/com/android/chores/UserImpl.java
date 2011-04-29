@@ -61,7 +61,7 @@ public class UserImpl implements User {
 	public static User getUserByName(String name) {
 		User retval = null;
 		List<User> temp = getUsersCollection();
-		for (int i = 1; i < temp.size(); i++) {
+		for (int i = 0; i < temp.size(); i++) {
 			if (temp.get(i).getName().equalsIgnoreCase(name)) {
 				retval = temp.get(i);
 			}

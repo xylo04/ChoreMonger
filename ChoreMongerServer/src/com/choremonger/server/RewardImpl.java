@@ -46,7 +46,7 @@ public class RewardImpl implements Reward {
 	@SuppressWarnings("unused")
 	@Persistent
 	@XmlElement
-	private String users;
+	private String users = "";
 
 	@Override
 	public String getDescription() {
